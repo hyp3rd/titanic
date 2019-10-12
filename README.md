@@ -16,7 +16,7 @@ There are two ways here available to build the API code; a targetted method and 
 
 ```bash
 # change according to your system/architecture
-CGO_ENABLED=0 GOARCH=[amd64|386] GOOS=[linux|darwin] go build -ldflags="-w -s" -a -installsuffix 'static' -o cs cmd/cs/main.go
+CGO_ENABLED=0 GOARCH=[amd64|386] GOOS=[linux|darwin] go build -ldflags="-w -s" -a -installsuffix 'static' -o titanic cmd/titanic/main.go
 ```
 
 #### Cross-platform build, leveraging the [build.sh](./build.sh) script
