@@ -1,0 +1,92 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: titanic-api
+  namespace: hcs
+  labels:
+    app: titanic-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: titanic-api
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 100%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: titanic-api
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: failure-domain.beta.kubernetes.io/zone
+                    operator: In
+                    values:
+                      - europe-west4-a
+                      - europe-west4-b
+                      - europe-west4-c
+      containers:
+        - name: titanic-api-sha256
+          image: gcr.io/hyperd-titanic-api-255117/titanic-api@sha256:247ae88d303f5138d3ba567458809215c75179e7e90154bd526a18acab908556
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+            - containerPort: 8443
+              protocol: TCP
+          livenessProbe:
+            failureThreshold: 7
+            httpGet:
+              path: /
+              port: 3000
+              httpHeaders:
+                - name: X-Alive
+                  value: Healthcheck
+            initialDelaySeconds: 3
+            periodSeconds: 3
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 3000
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 10
+          resources:
+            limits:
+              cpu: 2
+              memory: 2Gi
+            requests:
+              cpu: 250m
+              memory: 1Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - name: tls-vol
+              mountPath: /etc/tls/certs
+      volumes:
+        - name: tls-vol
+          secret:
+            secretName: titanic-api-tls
+status:
+  availableReplicas: 1
+  conditions:
+    - message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+  observedGeneration: 13
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1

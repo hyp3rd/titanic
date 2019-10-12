@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: titanic-api
+  name: titanic-api-service
+  namespace: hcs
+spec:
+  ports:
+    # - name: 8443-tcp
+    #   port: 8443
+    #   protocol: TCP
+    #   targetPort: 8443
+    - name: 3000-tcp
+      port: 3000
+      protocol: TCP
+      targetPort: 3000
+  selector:
+    app: titanic-api
+  type: NodePort

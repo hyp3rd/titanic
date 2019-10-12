@@ -1,0 +1,20 @@
+---
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: titanic-api-hpa
+  namespace: hcs
+  labels:
+    app: titanic-api
+spec:
+  scaleTargetRef:
+    kind: Deployment
+    name: titanic-api
+    apiVersion: apps/v1
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        targetAverageUtilization: 80
