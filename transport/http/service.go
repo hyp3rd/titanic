@@ -29,7 +29,7 @@ var (
 // MakeHTTPHandler mounts all of the service endpoints into an http.Handler.
 func MakeHTTPHandler(s titanic.Service, logger log.Logger) http.Handler {
 	r := mux.NewRouter()
-	e := MakeServerEndpoints(s)
+	e := transport.MakeServerEndpoints(s)
 	options := []httptransport.ServerOption{
 		httptransport.ServerErrorHandler(transport.NewLogErrorHandler(logger)),
 		httptransport.ServerErrorEncoder(encodeError),
@@ -104,7 +104,7 @@ func decodeGetPeopleRequest(_ context.Context, r *http.Request) (request interfa
 		return nil, ErrBadRouting
 	}
 
-	return getPeopleRequest{UUID: id}, nil
+	return transport.GetPeopleRequest{UUID: id}, nil
 }
 
 func decodePutPeopleRequest(_ context.Context, r *http.Request) (request interface{}, err error) {
@@ -115,11 +115,11 @@ func decodePutPeopleRequest(_ context.Context, r *http.Request) (request interfa
 		return nil, ErrBadRouting
 	}
 
-	var people People
+	var people titanic.People
 	if err := json.NewDecoder(r.Body).Decode(&people); err != nil {
 		return nil, err
 	}
-	return putPeopleRequest{
+	return transport.PutPeopleRequest{
 		UUID:   id,
 		People: people,
 	}, nil
@@ -133,11 +133,11 @@ func decodePatchPeopleRequest(_ context.Context, r *http.Request) (request inter
 		return nil, ErrBadRouting
 	}
 
-	var people People
+	var people titanic.People
 	if err := json.NewDecoder(r.Body).Decode(&people); err != nil {
 		return nil, err
 	}
-	return patchPeopleRequest{
+	return transport.PatchPeopleRequest{
 		UUID:   id,
 		People: people,
 	}, nil
@@ -151,17 +151,17 @@ func decodeDeletePeopleRequest(_ context.Context, r *http.Request) (request inte
 		return nil, ErrBadRouting
 	}
 
-	return deletePeopleRequest{UUID: id}, nil
+	return transport.DeletePeopleRequest{UUID: id}, nil
 }
 
 func decodeGetAllPeopleRequest(_ context.Context, r *http.Request) (request interface{}, err error) {
 
-	return getAllPeopleRequest{}, nil
+	return transport.GetAllPeopleRequest{}, nil
 }
 
 func decodeGetAPIStatusRequest(_ context.Context, r *http.Request) (request interface{}, err error) {
 
-	return getAPIStatusRequest{}, nil
+	return transport.GetAPIStatusRequest{}, nil
 }
 
 func encodePostPeopleRequest(ctx context.Context, req *http.Request, request interface{}) error {
@@ -180,7 +180,7 @@ func encodeGetPeopleRequest(ctx context.Context, req *http.Request, request inte
 
 func encodePutPeopleRequest(ctx context.Context, req *http.Request, request interface{}) error {
 	// r.Methods("PUT").Path("/people/{uuid}")
-	r := request.(putPeopleRequest)
+	r := request.(transport.PutPeopleRequest)
 	peopleUUID := url.QueryEscape(r.UUID.String())
 	req.URL.Path = "/people/" + peopleUUID
 	return encodeRequest(ctx, req, request)
@@ -188,7 +188,7 @@ func encodePutPeopleRequest(ctx context.Context, req *http.Request, request inte
 
 func encodePatchPeopleRequest(ctx context.Context, req *http.Request, request interface{}) error {
 	// r.Methods("PATCH").Path("/people/{uuid}")
-	r := request.(patchPeopleRequest)
+	r := request.(transport.PatchPeopleRequest)
 	peopleUUID := url.QueryEscape(r.UUID.String())
 	req.URL.Path = "/people/" + peopleUUID
 	return encodeRequest(ctx, req, request)
@@ -196,7 +196,7 @@ func encodePatchPeopleRequest(ctx context.Context, req *http.Request, request in
 
 func encodeDeletePeopleRequest(ctx context.Context, req *http.Request, request interface{}) error {
 	// r.Methods("DELETE").Path("/people/{uuid}")
-	r := request.(deletePeopleRequest)
+	r := request.(transport.DeletePeopleRequest)
 	peopleUUID := url.QueryEscape(r.UUID.String())
 	req.URL.Path = "/people/" + peopleUUID
 	return encodeRequest(ctx, req, request)
@@ -215,43 +215,43 @@ func encodeGetAPIStatusRequest(ctx context.Context, req *http.Request, request i
 }
 
 func decodePostPeopleResponse(_ context.Context, resp *http.Response) (interface{}, error) {
-	var response postPeopleResponse
+	var response transport.PostPeopleResponse
 	err := json.NewDecoder(resp.Body).Decode(&response)
 	return response, err
 }
 
 func decodeGetPeopleResponse(_ context.Context, resp *http.Response) (interface{}, error) {
-	var response getPeopleResponse
+	var response transport.GetPeopleResponse
 	err := json.NewDecoder(resp.Body).Decode(&response)
 	return response, err
 }
 
 func decodePutPeopleResponse(_ context.Context, resp *http.Response) (interface{}, error) {
-	var response putPeopleResponse
+	var response transport.PutPeopleResponse
 	err := json.NewDecoder(resp.Body).Decode(&response)
 	return response, err
 }
 
 func decodePatchPeopleResponse(_ context.Context, resp *http.Response) (interface{}, error) {
-	var response patchPeopleResponse
+	var response transport.PatchPeopleResponse
 	err := json.NewDecoder(resp.Body).Decode(&response)
 	return response, err
 }
 
 func decodeDeletePeopleResponse(_ context.Context, resp *http.Response) (interface{}, error) {
-	var response deletePeopleResponse
+	var response transport.DeletePeopleResponse
 	err := json.NewDecoder(resp.Body).Decode(&response)
 	return response, err
 }
 
 func decodeGetAllPeopleResponse(_ context.Context, resp *http.Response) (interface{}, error) {
-	var response getAllPeopleResponse
+	var response transport.GetAllPeopleResponse
 	err := json.NewDecoder(resp.Body).Decode(&response)
 	return response, err
 }
 
 func decodeGetAPIStatusResponse(_ context.Context, resp *http.Response) (interface{}, error) {
-	var response getAPIStatusResponse
+	var response transport.GetAPIStatusResponse
 	err := json.NewDecoder(resp.Body).Decode(&response)
 	return response, err
 }
