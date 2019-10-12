@@ -1,4 +1,4 @@
-gcp_project_id = "hyperd-titanic-api-255117"
+gcp_project_id = "hyperd-titanic-api"
 
 cluster_name = "titanic-api-cluster"
 
