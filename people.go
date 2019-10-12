@@ -23,9 +23,9 @@ type People struct {
 // Repository describes the persistence on people model
 type Repository interface {
 	PostPeople(ctx context.Context, p People) error
-	GetPeople(ctx context.Context, uuid uuid.UUID) (People, error)
+	GetPeopleByID(ctx context.Context, uuid uuid.UUID) (People, error)
 	PutPeople(ctx context.Context, uuid uuid.UUID, p People) error
 	PatchPeople(ctx context.Context, uuid uuid.UUID, p People) error
 	DeletePeople(ctx context.Context, uuid uuid.UUID) error
-	GetAllPeople(ctx context.Context) ([]People, error)
+	GetPeople(ctx context.Context) ([]People, error)
 }

@@ -18,11 +18,11 @@ var (
 
 // Service is a CRUD interface for People in the Titanic collection.
 type Service interface {
-	PostPeople(ctx context.Context, p People) error
-	GetPeople(ctx context.Context, uuid uuid.UUID) (People, error)
+	PostPeople(ctx context.Context, p People) (string, error)
+	GetPeopleByID(ctx context.Context, uuid uuid.UUID) (People, error)
 	PutPeople(ctx context.Context, uuid uuid.UUID, p People) error
 	PatchPeople(ctx context.Context, uuid uuid.UUID, p People) error
 	DeletePeople(ctx context.Context, uuid uuid.UUID) error
-	GetAllPeople(ctx context.Context) ([]People, error)
+	GetPeople(ctx context.Context) ([]People, error)
 	GetAPIStatus(ctx context.Context) (string, error)
 }

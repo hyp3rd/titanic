@@ -10,13 +10,13 @@ import (
 
 // Endpoints collects all of the endpoints that compose a People titanic.People.
 type Endpoints struct {
-	PostPeopleEndpoint   endpoint.Endpoint
-	GetPeopleEndpoint    endpoint.Endpoint
-	PutPeopleEndpoint    endpoint.Endpoint
-	PatchPeopleEndpoint  endpoint.Endpoint
-	DeletePeopleEndpoint endpoint.Endpoint
-	GetAllPeopleEndpoint endpoint.Endpoint
-	GetAPIStatusEndpoint endpoint.Endpoint
+	PostPeopleEndpoint    endpoint.Endpoint
+	GetPeopleByIDEndpoint endpoint.Endpoint
+	PutPeopleEndpoint     endpoint.Endpoint
+	PatchPeopleEndpoint   endpoint.Endpoint
+	DeletePeopleEndpoint  endpoint.Endpoint
+	GetPeopleEndpoint     endpoint.Endpoint
+	GetAPIStatusEndpoint  endpoint.Endpoint
 }
 
 // MakeServerEndpoints returns an Endpoints struct where each endpoint invokes
@@ -24,13 +24,13 @@ type Endpoints struct {
 // server.
 func MakeServerEndpoints(s titanic.Service) Endpoints {
 	return Endpoints{
-		PostPeopleEndpoint:   MakePostPeopleEndpoint(s),
-		GetPeopleEndpoint:    MakeGetPeopleEndpoint(s),
-		PutPeopleEndpoint:    MakePutPeopleEndpoint(s),
-		PatchPeopleEndpoint:  MakePatchPeopleEndpoint(s),
-		DeletePeopleEndpoint: MakeDeletePeopleEndpoint(s),
-		GetAllPeopleEndpoint: MakeGetAllPeopleEndpoint(s),
-		GetAPIStatusEndpoint: MakeGetAPIStatusEndpoint(s),
+		PostPeopleEndpoint:    MakePostPeopleEndpoint(s),
+		GetPeopleByIDEndpoint: MakeGetPeopleByIDEndpoint(s),
+		PutPeopleEndpoint:     MakePutPeopleEndpoint(s),
+		PatchPeopleEndpoint:   MakePatchPeopleEndpoint(s),
+		DeletePeopleEndpoint:  MakeDeletePeopleEndpoint(s),
+		GetPeopleEndpoint:     MakeGetPeopleEndpoint(s),
+		GetAPIStatusEndpoint:  MakeGetAPIStatusEndpoint(s),
 	}
 }
 
@@ -46,7 +46,7 @@ func MakePostPeopleEndpoint(s titanic.Service) endpoint.Endpoint {
 
 // MakeGetPeopleEndpoint returns an endpoint via the passed service.
 // Primarily useful in a server.
-func MakeGetPeopleEndpoint(s titanic.Service) endpoint.Endpoint {
+func MakeGetPeopleByIDEndpoint(s titanic.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(GetPeopleRequest)
 		p, e := s.GetPeople(ctx, req.UUID)
@@ -86,7 +86,7 @@ func MakeDeletePeopleEndpoint(s titanic.Service) endpoint.Endpoint {
 
 // MakeGetAllPeopleEndpoint returns an endpoint via the passed service.
 // Primarily useful in a server.
-func MakeGetAllPeopleEndpoint(s titanic.Service) endpoint.Endpoint {
+func MakeGetPeopleEndpoint(s titanic.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		// req := request.(getAllPeopleRequest)
 		a, e := s.GetAllPeople(ctx)

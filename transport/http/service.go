@@ -51,7 +51,7 @@ func MakeHTTPHandler(s titanic.Service, logger log.Logger) http.Handler {
 	))
 	r.Methods("GET").Path("/people/{uuid}").Handler(httptransport.NewServer(
 		e.GetPeopleEndpoint,
-		decodeGetPeopleRequest,
+		decodeGetPeopleByIDRequest,
 		encodeResponse,
 		options...,
 	))
@@ -75,7 +75,7 @@ func MakeHTTPHandler(s titanic.Service, logger log.Logger) http.Handler {
 	))
 	r.Methods("GET").Path("/people/").Handler(httptransport.NewServer(
 		e.GetAllPeopleEndpoint,
-		decodeGetAllPeopleRequest,
+		decodeGetPeopleRequest,
 		encodeResponse,
 		options...,
 	))
@@ -96,7 +96,7 @@ func decodePostPeopleRequest(_ context.Context, r *http.Request) (request interf
 	return req, nil
 }
 
-func decodeGetPeopleRequest(_ context.Context, r *http.Request) (request interface{}, err error) {
+func decodeGetPeopleByIDRequest(_ context.Context, r *http.Request) (request interface{}, err error) {
 	vars := mux.Vars(r)
 	id, err := uuid.Parse(vars["uuid"])
 
@@ -154,7 +154,7 @@ func decodeDeletePeopleRequest(_ context.Context, r *http.Request) (request inte
 	return transport.DeletePeopleRequest{UUID: id}, nil
 }
 
-func decodeGetAllPeopleRequest(_ context.Context, r *http.Request) (request interface{}, err error) {
+func decodeGetPeopleRequest(_ context.Context, r *http.Request) (request interface{}, err error) {
 
 	return transport.GetAllPeopleRequest{}, nil
 }
@@ -170,7 +170,7 @@ func encodePostPeopleRequest(ctx context.Context, req *http.Request, request int
 	return encodeRequest(ctx, req, request)
 }
 
-func encodeGetPeopleRequest(ctx context.Context, req *http.Request, request interface{}) error {
+func encodeGetPeopleByIDRequest(ctx context.Context, req *http.Request, request interface{}) error {
 	// r.Methods("GET").Path("/people/{uuid}")
 	r := request.(transport.GetPeopleRequest)
 	peopleUUID := url.QueryEscape(r.UUID.String())
@@ -202,7 +202,7 @@ func encodeDeletePeopleRequest(ctx context.Context, req *http.Request, request i
 	return encodeRequest(ctx, req, request)
 }
 
-func encodeGetAllPeopleRequest(ctx context.Context, req *http.Request, request interface{}) error {
+func encodeGetPeopleRequest(ctx context.Context, req *http.Request, request interface{}) error {
 	// r.Methods("GET").Path("/people/")
 	req.URL.Path = "/people/"
 	return encodeRequest(ctx, req, request)
@@ -220,7 +220,7 @@ func decodePostPeopleResponse(_ context.Context, resp *http.Response) (interface
 	return response, err
 }
 
-func decodeGetPeopleResponse(_ context.Context, resp *http.Response) (interface{}, error) {
+func decodeGetPeopleByIDResponse(_ context.Context, resp *http.Response) (interface{}, error) {
 	var response transport.GetPeopleResponse
 	err := json.NewDecoder(resp.Body).Decode(&response)
 	return response, err
@@ -244,7 +244,7 @@ func decodeDeletePeopleResponse(_ context.Context, resp *http.Response) (interfa
 	return response, err
 }
 
-func decodeGetAllPeopleResponse(_ context.Context, resp *http.Response) (interface{}, error) {
+func decodeGetPeopleResponse(_ context.Context, resp *http.Response) (interface{}, error) {
 	var response transport.GetAllPeopleResponse
 	err := json.NewDecoder(resp.Body).Decode(&response)
 	return response, err

@@ -32,11 +32,11 @@ func (mw loggingMiddleware) PostPeople(ctx context.Context, p titanic.People) (e
 	return mw.next.PostPeople(ctx, p)
 }
 
-func (mw loggingMiddleware) GetPeople(ctx context.Context, uuid uuid.UUID) (p titanic.People, err error) {
+func (mw loggingMiddleware) GetPeopleByID(ctx context.Context, uuid uuid.UUID) (p titanic.People, err error) {
 	defer func(begin time.Time) {
 		mw.logger.Log("method", "GetPeople", "uuid", uuid, "took", time.Since(begin), "err", err)
 	}(time.Now())
-	return mw.next.GetPeople(ctx, uuid)
+	return mw.next.GetPeopleByID(ctx, uuid)
 }
 
 func (mw loggingMiddleware) PutPeople(ctx context.Context, uuid uuid.UUID, p titanic.People) (err error) {
@@ -64,7 +64,7 @@ func (mw loggingMiddleware) GetAllPeople(ctx context.Context) (allPeople []titan
 	defer func(begin time.Time) {
 		mw.logger.Log("method", "GetAllPeople", "took", time.Since(begin), "err", err)
 	}(time.Now())
-	return mw.next.GetAllPeople(ctx)
+	return mw.next.GetPeople(ctx)
 }
 
 func (mw loggingMiddleware) GetAPIStatus(ctx context.Context) (status string, err error) {
