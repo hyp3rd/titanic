@@ -75,7 +75,7 @@ func MakeHTTPHandler(s titanic.Service, logger log.Logger) http.Handler {
 		options...,
 	))
 	r.Methods("GET").Path("/people/").Handler(httptransport.NewServer(
-		e.GetAllPeopleEndpoint,
+		e.GetPeopleEndpoint,
 		decodeGetPeopleRequest,
 		encodeResponse,
 		options...,
@@ -105,7 +105,7 @@ func decodeGetPeopleByIDRequest(_ context.Context, r *http.Request) (request int
 		return nil, ErrBadRouting
 	}
 
-	return tr.GetPeopleRequest{UUID: id}, nil
+	return tr.GetPeopleByIDRequest{UUID: id}, nil
 }
 
 func decodePutPeopleRequest(_ context.Context, r *http.Request) (request interface{}, err error) {
@@ -173,7 +173,7 @@ func encodePostPeopleRequest(ctx context.Context, req *http.Request, request int
 
 func encodeGetPeopleByIDRequest(ctx context.Context, req *http.Request, request interface{}) error {
 	// r.Methods("GET").Path("/people/{uuid}")
-	r := request.(tr.GetPeopleRequest)
+	r := request.(tr.GetPeopleByIDRequest)
 	peopleUUID := url.QueryEscape(r.UUID.String())
 	req.URL.Path = "/people/" + peopleUUID
 	return encodeRequest(ctx, req, request)
@@ -222,7 +222,7 @@ func decodePostPeopleResponse(_ context.Context, resp *http.Response) (interface
 }
 
 func decodeGetPeopleByIDResponse(_ context.Context, resp *http.Response) (interface{}, error) {
-	var response tr.GetPeopleResponse
+	var response tr.GetPeopleByIDRequest
 	err := json.NewDecoder(resp.Body).Decode(&response)
 	return response, err
 }
@@ -246,7 +246,7 @@ func decodeDeletePeopleResponse(_ context.Context, resp *http.Response) (interfa
 }
 
 func decodeGetPeopleResponse(_ context.Context, resp *http.Response) (interface{}, error) {
-	var response tr.GetAllPeopleResponse
+	var response tr.GetPeopleResponse
 	err := json.NewDecoder(resp.Body).Decode(&response)
 	return response, err
 }

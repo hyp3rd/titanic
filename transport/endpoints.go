@@ -183,8 +183,8 @@ type DeletePeopleResponse struct {
 
 func (r DeletePeopleResponse) error() error { return r.Err }
 
-// GetAllPeopleRequest struct
-type GetAllPeopleRequest struct{}
+// GetPeopleRequest struct
+type GetPeopleRequest struct{}
 
 // GetPeopleResponse response object
 type GetPeopleResponse struct {

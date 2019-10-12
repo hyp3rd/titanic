@@ -2,21 +2,36 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"net/http"
 	"os"
-	"os/signal"
-	"syscall"
 
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/log/level"
-
 	"gitlab.com/hyperd/titanic"
-	titanicsvc "gitlab.com/hyperd/titanic/implementation"
-	inmemory "gitlab.com/hyperd/titanic/inmemory"
+	"gitlab.com/hyperd/titanic/inmemory"
 	"gitlab.com/hyperd/titanic/middleware"
-	http "gitlab.com/hyperd/titanic/transport/http"
+
+	titanicsvc "gitlab.com/hyperd/titanic/implementation"
+	httpx "gitlab.com/hyperd/titanic/transport/http"
 )
+
+// import (
+// 	"flag"
+// 	"fmt"
+// 	"net/http"
+// 	"os"
+// 	"os/signal"
+// 	"syscall"
+
+// 	"github.com/go-kit/kit/log"
+// 	"github.com/go-kit/kit/log/level"
+
+// 	"gitlab.com/hyperd/titanic"
+// 	titanicsvc "gitlab.com/hyperd/titanic/implementation"
+// 	inmemory "gitlab.com/hyperd/titanic/inmemory"
+// 	"gitlab.com/hyperd/titanic/middleware"
+// 	tr "gitlab.com/hyperd/titanic/transport/http"
+// )
 
 func main() {
 	var (
@@ -44,25 +59,20 @@ func main() {
 	level.Info(logger).Log("msg", "service started")
 	defer level.Info(logger).Log("msg", "service ended")
 
-	// var db *sql.DB
-	// {
-	// 	var err error
-	// 	// Connect to the "titanicdb" database
-	// 	db, err = sql.Open("postgres",
-	// 		"postgresql://user@localhost:26257/titanicdb?sslmode=disable")
-	// 	if err != nil {
-	// 		level.Error(logger).Log("exit", err)
-	// 		os.Exit(-1)
-	// 	}
-	// }
+	// 	// var db *sql.DB
+	// 	// {
+	// 	// 	var err error
+	// 	// 	// Connect to the "titanicdb" database
+	// 	// 	db, err = sql.Open("postgres",
+	// 	// 		"postgresql://user@localhost:26257/titanicdb?sslmode=disable")
+	// 	// 	if err != nil {
+	// 	// 		level.Error(logger).Log("exit", err)
+	// 	// 		os.Exit(-1)
+	// 	// 	}
+	// 	// }
 
 	var svc titanic.Service
 	{
-		// repository, err := cockroachdb.New(db, logger)
-		// if err != nil {
-		// 	level.Error(logger).Log("exit", err)
-		// 	os.Exit(-1)
-		// }
 		repository, err := inmemory.NewInmemService(logger)
 		if err != nil {
 			level.Error(logger).Log("exit", err)
@@ -80,28 +90,53 @@ func main() {
 		svc = middleware.LoggingMiddleware(logger)(svc)
 	}
 
+	// 	// Create Go kit endpoints for the Order Service
+	// 	// Then decorates with endpoint middlewares
+	// 	// var endpoints tr.Endpoints
+	// 	// {
+	// 	// 	endpoints = tr. MakeServiceEndpoints(svc)
+	// 	// 	// Add endpoint level middlewares here
+	// 	// 	// Trace server side endpoints with open census
+	// 	// 	endpoints = transport.Endpoints{
+	// 	// 		Create:       oc.ServerEndpoint("Create")(endpoints.Create),
+	// 	// 		GetByID:      oc.ServerEndpoint("GetByID")(endpoints.GetByID),
+	// 	// 		ChangeStatus: oc.ServerEndpoint("ChangeStatus")(endpoints.ChangeStatus),
+	// 	// 	}
+
+	// 	// }
+	// 	// var h http.Handler
+	// 	// {
+	// 	// 	ocTracing := kitoc.HTTPServerTrace()
+	// 	// 	serverOptions := []kithttp.ServerOption{ocTracing}
+	// 	// 	h = httptransport.NewService(endpoints, serverOptions, logger)
+	// 	// }
 	var h http.Handler
 	{
-		h = http.MakeHTTPHandler(svc, log.With(logger, "component", "HTTP"))
+		h = httpX..MakeHTTPHandler(s, log.With(logger, "component", "HTTP"))
 	}
 
-	errs := make(chan error)
-	go func() {
-		c := make(chan os.Signal)
-		signal.Notify(c, syscall.SIGINT, syscall.SIGTERM)
-		errs <- fmt.Errorf("%s", <-c)
-	}()
+	// 	// var h http.Handler
+	// 	// {
+	// 	// 	h = httpTransport..MakeHTTPHandler(svc, log.With(logger, "component", "HTTP"))
+	// 	// }
 
-	go func() {
-		logger.Log("transport", "HTTP", "addr", *httpAddr)
-		errs <- http.ListenAndServe(*httpAddr, h)
-	}()
+	// 	errs := make(chan error)
+	// 	go func() {
+	// 		c := make(chan os.Signal)
+	// 		signal.Notify(c, syscall.SIGINT, syscall.SIGTERM)
+	// 		errs <- fmt.Errorf("%s", <-c)
+	// 	}()
 
-	go func() {
-		logger.Log("transport", "HTTPS", "addr", *httpsAddr)
-		errs <- http.ListenAndServeTLS(*httpsAddr, "tls/tls.crt", "tls/tls.key", h)
-		// errs <- http.ListenAndServeTLS(*httpsAddr, "/etc/tls/certs/tls.crt", "/etc/tls/certs/tls.key", h)
-	}()
+	// 	go func() {
+	// 		logger.Log("transport", "HTTP", "addr", *httpAddr)
+	// 		errs <- http.ListenAndServe(*httpAddr, h)
+	// 	}()
 
-	logger.Log("exit", <-errs)
+	// 	go func() {
+	// 		logger.Log("transport", "HTTPS", "addr", *httpsAddr)
+	// 		errs <- http.ListenAndServeTLS(*httpsAddr, "tls/tls.crt", "tls/tls.key", h)
+	// 		// errs <- http.ListenAndServeTLS(*httpsAddr, "/etc/tls/certs/tls.crt", "/etc/tls/certs/tls.key", h)
+	// 	}()
+
+	// 	logger.Log("exit", <-errs)
 }
