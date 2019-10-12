@@ -20,20 +20,24 @@ import (
 // Response types that may contain business-logic errors implement that
 // interface.
 
+// PostPeopleRequest request object
 type PostPeopleRequest struct {
 	People titanic.People `json:"people,omitempty"`
 }
 
+// PostPeopleResponse response object
 type PostPeopleResponse struct {
 	Err error `json:"err,omitempty"`
 }
 
 func (r PostPeopleResponse) error() error { return r.Err }
 
+// GetPeopleRequest request object
 type GetPeopleRequest struct {
 	UUID uuid.UUID `json:"uuid,omitempty"`
 }
 
+// GetPeopleResponse response object
 type GetPeopleResponse struct {
 	People titanic.People `json:"people,omitempty"`
 	Err    error          `json:"err,omitempty"`
@@ -41,32 +45,38 @@ type GetPeopleResponse struct {
 
 func (r GetPeopleResponse) error() error { return r.Err }
 
+// PutPeopleRequest request object
 type PutPeopleRequest struct {
 	UUID   uuid.UUID      `json:"uuid,omitempty"`
 	People titanic.People `json:"people,omitempty"`
 }
 
+// PutPeopleResponse response object
 type PutPeopleResponse struct {
 	Err error `json:"err,omitempty"`
 }
 
 func (r PutPeopleResponse) error() error { return nil }
 
+// PatchPeopleRequest request object
 type PatchPeopleRequest struct {
 	UUID   uuid.UUID      `json:"uuid,omitempty"`
 	People titanic.People `json:"people,omitempty"`
 }
 
+// PatchPeopleResponse response object
 type PatchPeopleResponse struct {
 	Err error `json:"err,omitempty"`
 }
 
 func (r PatchPeopleResponse) error() error { return r.Err }
 
+// DeletePeopleRequest request object
 type DeletePeopleRequest struct {
 	UUID uuid.UUID
 }
 
+// DeletePeopleResponse response object
 type DeletePeopleResponse struct {
 	Err error `json:"err,omitempty"`
 }
@@ -74,10 +84,9 @@ type DeletePeopleResponse struct {
 func (r DeletePeopleResponse) error() error { return r.Err }
 
 // GetAllPeopleRequest struct
-type GetAllPeopleRequest struct {
-}
+type GetAllPeopleRequest struct{}
 
-// GetAllPeopleResponse struct
+// GetAllPeopleResponse response object
 type GetAllPeopleResponse struct {
 	AllPeople []titanic.People `json:"people,omitempty"`
 	Err       error            `json:"err,omitempty"`
@@ -85,9 +94,10 @@ type GetAllPeopleResponse struct {
 
 func (r GetAllPeopleResponse) error() error { return r.Err }
 
-type GetAPIStatusRequest struct {
-}
+// GetAPIStatusRequest request object
+type GetAPIStatusRequest struct{}
 
+// GetAPIStatusResponse response object
 type GetAPIStatusResponse struct {
 	Status string `json:"status,omitempty"`
 	Err    error  `json:"err,omitempty"`
