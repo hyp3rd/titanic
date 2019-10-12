@@ -38,11 +38,13 @@ func (s *service) PostPeople(ctx context.Context, people titanic.People) (string
 
 	people.UUID = uuid
 
-	if err := s.repository.PostPeople(ctx, people); err != nil {
+	id, err := s.repository.PostPeople(ctx, people)
+
+	if err != nil {
 		level.Error(logger).Log("err", err)
 		return "", titanic.ErrCmdRepository
 	}
-	return uuid.String(), nil
+	return id, nil
 }
 
 func (s *service) GetPeopleByID(ctx context.Context, uuid uuid.UUID) (titanic.People, error) {

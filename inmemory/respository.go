@@ -40,7 +40,7 @@ func (r *repository) PostPeople(ctx context.Context, p titanic.People) (string, 
 	p.UUID = id
 
 	if _, ok := r.m[p.UUID.String()]; ok {
-		return id.String(), ErrAlreadyExists // POST = create, don't overwrite
+		return "", ErrAlreadyExists // POST = create, don't overwrite
 	}
 	r.m[p.UUID.String()] = p
 	return id.String(), nil
