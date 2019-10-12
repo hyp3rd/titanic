@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -17,7 +18,7 @@ import (
 	"github.com/go-kit/kit/transport"
 	httptransport "github.com/go-kit/kit/transport/http"
 	"gitlab.com/hyperd/titanic"
-	"gitlab.com/hyperd/titanic/transport"
+	transport "gitlab.com/hyperd/titanic/transport"
 )
 
 var (
@@ -156,7 +157,7 @@ func decodeDeletePeopleRequest(_ context.Context, r *http.Request) (request inte
 
 func decodeGetPeopleRequest(_ context.Context, r *http.Request) (request interface{}, err error) {
 
-	return transport.GetAllPeopleRequest{}, nil
+	return transport.GetPeopleRequest{}, nil
 }
 
 func decodeGetAPIStatusRequest(_ context.Context, r *http.Request) (request interface{}, err error) {
@@ -292,10 +293,10 @@ func encodeStatusResponse(ctx context.Context, w http.ResponseWriter, response i
 
 	if duration.Seconds() > 10 {
 		w.WriteHeader(500)
-		// w.Write([]byte(fmt.Sprintf("error: %v", duration.Seconds())))
+		w.Write([]byte(fmt.Sprintf("error: %v", duration.Seconds())))
 	} else {
 		w.WriteHeader(200)
-		// w.Write([]byte("ok"))
+		w.Write([]byte("ok"))
 	}
 
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")

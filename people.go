@@ -22,7 +22,7 @@ type People struct {
 
 // Repository describes the persistence on people model
 type Repository interface {
-	PostPeople(ctx context.Context, p People) error
+	PostPeople(ctx context.Context, p People) (string, error)
 	GetPeopleByID(ctx context.Context, uuid uuid.UUID) (People, error)
 	PutPeople(ctx context.Context, uuid uuid.UUID, p People) error
 	PatchPeople(ctx context.Context, uuid uuid.UUID, p People) error

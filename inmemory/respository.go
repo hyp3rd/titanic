@@ -31,7 +31,7 @@ func NewInmemService(logger log.Logger) (titanic.Repository, error) {
 	}, nil
 }
 
-func (r *repository) PostPeople(ctx context.Context, p titanic.People) error {
+func (r *repository) PostPeople(ctx context.Context, p titanic.People) (string, error) {
 	r.mtx.Lock()
 	defer r.mtx.Unlock()
 	// id, err := uuid.Parse(vars["uuid"])
@@ -40,10 +40,10 @@ func (r *repository) PostPeople(ctx context.Context, p titanic.People) error {
 	p.UUID = id
 
 	if _, ok := r.m[p.UUID.String()]; ok {
-		return ErrAlreadyExists // POST = create, don't overwrite
+		return id.String(), ErrAlreadyExists // POST = create, don't overwrite
 	}
 	r.m[p.UUID.String()] = p
-	return nil
+	return id.String(), nil
 }
 
 func (r *repository) GetPeopleByID(ctx context.Context, uuid uuid.UUID) (titanic.People, error) {

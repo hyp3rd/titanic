@@ -12,9 +12,10 @@ import (
 	"github.com/go-kit/kit/log/level"
 
 	"gitlab.com/hyperd/titanic"
-	"gitlab.com/hyperd/titanic/inmemory"
+	titanicsvc "gitlab.com/hyperd/titanic/implementation"
+	inmemory "gitlab.com/hyperd/titanic/inmemory"
 	"gitlab.com/hyperd/titanic/middleware"
-	"gitlab.com/hyperd/titanic/transport/http"
+	http "gitlab.com/hyperd/titanic/transport/http"
 )
 
 func main() {
@@ -55,21 +56,33 @@ func main() {
 	// 	}
 	// }
 
-	var s titanic.Service
+	var svc titanic.Service
 	{
 		// repository, err := cockroachdb.New(db, logger)
 		// if err != nil {
 		// 	level.Error(logger).Log("exit", err)
 		// 	os.Exit(-1)
 		// }
+		repository, err := inmemory.NewInmemService(logger)
+		if err != nil {
+			level.Error(logger).Log("exit", err)
+			os.Exit(-1)
+		}
 
-		s = inmemory.NewInmemService()
-		s = middleware.LoggingMiddleware(logger)(s)
+		svc = titanicsvc.NewService(repository, logger)
+
+		svc, err = inmemory.NewInmemService(logger)
+		if err != nil {
+			level.Error(logger).Log("exit", err)
+			os.Exit(-1)
+		}
+
+		svc = middleware.LoggingMiddleware(logger)(svc)
 	}
 
 	var h http.Handler
 	{
-		h = http.MakeHTTPHandler(s, log.With(logger, "component", "HTTP"))
+		h = http.MakeHTTPHandler(svc, log.With(logger, "component", "HTTP"))
 	}
 
 	errs := make(chan error)

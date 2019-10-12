@@ -67,9 +67,9 @@ func (mw loggingMiddleware) GetPeople(ctx context.Context) (allPeople []titanic.
 	return mw.next.GetPeople(ctx)
 }
 
-func (mw loggingMiddleware) GetAPIStatus(ctx context.Context) (status string, err error) {
-	defer func(begin time.Time) {
-		mw.logger.Log("method", "GetAPIStatus", "took", time.Since(begin), "err", err)
-	}(time.Now())
-	return mw.next.GetAPIStatus(ctx)
-}
+// func (mw loggingMiddleware) GetAPIStatus(ctx context.Context) (status string, err error) {
+// 	defer func(begin time.Time) {
+// 		mw.logger.Log("method", "GetAPIStatus", "took", time.Since(begin), "err", err)
+// 	}(time.Now())
+// 	return mw.next.GetAPIStatus(ctx)
+// }

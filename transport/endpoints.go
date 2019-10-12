@@ -39,18 +39,18 @@ func MakeServerEndpoints(s titanic.Service) Endpoints {
 func MakePostPeopleEndpoint(s titanic.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(PostPeopleRequest)
-		e := s.PostPeople(ctx, req.People)
-		return PostPeopleResponse{Err: e}, nil
+		id, e := s.PostPeople(ctx, req.People)
+		return PostPeopleResponse{ID: id, Err: e}, nil
 	}
 }
 
-// MakeGetPeopleEndpoint returns an endpoint via the passed service.
+// MakeGetPeopleByIDEndpoint returns an endpoint via the passed service.
 // Primarily useful in a server.
 func MakeGetPeopleByIDEndpoint(s titanic.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
-		req := request.(GetPeopleRequest)
-		p, e := s.GetPeople(ctx, req.UUID)
-		return GetPeopleResponse{People: p, Err: e}, nil
+		req := request.(GetPeopleByIDRequest)
+		p, e := s.GetPeopleByID(ctx, req.UUID)
+		return GetPeopleByIDResponse{People: p, Err: e}, nil
 	}
 }
 
@@ -79,18 +79,18 @@ func MakePatchPeopleEndpoint(s titanic.Service) endpoint.Endpoint {
 func MakeDeletePeopleEndpoint(s titanic.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(DeletePeopleRequest)
-		e := s.DeletePeople(ctx, req.UUID)
-		return DeletePeopleResponse{Err: e}, nil
+		id, e := s.DeletePeople(ctx, req.UUID)
+		return DeletePeopleResponse{ID: id, Err: e}, nil
 	}
 }
 
-// MakeGetAllPeopleEndpoint returns an endpoint via the passed service.
+// MakeGetPeopleEndpoint returns an endpoint via the passed service.
 // Primarily useful in a server.
 func MakeGetPeopleEndpoint(s titanic.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		// req := request.(getAllPeopleRequest)
-		a, e := s.GetAllPeople(ctx)
-		return GetAllPeopleResponse{AllPeople: a, Err: e}, nil
+		a, e := s.GetPeople(ctx)
+		return GetPeopleResponse{People: a, Err: e}, nil
 	}
 }
 
@@ -126,23 +126,24 @@ type PostPeopleRequest struct {
 
 // PostPeopleResponse response object
 type PostPeopleResponse struct {
-	Err error `json:"err,omitempty"`
+	ID  string `json:"id,omitempty"`
+	Err error  `json:"err,omitempty"`
 }
 
 func (r PostPeopleResponse) error() error { return r.Err }
 
-// GetPeopleRequest request object
-type GetPeopleRequest struct {
+// GetPeopleByIDRequest request object
+type GetPeopleByIDRequest struct {
 	UUID uuid.UUID `json:"uuid,omitempty"`
 }
 
-// GetPeopleResponse response object
-type GetPeopleResponse struct {
+// GetPeopleByIDResponse response object
+type GetPeopleByIDResponse struct {
 	People titanic.People `json:"people,omitempty"`
 	Err    error          `json:"err,omitempty"`
 }
 
-func (r GetPeopleResponse) error() error { return r.Err }
+func (r GetPeopleByIDResponse) error() error { return r.Err }
 
 // PutPeopleRequest request object
 type PutPeopleRequest struct {
@@ -177,7 +178,8 @@ type DeletePeopleRequest struct {
 
 // DeletePeopleResponse response object
 type DeletePeopleResponse struct {
-	Err error `json:"err,omitempty"`
+	ID  string `json:"id,omitempty"`
+	Err error  `json:"err,omitempty"`
 }
 
 func (r DeletePeopleResponse) error() error { return r.Err }
@@ -185,13 +187,13 @@ func (r DeletePeopleResponse) error() error { return r.Err }
 // GetAllPeopleRequest struct
 type GetAllPeopleRequest struct{}
 
-// GetAllPeopleResponse response object
-type GetAllPeopleResponse struct {
-	AllPeople []titanic.People `json:"people,omitempty"`
-	Err       error            `json:"err,omitempty"`
+// GetPeopleResponse response object
+type GetPeopleResponse struct {
+	People []titanic.People `json:"people,omitempty"`
+	Err    error            `json:"err,omitempty"`
 }
 
-func (r GetAllPeopleResponse) error() error { return r.Err }
+func (r GetPeopleResponse) error() error { return r.Err }
 
 // GetAPIStatusRequest request object
 type GetAPIStatusRequest struct{}
