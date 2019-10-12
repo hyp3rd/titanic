@@ -2,6 +2,7 @@ package implementation
 
 import (
 	"context"
+	"database/sql"
 	"errors"
 
 	"github.com/go-kit/kit/log"
@@ -44,104 +45,64 @@ func (s *service) PostPeople(ctx context.Context, people titanic.People) (string
 	return uuid.String(), nil
 }
 
-func (s *service) GetPeople(ctx context.Context, uuid uuid.UUID) (titanic.People, error) {
-	s.mtx.RLock()
-	defer s.mtx.RUnlock()
-	p, ok := s.m[uuid.String()]
-	if !ok {
-		return titanic.People{}, ErrNotFound
+func (s *service) GetPeopleByID(ctx context.Context, uuid uuid.UUID) (titanic.People, error) {
+	logger := log.With(s.logger, "method", "GetPeopleByID")
+	people, err := s.repository.GetPeopleByID(ctx, uuid)
+	if err != nil {
+		level.Error(logger).Log("err", err)
+		if err == sql.ErrNoRows {
+			return people, titanic.ErrNotFound
+		}
+		return people, titanic.ErrQueryRepository
 	}
-	return p, nil
+	return people, nil
 }
 
-func (s *inmemService) PutPeople(ctx context.Context, uuid uuid.UUID, p titanic.People) error {
-	if p.UUID.String() == "" {
-		return ErrInconsistentUUIDs
+func (s *service) PutPeople(ctx context.Context, uuid uuid.UUID, p titanic.People) error {
+	logger := log.With(s.logger, "method", "PutPeople")
+	if err := s.repository.PutPeople(ctx, uuid, p); err != nil {
+		level.Error(logger).Log("err", err)
+		return titanic.ErrCmdRepository
 	}
-
-	s.mtx.Lock()
-	defer s.mtx.Unlock()
-
-	p.UUID = uuid
-	s.m[uuid.String()] = p // PUT = create or update
 	return nil
 }
 
-func (s *inmemService) PatchPeople(ctx context.Context, uuid uuid.UUID, p titanic.People) error {
-	if p.UUID.String() == "" {
-		return ErrInconsistentUUIDs
+func (s *service) PatchPeople(ctx context.Context, uuid uuid.UUID, p titanic.People) error {
+	logger := log.With(s.logger, "method", "PatchPeople")
+	if err := s.repository.PatchPeople(ctx, uuid, p); err != nil {
+		level.Error(logger).Log("err", err)
+		return titanic.ErrCmdRepository
 	}
-
-	s.mtx.Lock()
-	defer s.mtx.Unlock()
-
-	existing, ok := s.m[uuid.String()]
-	if !ok {
-		return ErrNotFound // PATCH = update existing, don't create
-	}
-
-	// It should not possible to PATCH the UUID, and it should not be
-	// possible to PATCH any field to its zero value. That is, the zero value
-	// means not specified. The way around this is to use e.g. Name *string in
-	// the People definition.
-
-	if p.Survived != nil {
-		existing.Survived = p.Survived
-	}
-	if p.Pclass != nil {
-		existing.Pclass = p.Pclass
-	}
-	if p.Name != "" {
-		existing.Name = p.Name
-	}
-	if p.Sex != "" {
-		existing.Sex = p.Sex
-	}
-	if p.Age != nil {
-		existing.Age = p.Age
-	}
-	if p.SiblingsSpousesAbroad != nil {
-		existing.SiblingsSpousesAbroad = p.SiblingsSpousesAbroad
-	}
-	if p.ParentsChildrenAboard != nil {
-		existing.ParentsChildrenAboard = p.ParentsChildrenAboard
-	}
-	if p.Fare != nil {
-		existing.Fare = p.Fare
-	}
-
-	s.m[uuid.String()] = existing
 	return nil
 }
 
-func (s *inmemService) DeletePeople(ctx context.Context, uuid uuid.UUID) error {
-	s.mtx.Lock()
-	defer s.mtx.Unlock()
-	if _, ok := s.m[uuid.String()]; !ok {
-		return ErrNotFound
+func (s *service) DeletePeople(ctx context.Context, uuid uuid.UUID) (string, error) {
+	logger := log.With(s.logger, "method", "DeletePeople")
+	id, err := s.repository.DeletePeople(ctx, uuid)
+	if err != nil {
+		level.Error(logger).Log("err", err)
+		if err == sql.ErrNoRows {
+			return uuid.String(), titanic.ErrNotFound
+		}
+		return uuid.String(), titanic.ErrQueryRepository
 	}
-	delete(s.m, uuid.String())
-	return nil
+	return id, nil
 }
 
-func (s *inmemService) GetAllPeople(ctx context.Context) ([]titanic.People, error) {
-	s.mtx.RLock()
-	defer s.mtx.RUnlock()
-
-	p := []titanic.People{}
-	for _, value := range s.m {
-		p = append(p, value)
+func (s *service) GetPeople(ctx context.Context) ([]titanic.People, error) {
+	logger := log.With(s.logger, "method", "GetPeople")
+	people, err := s.repository.GetPeople(ctx)
+	if err != nil {
+		level.Error(logger).Log("err", err)
+		if err == sql.ErrNoRows {
+			return people, titanic.ErrNotFound
+		}
+		return people, titanic.ErrQueryRepository
 	}
-
-	if p == nil {
-		return []titanic.People{}, ErrNotFound
-	}
-	return p, nil
+	return people, nil
 }
 
-func (s *inmemService) GetAPIStatus(ctx context.Context) (string, error) {
-	s.mtx.RLock()
-	defer s.mtx.RUnlock()
+func (s *service) GetAPIStatus(ctx context.Context) (string, error) {
 
 	status := "Healthy"
 

@@ -22,7 +22,7 @@ type Service interface {
 	GetPeopleByID(ctx context.Context, uuid uuid.UUID) (People, error)
 	PutPeople(ctx context.Context, uuid uuid.UUID, p People) error
 	PatchPeople(ctx context.Context, uuid uuid.UUID, p People) error
-	DeletePeople(ctx context.Context, uuid uuid.UUID) error
+	DeletePeople(ctx context.Context, uuid uuid.UUID) (string, error)
 	GetPeople(ctx context.Context) ([]People, error)
 	GetAPIStatus(ctx context.Context) (string, error)
 }

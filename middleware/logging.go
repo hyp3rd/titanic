@@ -25,7 +25,7 @@ type loggingMiddleware struct {
 	logger log.Logger
 }
 
-func (mw loggingMiddleware) PostPeople(ctx context.Context, p titanic.People) (err error) {
+func (mw loggingMiddleware) PostPeople(ctx context.Context, p titanic.People) (id string, err error) {
 	defer func(begin time.Time) {
 		mw.logger.Log("method", "PostPeople", "uuid", p.UUID, "took", time.Since(begin), "err", err)
 	}(time.Now())
@@ -53,14 +53,14 @@ func (mw loggingMiddleware) PatchPeople(ctx context.Context, uuid uuid.UUID, p t
 	return mw.next.PatchPeople(ctx, uuid, p)
 }
 
-func (mw loggingMiddleware) DeletePeople(ctx context.Context, uuid uuid.UUID) (err error) {
+func (mw loggingMiddleware) DeletePeople(ctx context.Context, uuid uuid.UUID) (id string, err error) {
 	defer func(begin time.Time) {
 		mw.logger.Log("method", "DeletePeople", "uuid", uuid, "took", time.Since(begin), "err", err)
 	}(time.Now())
 	return mw.next.DeletePeople(ctx, uuid)
 }
 
-func (mw loggingMiddleware) GetAllPeople(ctx context.Context) (allPeople []titanic.People, err error) {
+func (mw loggingMiddleware) GetPeople(ctx context.Context) (allPeople []titanic.People, err error) {
 	defer func(begin time.Time) {
 		mw.logger.Log("method", "GetAllPeople", "took", time.Since(begin), "err", err)
 	}(time.Now())
