@@ -10,7 +10,7 @@ import (
 
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/log/level"
-	"gitlab.com/hyperd/titanic"
+	titanic "gitlab.com/hyperd/titanic"
 	titanicsvc "gitlab.com/hyperd/titanic/implementation"
 	"gitlab.com/hyperd/titanic/inmemory"
 	"gitlab.com/hyperd/titanic/middleware"

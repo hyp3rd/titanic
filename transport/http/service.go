@@ -17,7 +17,7 @@ import (
 	"github.com/go-kit/kit/log"
 	kithttp "github.com/go-kit/kit/transport/http"
 	"gitlab.com/hyperd/titanic"
-	transport "gitlab.com/hyperd/titanic/transport"
+	"gitlab.com/hyperd/titanic/transport"
 )
 
 var (
