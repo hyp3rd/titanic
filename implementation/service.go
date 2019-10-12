@@ -104,9 +104,9 @@ func (s *service) GetPeople(ctx context.Context) ([]titanic.People, error) {
 	return people, nil
 }
 
-func (s *service) GetAPIStatus(ctx context.Context) (string, error) {
+// func (s *service) GetAPIStatus(ctx context.Context) (string, error) {
 
-	status := "Healthy"
+// 	status := "Healthy"
 
-	return status, nil
-}
+// 	return status, nil
+// }

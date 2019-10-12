@@ -30,7 +30,7 @@ func MakeServerEndpoints(s titanic.Service) Endpoints {
 		PatchPeopleEndpoint:   MakePatchPeopleEndpoint(s),
 		DeletePeopleEndpoint:  MakeDeletePeopleEndpoint(s),
 		GetPeopleEndpoint:     MakeGetPeopleEndpoint(s),
-		GetAPIStatusEndpoint:  MakeGetAPIStatusEndpoint(s),
+		GetAPIStatusEndpoint:  MakeGetAPIStatusEndpoint(),
 	}
 }
 
@@ -96,11 +96,10 @@ func MakeGetPeopleEndpoint(s titanic.Service) endpoint.Endpoint {
 
 // MakeGetAPIStatusEndpoint returns an endpoint via the passed service.
 // Primarily useful in a server.
-func MakeGetAPIStatusEndpoint(s titanic.Service) endpoint.Endpoint {
+func MakeGetAPIStatusEndpoint() endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
-		// req := request.(getAllPeopleRequest)
-		s, e := s.GetAPIStatus(ctx)
-		return GetAPIStatusResponse{Status: s, Err: e}, nil
+
+		return GetAPIStatusResponse{Status: "Healthy"}, nil
 	}
 }
 

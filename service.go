@@ -24,5 +24,5 @@ type Service interface {
 	PatchPeople(ctx context.Context, uuid uuid.UUID, p People) error
 	DeletePeople(ctx context.Context, uuid uuid.UUID) (string, error)
 	GetPeople(ctx context.Context) ([]People, error)
-	GetAPIStatus(ctx context.Context) (string, error)
+	// GetAPIStatus(ctx context.Context) (string, error)
 }
