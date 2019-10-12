@@ -3,7 +3,7 @@ package transport
 import (
 	"context"
 
-	"github.com/go-kit/kit/endpoint"
+	endpoint "github.com/go-kit/kit/endpoint"
 	"github.com/google/uuid"
 	"gitlab.com/hyperd/titanic"
 )
