@@ -24,6 +24,8 @@ ini_modules () {
     for i in "${modules[@]}"; do
         cd $i ; rm -rf go.*; go mod init ; go get ; go mod tidy ; go build ; cd -
     done
+
+    report
 }
 
 ini_modules
