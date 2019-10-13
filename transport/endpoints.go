@@ -133,7 +133,7 @@ func (r PostPeopleResponse) error() error { return r.Err }
 
 // GetPeopleByIDRequest request object
 type GetPeopleByIDRequest struct {
-	UUID uuid.UUID `json:"uuid,omitempty"`
+	UUID uuid.UUID
 }
 
 // GetPeopleByIDResponse response object

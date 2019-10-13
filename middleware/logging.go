@@ -36,7 +36,7 @@ func (mw loggingMiddleware) PostPeople(ctx context.Context, p titanic.People) (i
 
 func (mw loggingMiddleware) GetPeopleByID(ctx context.Context, uuid uuid.UUID) (p titanic.People, err error) {
 	defer func(begin time.Time) {
-		mw.logger.Log("method", "GetPeople", "uuid", uuid, "took", time.Since(begin), "err", err)
+		mw.logger.Log("method", "GetPeopleByID", "uuid", uuid, "took", time.Since(begin), "err", err)
 	}(time.Now())
 	return mw.next.GetPeopleByID(ctx, uuid)
 }
