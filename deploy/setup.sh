@@ -43,11 +43,7 @@ gcloud_setup () {
 
 terraform_deployment () {
   # create the shared state bucket for terraform to save it being persisted locally / allow other people to run the tooling
-  if gsutil ls | awk -F, '$1 == V' V="gs://$PROJECT_ID-terraform-state/"; then
-    echo "backend bucket: $REGION gs://$PROJECT_ID-terraform-state"
-  else
-    gsutil mb -l $REGION gs://$PROJECT_ID-terraform-state
-  fi
+  gsutil mb -l $REGION gs://$PROJECT_ID-terraform-state || :
 
   # initialise terraform state and providers
   ./utils/terraform init -backend-config=bucket=$PROJECT_ID-terraform-state

@@ -34,7 +34,7 @@ spec:
                       - europe-west4-c
       containers:
         - name: titanic-api-sha256
-          image: gcr.io/hyperd-titanic-api-255117/titanic-api@sha256:247ae88d303f5138d3ba567458809215c75179e7e90154bd526a18acab908556
+          image: gcr.io/hyperd-titanic-api-255117/titanic-api@sha256:fe64e479466ca0812fe3143209e3bb29837e8c68974549567f0cfd3a573fccf1
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
