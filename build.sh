@@ -37,6 +37,13 @@ push_to_scm() {
 update_docker_images () {
     cd $(pwd)/releases
 
+    if [[ -z "$PROJECT_ID" ]] || [[ -z "$REGION" ]]; then
+      echo "To run this deployment you need to export PROJECT_ID and REGION as follows:
+      export REGION=<region e.g. europe-west1>
+      export PROJECT_ID=<project name e.g. hyperd-titanic-api>";
+      exit 1
+    fi
+
     # build the cs-api image with our modifications (see Dockerfile) and tag for private GCR
     docker build --no-cache --file ../docker/Dockerfile -t gcr.io/$PROJECT_ID/cs-api .
 
