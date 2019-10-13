@@ -295,7 +295,7 @@ func encodeStatusResponse(ctx context.Context, w http.ResponseWriter, response i
 		w.Write([]byte(fmt.Sprintf("error: %v", duration.Seconds())))
 	} else {
 		w.WriteHeader(200)
-		w.Write([]byte("ok"))
+		// w.Write([]byte("ok"))
 	}
 
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")

@@ -10,7 +10,7 @@ import (
 	"gitlab.com/hyperd/titanic"
 )
 
-// type Middleware func(titanic.Service) titanic.Service
+type Middleware func(titanic.Service) titanic.Service
 
 // LoggingMiddleware provides basic logging Middleware
 func LoggingMiddleware(logger log.Logger) Middleware {
@@ -64,7 +64,7 @@ func (mw loggingMiddleware) DeletePeople(ctx context.Context, uuid uuid.UUID) (i
 
 func (mw loggingMiddleware) GetPeople(ctx context.Context) (allPeople []titanic.People, err error) {
 	defer func(begin time.Time) {
-		mw.logger.Log("method", "GetAllPeople", "took", time.Since(begin), "err", err)
+		mw.logger.Log("method", "GetPeople", "took", time.Since(begin), "err", err)
 	}(time.Now())
 	return mw.next.GetPeople(ctx)
 }

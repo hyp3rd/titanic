@@ -140,12 +140,3 @@ func (r *repository) GetPeople(ctx context.Context) ([]titanic.People, error) {
 	}
 	return p, nil
 }
-
-// func (r *repository) GetAPIStatus(ctx context.Context) (string, error) {
-// 	r.mtx.RLock()
-// 	defer r.mtx.RUnlock()
-
-// 	status := "Healthy"
-
-// 	return status, nil
-// }
