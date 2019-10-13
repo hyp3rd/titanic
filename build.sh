@@ -31,6 +31,8 @@ build () {
 
     validate_env
 
+    rm -rf $(pwd)/releases/*
+
     docker run --rm -it -v "$PWD":/usr/src/app -w /usr/src/app golang:latest bash -c '
     for GOOS in darwin linux; do
         for GOARCH in 386 amd64; do
