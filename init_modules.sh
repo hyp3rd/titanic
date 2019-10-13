@@ -19,7 +19,7 @@ I've successfully initialized all the modules.
 ini_modules () {
     modules=('.' 'transport' 'transport/http' 'inmemory' 'implementation' 'cmd/titanic')
 
-    git add . ; git commit -m "modules update" ; git push
+    git add . ; git commit -m "modules update" ; git push | ::
 
     for i in "${modules[@]}"; do
         cd $i ; rm -rf go.*; go mod init ; go get ; go mod tidy ; go build ; cd -
