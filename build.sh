@@ -43,7 +43,7 @@ build () {
 
 push_to_scm() {
   git status
-  git add . ; git commit -m "builds update" ; git push
+  git add . ; git commit -m "builds update" ; git push || :
 }
 
 update_docker_images () {
