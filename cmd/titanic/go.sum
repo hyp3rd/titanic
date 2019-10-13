@@ -13,12 +13,11 @@ github.com/kr/logfmt v0.0.0-20140226030751-b84e30acd515/go.mod h1:+0opPa2QZZtGFB
 gitlab.com/hyperd/cs v0.0.0-20191011224911-e3b406775709/go.mod h1:LPxp5lgjgvhasCwtv7GaSmLx8WuSWWKg/3prQNwKgrU=
 gitlab.com/hyperd/titanic v0.0.0-20191012171357-0702d6636f13/go.mod h1:JZH+6DGTe1qe4NfSMGkENUvWsyOJe/jNK7JYY2upo9s=
 gitlab.com/hyperd/titanic v0.0.0-20191012184220-53c1d84562a2/go.mod h1:pI5dVFptri6W1N8V+3IX3sl+gRKCoTYhxtFjEfu0x7U=
-gitlab.com/hyperd/titanic v0.0.0-20191012214302-7ccc80f297f9/go.mod h1:xAjjw5WRanyQ2nXNhG4uAxUEwpuFgOqKPMT+MByTXXk=
 gitlab.com/hyperd/titanic v0.0.0-20191012225530-3963d6e58542/go.mod h1:xAjjw5WRanyQ2nXNhG4uAxUEwpuFgOqKPMT+MByTXXk=
 gitlab.com/hyperd/titanic v1.0.0 h1:LVUEfYeCpUj5GDvtkdsF0oH5o3vDEn0R9KPuWfXb8Do=
 gitlab.com/hyperd/titanic v1.0.0/go.mod h1:2Dn8pb6upMpC492mLgtp9nq4Raq9yR8u9DI6WfMUgwk=
-gitlab.com/hyperd/titanic/implementation v0.0.0-20191013063636-dccbb5e6f8af h1:CwiOxN8JFWMt5+DB+5pYDYH2/mQ0pNqPbmXUNL4M3Vc=
-gitlab.com/hyperd/titanic/implementation v0.0.0-20191013063636-dccbb5e6f8af/go.mod h1:RwFLixlBOWt9sR8WtIHb6irto8pcpEdhO0e7iceiAKQ=
+gitlab.com/hyperd/titanic/implementation v0.0.0-20191013085105-87aaafef237b h1:7zFrB22e2X02zyF4xXhlYuiC/dKf/eYDyCB8+ga/Jpg=
+gitlab.com/hyperd/titanic/implementation v0.0.0-20191013085105-87aaafef237b/go.mod h1:Mun/Dt0g+MJuTJeSTI32/bzb6xnTP3jWzYFomUXdhGE=
 gitlab.com/hyperd/titanic/inmemory v0.0.0-20191012194558-e7734eac9c08/go.mod h1:weOhsGjg/BnsJJuQDvQDe6KLgeIHW7YFYyugoYPKy2Q=
 gitlab.com/hyperd/titanic/inmemory v0.0.0-20191013080533-0b98ef746ff4 h1:Wd+II3poQ+nL9i7YYczQ30BCv5EbdYvBvJSJH5UHMjQ=
 gitlab.com/hyperd/titanic/inmemory v0.0.0-20191013080533-0b98ef746ff4/go.mod h1:PArsgQUGORu6xiUAmK+WEH/jWNHeVZNKnTiGelzZffo=
@@ -26,7 +25,7 @@ gitlab.com/hyperd/titanic/middleware v0.0.0-20191012184220-53c1d84562a2/go.mod h
 gitlab.com/hyperd/titanic/middleware v0.0.0-20191013080533-0b98ef746ff4 h1:v8kgvEPdiVMrFR8nRMPAXBIrk/smTE7bnLwQWI/jkvg=
 gitlab.com/hyperd/titanic/middleware v0.0.0-20191013080533-0b98ef746ff4/go.mod h1:Ix9n6UPVy7DirywqZJ9FL3N2IPuMB09ZTJLUn17HvXA=
 gitlab.com/hyperd/titanic/transport v0.0.0-20191012173600-0f4fa04c4a54/go.mod h1:p/JAjFmXtiRvNxxoVObRmNmqdenULkBNXKa1WlwZo4g=
-gitlab.com/hyperd/titanic/transport v0.0.0-20191012225530-3963d6e58542 h1:Js8IiXfR/t5NUJE23TrJ+hUTWNHkbXgBvcI+g2iQAUI=
-gitlab.com/hyperd/titanic/transport v0.0.0-20191012225530-3963d6e58542/go.mod h1:a+WHqX8BXYcguZCdqqih3GlqbYdx7z5zip0Wg8+YNoU=
-gitlab.com/hyperd/titanic/transport/http v0.0.0-20191013063636-dccbb5e6f8af h1:YZ2fPguLPL535/aKS0zv8dxxyZOmg9Na6oiq0Qaxp2k=
-gitlab.com/hyperd/titanic/transport/http v0.0.0-20191013063636-dccbb5e6f8af/go.mod h1:qMyWSvbMASlfYPeTyqd4zAJzkQl6UXWREkYDCitv/ME=
+gitlab.com/hyperd/titanic/transport v0.0.0-20191012233950-b95a00aac618 h1:f3x808hjvIDhPRV+mwupwSo6ZD0+twoiK9yxRDJlb2g=
+gitlab.com/hyperd/titanic/transport v0.0.0-20191012233950-b95a00aac618/go.mod h1:EavoxZzzVW8KOwLdSuSodvAnkG9lbYO++BjGa2Xrwnw=
+gitlab.com/hyperd/titanic/transport/http v0.0.0-20191013085105-87aaafef237b h1:yCHcGbX9rki3brzAPvSEwKVX/EYc5CvfzODAJXQA3QA=
+gitlab.com/hyperd/titanic/transport/http v0.0.0-20191013085105-87aaafef237b/go.mod h1:0pWb6DP4TRxW+ZUK0H1apY250u87sbcw3c0vOiMbFcI=
