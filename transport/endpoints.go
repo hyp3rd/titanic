@@ -3,7 +3,7 @@ package transport
 import (
 	"context"
 
-	endpoint "github.com/go-kit/kit/endpoint"
+	"github.com/go-kit/kit/endpoint"
 	"github.com/google/uuid"
 	"gitlab.com/hyperd/titanic"
 )
@@ -88,7 +88,7 @@ func MakeDeletePeopleEndpoint(s titanic.Service) endpoint.Endpoint {
 // Primarily useful in a server.
 func MakeGetPeopleEndpoint(s titanic.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
-		// req := request.(getAllPeopleRequest)
+		// req := request.(GetPeopleResponse)
 		a, e := s.GetPeople(ctx)
 		return GetPeopleResponse{People: a, Err: e}, nil
 	}

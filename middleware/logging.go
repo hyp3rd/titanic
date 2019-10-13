@@ -10,6 +10,8 @@ import (
 	"gitlab.com/hyperd/titanic"
 )
 
+// type Middleware func(titanic.Service) titanic.Service
+
 // LoggingMiddleware provides basic logging Middleware
 func LoggingMiddleware(logger log.Logger) Middleware {
 	return func(next titanic.Service) titanic.Service {
