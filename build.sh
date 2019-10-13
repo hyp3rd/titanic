@@ -50,7 +50,7 @@ update_docker_images () {
     cd $(pwd)/releases
 
     # build the cs-api image with our modifications (see Dockerfile) and tag for private GCR
-    docker build --no-cache --file ../docker/Dockerfile -t gcr.io/$PROJECT_ID/cs-api .
+    docker build --no-cache --file ../docker/Dockerfile -t gcr.io/$PROJECT_ID/cs-api:latest .
 
     # configure pushing to private GCR, and push our image
     gcloud auth configure-docker -q
