@@ -7,5 +7,5 @@ require (
 	github.com/google/uuid v1.1.1
 	github.com/gorilla/mux v1.7.3
 	gitlab.com/hyperd/titanic v1.0.0
-	gitlab.com/hyperd/titanic/transport v0.0.0-20191013085105-87aaafef237b
+	gitlab.com/hyperd/titanic/transport v0.0.0-20191013123129-53ced275818e
 )
