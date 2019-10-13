@@ -8,6 +8,15 @@ traperr() {
 set -o errtrace
 trap traperr ERR
 
+validate_env () {
+    if [[ -z ${PROJECT_ID+x} ]] || [[ -z ${REGION+x} ]]; then
+      echo "To run this deployment you need to export PROJECT_ID and REGION as follows:
+      export REGION=<region e.g. europe-west1>
+      export PROJECT_ID=<project name e.g. hyperd-titanic-api>";
+      exit 1
+    fi
+}
+
 gcloud_setup () {
     # implicitly enable the apis we'll use
   gcloud services enable storage-api.googleapis.com
@@ -95,12 +104,7 @@ deploy_secrets () {
 setup() {
 
   # check that PROJECT_ID and REGION are exported in the current shell
-  if [[ -z "$PROJECT_ID " ]] || [[ -z "$REGION" ]]; then
-    echo "To run this deployment you need to export PROJECT_ID and REGION as follows:
-    export REGION=<region e.g. europe-west1>
-    export PROJECT_ID=<project name e.g. hyperd-titanic-api>";
-    exit 1
-  fi
+  validate_env
 
   # run the initial gcloud setup
   gcloud_setup
