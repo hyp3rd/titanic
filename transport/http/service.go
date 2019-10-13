@@ -14,11 +14,10 @@ import (
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 
-	"titanic/transport"
-
 	"github.com/go-kit/kit/log"
 	kithttp "github.com/go-kit/kit/transport/http"
 	"gitlab.com/hyperd/titanic"
+	"gitlab.com/hyperd/titanic/transport"
 )
 
 var (
