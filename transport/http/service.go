@@ -14,10 +14,11 @@ import (
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 
+	"titanic/transport"
+
 	"github.com/go-kit/kit/log"
 	kithttp "github.com/go-kit/kit/transport/http"
 	"gitlab.com/hyperd/titanic"
-	"gitlab.com/hyperd/titanic/transport"
 )
 
 var (
@@ -155,12 +156,10 @@ func decodeDeletePeopleRequest(_ context.Context, r *http.Request) (request inte
 }
 
 func decodeGetPeopleRequest(_ context.Context, r *http.Request) (request interface{}, err error) {
-
 	return transport.GetPeopleRequest{}, nil
 }
 
 func decodeGetAPIStatusRequest(_ context.Context, r *http.Request) (request interface{}, err error) {
-
 	return transport.GetAPIStatusRequest{}, nil
 }
 
