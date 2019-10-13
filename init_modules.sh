@@ -17,12 +17,13 @@ I've successfully initialized all the modules.
 }
 
 ini_modules () {
-    modules=('transport' 'transport/http' 'inmemory' 'implementation' 'cmd/titanic')
+    modules=('.' 'transport' 'transport/http' 'inmemory' 'implementation' 'cmd/titanic')
 
-    git add . ; git commit -m "v1.0.0" ; git push
+    git add . ; git commit -m "modules update" ; git push
 
     for i in "${modules[@]}"; do
-      cd $i ; go mod init ; go get ; go mod tidy ; go build ; cd -
+        rm -rf go.*
+        cd $i ; go mod init ; go get ; go mod tidy ; go build ; cd -
     done
 }
 
