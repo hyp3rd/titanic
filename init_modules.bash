@@ -42,7 +42,7 @@ ini_modules () {
     git add -A . ; git commit -m "modules update" || : ; git push || :
 
     for i in "${modules[@]}"; do
-        cd $i ; rm -rf go.* ; cd - #; go mod init ; go get ; go mod tidy ; go build ; cd -
+        cd $i ; rm -rf go.* ; go mod init ; go get ; go mod tidy ; go build ; cd -
     done
 
     report
