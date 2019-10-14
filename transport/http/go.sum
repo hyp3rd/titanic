@@ -10,3 +10,7 @@ github.com/gorilla/mux v1.7.3 h1:gnP5JzjVOuiZD07fKKToCAOjS0yOpj/qPETTXCCS6hw=
 github.com/gorilla/mux v1.7.3/go.mod h1:1lud6UwP+6orDFRuTfBEV8e9/aOM/c4fVVCaMa2zaAs=
 github.com/kr/logfmt v0.0.0-20140226030751-b84e30acd515 h1:T+h1c/A9Gawja4Y9mFVWj2vyii2bbUNDw3kt9VxK2EY=
 github.com/kr/logfmt v0.0.0-20140226030751-b84e30acd515/go.mod h1:+0opPa2QZZtGFBFZlji/RkVcI2GknAs/DXo4wKdlNEc=
+gitlab.com/hyperd/titanic v1.0.0 h1:LVUEfYeCpUj5GDvtkdsF0oH5o3vDEn0R9KPuWfXb8Do=
+gitlab.com/hyperd/titanic v1.0.0/go.mod h1:2Dn8pb6upMpC492mLgtp9nq4Raq9yR8u9DI6WfMUgwk=
+gitlab.com/hyperd/titanic/transport v0.0.0-20191014203206-d5ca6b5260cd h1:ojONIuihpMDjSiGrs21WXG1tkhbLfx/OpMtKI4iV6Ic=
+gitlab.com/hyperd/titanic/transport v0.0.0-20191014203206-d5ca6b5260cd/go.mod h1:S3lM75m+61FltYiufGMqEGXAjuA6vEN7jsB2WSEsgGM=
