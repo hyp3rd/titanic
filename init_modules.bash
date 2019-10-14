@@ -48,6 +48,6 @@ ini_modules () {
     report
 }
 
-deps | unique_repos | local_packages | go_get_update
+# deps | unique_repos | local_packages | go_get_update
 
 ini_modules
