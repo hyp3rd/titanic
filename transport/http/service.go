@@ -50,7 +50,7 @@ func MakeHTTPHandler(s titanic.Service, logger log.Logger) http.Handler {
 		options...,
 	))
 	r.Methods("GET").Path("/people/{uuid}").Handler(kithttp.NewServer(
-		e.GetPeopleEndpoint,
+		e.GetPeopleByIDEndpoint,
 		decodeGetPeopleByIDRequest,
 		encodeResponse,
 		options...,

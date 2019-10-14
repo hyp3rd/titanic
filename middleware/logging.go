@@ -36,7 +36,7 @@ func (mw loggingMiddleware) PostPeople(ctx context.Context, p titanic.People) (i
 
 func (mw loggingMiddleware) GetPeopleByID(ctx context.Context, uuid uuid.UUID) (p titanic.People, err error) {
 	defer func(begin time.Time) {
-		mw.logger.Log("methodZZZ", "GetPeopleByID", "uuid", uuid, "took", time.Since(begin), "err", err)
+		mw.logger.Log("method", "GetPeopleByID", "uuid", uuid, "took", time.Since(begin), "err", err)
 	}(time.Now())
 	return mw.next.GetPeopleByID(ctx, uuid)
 }
@@ -64,7 +64,7 @@ func (mw loggingMiddleware) DeletePeople(ctx context.Context, uuid uuid.UUID) (i
 
 func (mw loggingMiddleware) GetPeople(ctx context.Context) (allPeople []titanic.People, err error) {
 	defer func(begin time.Time) {
-		mw.logger.Log("methodXXXX", "GetPeople", "took", time.Since(begin), "err", err)
+		mw.logger.Log("method", "GetPeople", "took", time.Since(begin), "err", err)
 	}(time.Now())
 	return mw.next.GetPeople(ctx)
 }
