@@ -24,7 +24,7 @@ unique_repos () {
 	cut -d '/' -f-3 | sort | uniq
 }
 
-local_packages () {
+no_titanic () {
 	grep -v '*titanic*'
 }
 
@@ -42,12 +42,12 @@ ini_modules () {
     git add -A . ; git commit -m "modules update" || : ; git push || :
 
     for i in "${modules[@]}"; do
-        cd $i ; rm -rf go.* ; go mod init ; cd - # git checkout master ; go get -u -x ; go mod tidy ; go build ; cd -
+        cd $i ; rm -rf go.* ; go mod init ; go get -u -x ; go mod tidy ; go build ; cd -
     done
 
     report
 }
 
-# deps | unique_repos | local_packages | go_get_update
+deps | unique_repos | no_titanic | go_get_update
 
 ini_modules
