@@ -1,0 +1,16 @@
+github.com/go-kit/kit v0.9.0 h1:wDJmvq38kDhkVxi50ni9ykkdUr1PKgqKOoi01fa0Mdk=
+github.com/go-kit/kit v0.9.0/go.mod h1:xBxKIO96dXMWWy0MnWVtmwkA9/13aqxPnvrjFYMA2as=
+github.com/go-logfmt/logfmt v0.4.0/go.mod h1:3RMwSq7FuexP4Kalkev3ejPJsZTpXXBr9+V4qmtdjCk=
+github.com/go-stack/stack v1.8.0/go.mod h1:v0f6uXyyMGvRgIKkXu+yp6POWl0qKG85gN/melR3HDY=
+github.com/google/uuid v1.1.1 h1:Gkbcsh/GbpXz7lPftLA3P6TYMwjCLYm83jiFQZF/3gY=
+github.com/google/uuid v1.1.1/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
+github.com/gorilla/mux v1.7.3/go.mod h1:1lud6UwP+6orDFRuTfBEV8e9/aOM/c4fVVCaMa2zaAs=
+github.com/kr/logfmt v0.0.0-20140226030751-b84e30acd515/go.mod h1:+0opPa2QZZtGFBFZlji/RkVcI2GknAs/DXo4wKdlNEc=
+gitlab.com/hyperd/titanic v1.0.0/go.mod h1:2Dn8pb6upMpC492mLgtp9nq4Raq9yR8u9DI6WfMUgwk=
+gitlab.com/hyperd/titanic v1.2.0 h1:Vic8TzLzQ6GcUCwOaWIhX8b8fZcc8HUAt+LQ/GAtQDw=
+gitlab.com/hyperd/titanic v1.2.0/go.mod h1:23Gb6bsHt+Al2BDMEiPz1SDKlWUpHI2o0Z5gTQLfIPI=
+gitlab.com/hyperd/titanic/implementation v0.0.0-20191014203206-d5ca6b5260cd/go.mod h1:Mun/Dt0g+MJuTJeSTI32/bzb6xnTP3jWzYFomUXdhGE=
+gitlab.com/hyperd/titanic/inmemory v0.0.0-20191014203206-d5ca6b5260cd/go.mod h1:PArsgQUGORu6xiUAmK+WEH/jWNHeVZNKnTiGelzZffo=
+gitlab.com/hyperd/titanic/middleware v0.0.0-20191014203206-d5ca6b5260cd/go.mod h1:Ix9n6UPVy7DirywqZJ9FL3N2IPuMB09ZTJLUn17HvXA=
+gitlab.com/hyperd/titanic/transport v0.0.0-20191014191409-260ddabcbf29/go.mod h1:S3lM75m+61FltYiufGMqEGXAjuA6vEN7jsB2WSEsgGM=
+gitlab.com/hyperd/titanic/transport/http v0.0.0-20191014203206-d5ca6b5260cd/go.mod h1:RHZMtF0LWIirPTPIuKz7hAOPeKSj8Z+miwMW3mhqDlw=

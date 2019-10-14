@@ -25,7 +25,7 @@ unique_repos () {
 }
 
 local_packages () {
-	grep titanic
+	grep -v '*titanic*'
 }
 
 go_get_update () {
@@ -42,7 +42,7 @@ ini_modules () {
     git add -A . ; git commit -m "modules update" || : ; git push || :
 
     for i in "${modules[@]}"; do
-        cd $i ; rm -rf go.*; go mod init ; go mod tidy ; go build ; cd -
+        cd $i ; rm -rf go.*; go mod init ; go get -u -x ; go mod tidy ; go build ; cd -
     done
 
     report
