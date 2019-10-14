@@ -12,5 +12,5 @@ github.com/kr/logfmt v0.0.0-20140226030751-b84e30acd515 h1:T+h1c/A9Gawja4Y9mFVWj
 github.com/kr/logfmt v0.0.0-20140226030751-b84e30acd515/go.mod h1:+0opPa2QZZtGFBFZlji/RkVcI2GknAs/DXo4wKdlNEc=
 gitlab.com/hyperd/titanic v1.0.0 h1:LVUEfYeCpUj5GDvtkdsF0oH5o3vDEn0R9KPuWfXb8Do=
 gitlab.com/hyperd/titanic v1.0.0/go.mod h1:2Dn8pb6upMpC492mLgtp9nq4Raq9yR8u9DI6WfMUgwk=
-gitlab.com/hyperd/titanic/transport v0.0.0-20191013165730-e4117da779ac h1:jTplgUyl8pkd5/ciz/bP3TaAcPKSnxGvOJpzABCjH48=
-gitlab.com/hyperd/titanic/transport v0.0.0-20191013165730-e4117da779ac/go.mod h1:S3lM75m+61FltYiufGMqEGXAjuA6vEN7jsB2WSEsgGM=
+gitlab.com/hyperd/titanic/transport v0.0.0-20191014175348-ae12113b3e7d h1:ILRt6ZOJ+8jg2ErpJ+YuKwc6eh5VCewIHb9wPIJfDaU=
+gitlab.com/hyperd/titanic/transport v0.0.0-20191014175348-ae12113b3e7d/go.mod h1:S3lM75m+61FltYiufGMqEGXAjuA6vEN7jsB2WSEsgGM=
