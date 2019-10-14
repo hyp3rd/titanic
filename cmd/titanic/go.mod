@@ -8,5 +8,6 @@ require (
 	gitlab.com/hyperd/titanic/implementation v0.0.0-20191014203206-d5ca6b5260cd
 	gitlab.com/hyperd/titanic/inmemory v0.0.0-20191014203206-d5ca6b5260cd
 	gitlab.com/hyperd/titanic/middleware v0.0.0-20191014203206-d5ca6b5260cd
+	gitlab.com/hyperd/titanic/transport v0.0.0-20191014203206-d5ca6b5260cd // indirect
 	gitlab.com/hyperd/titanic/transport/http v0.0.0-20191014203206-d5ca6b5260cd
 )
