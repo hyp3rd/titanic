@@ -50,16 +50,26 @@ func main() {
 			level.Error(logger).Log("exit", err)
 			os.Exit(-1)
 		}
-
 		svc = titanicsvc.NewService(repository, logger)
-
-		svc, err = inmemory.NewInmemService(logger)
-		if err != nil {
-			level.Error(logger).Log("exit", err)
-			os.Exit(-1)
-		}
-
+		// Add service middleware here
+		// Logging middleware
 		svc = middleware.LoggingMiddleware(logger)(svc)
+
+		// repository, err := inmemory.NewInmemService(logger)
+		// if err != nil {
+		// 	level.Error(logger).Log("exit", err)
+		// 	os.Exit(-1)
+		// }
+
+		// svc = titanicsvc.NewService(repository, logger)
+
+		// svc, err = inmemory.NewInmemService(logger)
+		// if err != nil {
+		// 	level.Error(logger).Log("exit", err)
+		// 	os.Exit(-1)
+		// }
+
+		// svc = middleware.LoggingMiddleware(logger)(svc)
 	}
 
 	var h http.Handler
