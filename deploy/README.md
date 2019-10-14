@@ -14,10 +14,10 @@ The following is stuff that's not feasible or desirable to automate:
 - `export REGION=<region e.g., europe-west1>`;
 - `export PROJECT_ID=<project name e.g. hyperd-titanic-api>`.
 
-Run the `setup.sh` script included in the [current folder](../deploy) (can take a while):
+Run the `setup.bash` script included in the [current folder](../deploy) (can take a while):
 
 ```bash
-# file <setup.sh>
+# file <setup.bash>
 #!/bin/bash
 set -Eeuo pipefail
 

@@ -19,13 +19,13 @@ There are two ways here available to build the API code; a targetted method and 
 CGO_ENABLED=0 GOARCH=[amd64|386] GOOS=[linux|darwin] go build -ldflags="-w -s" -a -installsuffix 'static' -o titanic cmd/titanic/main.go
 ```
 
-#### Cross-platform build, leveraging the [build.sh](./build.sh) script
+#### Cross-platform build, leveraging the [build.bash](./build.bash) script
 
 ```bash
-chmod +x build.sh && ./build.sh
+chmod +x build.bash && ./build.bash
 ```
 
-**The [build.sh](./build.sh) script will also re-build and push the docker images to our private [GCR](https://cloud.google.com/container-registry/).**
+**The [build.bash](./build.bash) script will also re-build and push the docker images to our private [GCR](https://cloud.google.com/container-registry/).**
 
 Currently, the builds in the [releases](./releases) folder are available for the following platforms and architectures:
 

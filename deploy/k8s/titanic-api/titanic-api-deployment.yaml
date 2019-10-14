@@ -34,7 +34,7 @@ spec:
                       - europe-west4-c
       containers:
         - name: titanic-api-sha256
-          image: gcr.io/hyperd-titanic-api/titanic-api@sha256:45e76b6d9072e11afec3463fcc80afdb8bdac6123f606a59e3b0df3c264f7d8b
+          image: gcr.io/hyperd-titanic-api/titanic-api@sha256:9ea4e92c9c6d861ef938fb1668898563e520529c06250e6dc922250ff7117f56
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
@@ -45,7 +45,7 @@ spec:
             failureThreshold: 7
             httpGet:
               path: /
-              port: "3000"
+              port: 3000
               httpHeaders:
                 - name: X-Alive
                   value: Healthcheck
@@ -55,14 +55,14 @@ spec:
             failureThreshold: 3
             httpGet:
               path: /
-              port: "3000"
+              port: 3000
               scheme: HTTP
             periodSeconds: 10
             successThreshold: 1
             timeoutSeconds: 10
           resources:
             limits:
-              cpu: "2"
+              cpu: 2
               memory: 2Gi
             requests:
               cpu: 250m
