@@ -4,6 +4,8 @@ Container Solution API-exercise, to assess technical proficiency with Software E
 
 ## The Titanic API
 
+[![GoDoc](https://godoc.org/gitlab.com/hyperd/titanic?status.svg)](https://godoc.org/gitlab.com/hyperd/titanic)
+
 The Titanic API is written in **golang**. It leverages **go-kit** to grant better modularity and micro-services support out-of-the-box.
 
 The data layer is designed around [**CockroachDB**](https://www.cockroachlabs.com), deployed to the K8S cluster leveraging a [StatefulSet configuration](./deploy/k8s/cockroachdb/cockroachdb-statefulset-secure.yaml).
