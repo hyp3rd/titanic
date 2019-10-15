@@ -32,7 +32,7 @@ go_get_update () {
 	while read d
 	do
 		echo $d
-		go get -u $d/... || echo "failed, trying again with master" && cd $GOPATH/src/$d && git checkout master && go get -x $d
+		go get -u $d/... || echo "failed, trying again with master" && cd $GOPATH/src/$d && git checkout master && go get -u -x $d
 	done
 }
 
