@@ -42,12 +42,12 @@ ini_modules () {
     git add -A . ; git commit -m "modules update" || : ; git push || :
 
     for i in "${modules[@]}"; do
-        cd $i ; rm -rf go.* ; cd - #go mod init ; go get -u -x ; go mod tidy ; go build ; cd -
+        cd $i ; rm -rf go.* ; go mod init ; go get -u -x ; go mod tidy ; go build ; cd -
     done
 git add -A . ; git commit -m "modules update" || : ; git push || :
     report
 }
 
-#deps | unique_repos | no_titanic | go_get_update
+# deps | unique_repos | go_get_update
 
 ini_modules
