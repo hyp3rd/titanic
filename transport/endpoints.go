@@ -20,7 +20,7 @@ type Endpoints struct {
 }
 
 // MakeServerEndpoints returns an Endpoints struct where each endpoint invokes
-// the corresponding method on the provided titanic.Service. Useful in a cs titanic.Service
+// the corresponding method on the provided titanic.Service. Useful in a titanic.Service
 // server.
 func MakeServerEndpoints(s titanic.Service) Endpoints {
 	return Endpoints{

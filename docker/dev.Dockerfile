@@ -17,7 +17,7 @@ RUN go mod download
 COPY . .
 
 # Build the Go app
-RUN CGO_ENABLED=0 GOARCH=amd64 GOOS=linux go build -a -installsuffix 'static' -o titanic cmd/cs/main.go
+RUN CGO_ENABLED=0 GOARCH=amd64 GOOS=linux go build -a -installsuffix 'static' -o titanic cmd/titanic/main.go
 
 # Start a new stage from scratch
 FROM alpine:3.10.2
@@ -40,4 +40,4 @@ LABEL org.opencontainers.image.vendor="Hyperd" \
     org.opencontainers.image.title="Titanic" \
     org.opencontainers.image.description="Container Solution API-exercise" \
     org.opencontainers.image.version="v0.5" \
-    org.opencontainers.image.documentation="https://gitlab.com/hyperd/cs/blob/master/README.md"
+    org.opencontainers.image.documentation="https://gitlab.com/hyperd/titanic/blob/master/README.md"

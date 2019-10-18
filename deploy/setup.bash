@@ -123,6 +123,9 @@ setup() {
 
   # deploy the api
   kubectl apply -f k8s/titanic-api/
+
+  # cockroachdb deployment init
+  kubectl apply -f k8s/cockroachdb/
 }
 
 setup

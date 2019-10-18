@@ -302,7 +302,7 @@ func encodeStatusResponse(ctx context.Context, w http.ResponseWriter, response i
 
 // encodeRequest likewise JSON-encodes the request to the HTTP request body.
 // Don't use it directly as a transport/http.Client EncodeRequestFunc:
-// cs endpoints require mutating the HTTP method and request path.
+// titanic endpoints require mutating the HTTP method and request path.
 func encodeRequest(_ context.Context, req *http.Request, request interface{}) error {
 	var buf bytes.Buffer
 	err := json.NewEncoder(&buf).Encode(request)
