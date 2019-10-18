@@ -37,7 +37,7 @@ build () {
     for GOOS in darwin linux; do
         for GOARCH in 386 amd64; do
          export GOOS GOARCH
-         CGO_ENABLED=0 go build -ldflags="-w -s -X main.minversion=`date -u +.%Y%m%d.%H%M%S`" \
+         CGO_ENABLED=0 GO111MODULE=on go build -ldflags="-w -s -X main.minversion=`date -u +.%Y%m%d.%H%M%S`" \
           -a -installsuffix "static" -o releases/titanic-$GOOS-$GOARCH cmd/titanic/main.go
         done
     done

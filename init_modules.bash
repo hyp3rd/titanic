@@ -32,6 +32,7 @@ go_get_update () {
 	while read d
 	do
 		echo $d
+		export GO111MODULE=on
 		go get -u $d/... || echo "failed, trying again with master" && cd $GOPATH/src/$d && git checkout master && go get -u -x $d
 	done
 }
@@ -40,7 +41,7 @@ ini_modules () {
     modules=('.' 'transport' 'transport/http' 'inmemory' 'implementation' 'cmd/titanic')
 
     for i in "${modules[@]}"; do
-        cd $i ; rm -rf go.* ; go mod init ; cd - #go mod init ; go get -u -x ; go mod tidy ; go build ; cd -
+        cd $i ; rm -rf go.* ; go mod init ;  cd -  # ; go mod tidy ; GO111MODULE=on go build ; cd -
     done
 
 	git add -A . ; git commit -m "modules update" || : ; git push || :
