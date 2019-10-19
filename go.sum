@@ -1,0 +1,17 @@
+github.com/go-kit/kit v0.9.0 h1:wDJmvq38kDhkVxi50ni9ykkdUr1PKgqKOoi01fa0Mdk=
+github.com/go-kit/kit v0.9.0/go.mod h1:xBxKIO96dXMWWy0MnWVtmwkA9/13aqxPnvrjFYMA2as=
+github.com/go-logfmt/logfmt v0.4.0 h1:MP4Eh7ZCb31lleYCFuwm0oe4/YGak+5l1vA2NOE80nA=
+github.com/go-logfmt/logfmt v0.4.0/go.mod h1:3RMwSq7FuexP4Kalkev3ejPJsZTpXXBr9+V4qmtdjCk=
+github.com/google/uuid v1.1.1 h1:Gkbcsh/GbpXz7lPftLA3P6TYMwjCLYm83jiFQZF/3gY=
+github.com/google/uuid v1.1.1/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
+github.com/gorilla/mux v1.7.3 h1:gnP5JzjVOuiZD07fKKToCAOjS0yOpj/qPETTXCCS6hw=
+github.com/gorilla/mux v1.7.3/go.mod h1:1lud6UwP+6orDFRuTfBEV8e9/aOM/c4fVVCaMa2zaAs=
+github.com/kr/logfmt v0.0.0-20140226030751-b84e30acd515/go.mod h1:+0opPa2QZZtGFBFZlji/RkVcI2GknAs/DXo4wKdlNEc=
+gitlab.com/hyperd/titanic/implementation v0.0.0-20191019160947-65399fe7f8b6 h1:pSw/uiKz+dT8BQVNo2Z+EL7KkDrXh5Ym/vRQW1aOuWc=
+gitlab.com/hyperd/titanic/implementation v0.0.0-20191019160947-65399fe7f8b6/go.mod h1:RwFLixlBOWt9sR8WtIHb6irto8pcpEdhO0e7iceiAKQ=
+gitlab.com/hyperd/titanic/inmemory v0.0.0-20191019160947-65399fe7f8b6 h1:yuUWSSw5eU+T7HhXadJDiRVG9SQmBm2nDbdCte3lfEE=
+gitlab.com/hyperd/titanic/inmemory v0.0.0-20191019160947-65399fe7f8b6/go.mod h1:gYXF9Vtgc1udyDJo7lb7oePj7BACS2X4cxLti4IsHnw=
+gitlab.com/hyperd/titanic/transport v0.0.0-20191019160947-65399fe7f8b6 h1:nFXhm1hbT4eB61ONgtXZL9VMkq290LHXKIoiR0ZIz44=
+gitlab.com/hyperd/titanic/transport v0.0.0-20191019160947-65399fe7f8b6/go.mod h1:PkDYFeCSfCAxzx2sIlLFKAaKqPE1WPhAX9WjewvDBKA=
+gitlab.com/hyperd/titanic/transport/http v0.0.0-20191019160947-65399fe7f8b6 h1:1IJfa2x+/715BEPIigTQ8wewTE//8IMBQnfYcwiKMCU=
+gitlab.com/hyperd/titanic/transport/http v0.0.0-20191019160947-65399fe7f8b6/go.mod h1:2KyFIiPRmnqhGd3tLmafgjvuG5zn4AuWjO4tg8FCByo=
