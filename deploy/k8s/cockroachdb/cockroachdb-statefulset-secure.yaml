@@ -253,28 +253,8 @@ spec:
       spec:
         accessModes:
           - "ReadWriteOnce"
-        # TODO: This specifically asks for a storage class with the name "ssd". A
-        # storage class of this name doesn't exist by default. See our docs for
-        # more information on how to create an optimized storage class for use here:
         # https://www.cockroachlabs.com/docs/stable/orchestrate-cockroachdb-with-kubernetes-performance.html#disk-type
-        storageClassName: faster
+        storageClassName: ssd-storageclass
         resources:
           requests:
-            # TODO: This asks for a fairly large disk by default because on
-            # certain popular clouds there is a direct correlation between disk
-            # size and the IOPS provisioned to the disk. Change this as necessary
-            # to suit your needs, but be aware that smaller disks will typically
-            # mean worse performance.
             storage: 30Gi
-# ---
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: datadir
-# spec:
-#   storageClassName: faster
-#   accessModes:
-#     - ReadWriteOnce
-#   resources:
-#     requests:
-#       storage: 30Gi

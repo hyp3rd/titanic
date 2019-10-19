@@ -57,7 +57,7 @@ build_docker_images () {
   gcloud container clusters get-credentials titanic-api-cluster --region $REGION
 
   # explicitly specify the cluster in case we have others configured
-  # kubectl config use-context gke-hyperd-$REGION-titanic-api-cluster
+  kubectl config use-context gke_${PROJECT_ID}_${REGION}_titanic-api-cluster
 
   # build the titanic-api image with our modifications (see Dockerfile) and tag for private GCR
   docker build --file ../docker/Dockerfile -t gcr.io/$PROJECT_ID/titanic-api .
@@ -65,6 +65,15 @@ build_docker_images () {
   # configure pushing to private GCR, and push our image
   gcloud auth configure-docker -q
   docker push gcr.io/$PROJECT_ID/titanic-api
+}
+
+init_cluster_resources () {
+  # apply the kubernetes manifests to provision the namespaces we need
+  kubectl create --save-config -f k8s/namespaces/ || :
+
+  # apply the kubernetes manifests which are declarative:
+  # generic k8s
+  kubectl apply -f k8s/
 }
 
 deploy_secrets () {
@@ -79,10 +88,12 @@ deploy_secrets () {
   fi
 
   # create a strong Diffie-Hellman group, used in negotiating Perfect Forward Secrecy with clients
-  # openssl dhparam -out tls/dhparam.pem 2048
+  if [[ ! -f $(pwd)/tls/dhparam.pem ]]; then
+    openssl dhparam -out tls/dhparam.pem 2048
 
-  # apply the kubernetes manifests to provision the namespaces we need
-  kubectl create --save-config -f k8s/namespaces/ || :
+    # make sure to remove the secret titanic-api-tls-dhparam, if exists
+    kubectl -n hcs delete secret titanic-api-tls-dhparam || :
+  fi
 
   # use an imperative command to create a kubernetes secret from this key that can be used with the GCE ingress
   tls_secret=$(kubectl -n hcs get secrets | awk '{print $1}' | awk -F, '$1 == V' V="titanic-api-tls")
@@ -90,14 +101,13 @@ deploy_secrets () {
     kubectl -n hcs create secret tls titanic-api-tls --key tls/titanic-api.hyperd.sh.key --cert tls/titanic-api.hyperd.sh.crt
   fi
 
-  # if kubectl -n hcs get secrets | awk '{print $1}' | awk -F, '$1 == V' V="titanic-api-tls-dhparam"; then
-  #   echo "tls secret: titanic-api-tls"
-  # else
-  #   kubectl -n hcs create secret generic titanic-api-tls-dhparam --from-file=tls/dhparam.pem
-  # fi
+  tls_dhparam_secret=$(kubectl -n hcs get secrets | awk '{print $1}' | awk -F, '$1 == V' V="titanic-api-tls-dhparam")
+  if [[ -z "$tls_dhparam_secret" ]]; then
+    kubectl -n hcs create secret generic titanic-api-tls-dhparam --from-file=tls/dhparam.pem
+  fi
 }
 
-setup() {
+init() {
 
   # check that PROJECT_ID and REGION are exported in the current shell
   validate_env
@@ -111,21 +121,42 @@ setup() {
   # build the API docker images and push em to a GCR private registry
   build_docker_images
 
-  # deploy the necessary secrets to run the API app
+  # deploy the necessary initial resources to our GKE cluster
+  init_cluster_resources
+
+  # deploy the secrets to run the API app
   deploy_secrets
+}
 
-  # apply the kubernetes manifests which are declarative:
-  # generic k8s
-  kubectl apply -f k8s/
+init
 
+deploy_titanic_api () {
   # nginx ingress controller
   kubectl apply -f k8s/ingress-nginx/
 
   # deploy the api
   kubectl apply -f k8s/titanic-api/
-
-  # cockroachdb deployment init
-  kubectl apply -f k8s/cockroachdb/
 }
 
-setup
+deploy_cockroachdb () {
+   # cockroachdb deployment init
+  kubectl apply -f k8s/cockroachdb/
+
+  kubectl get csr
+
+  kubectl certificate approve default.node.cockroachdb-0
+
+  kubectl create -f k8s/cockroachdb/cockroachdb-cluster-init/cluster-init-secure.yaml
+
+  kubectl get csr
+
+  kubectl certificate approve default.client.root
+
+  kubectl get job cluster-init-secure
+
+  kubectl get pods
+}
+
+deploy_titanic_api
+
+# deploy_cockroachdb
