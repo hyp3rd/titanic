@@ -47,6 +47,12 @@ metadata:
       more_set_headers 'X-Content-Type-Options: nosniff';
       more_set_headers 'Content-Security-Policy: upgrade-insecure-requests';
       more_set_headers 'Referrer-Policy: no-referrer-when-downgrade';
+      # add_header X-Whatever; NO;
+      # add_header X-Frame-Options; SAMEORIGIN;
+      # add_header X-XSS-Protection 1; mode=block;
+      # add_header X-Content-Type-Options nosniff;
+      # add_header Content-Security-Policy upgrade-insecure-requests;
+      # add_header Referrer-Policy no-referrer-when-downgrade;
 
 spec:
   tls:
