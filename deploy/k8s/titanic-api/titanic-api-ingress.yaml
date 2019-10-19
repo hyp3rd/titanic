@@ -40,6 +40,14 @@ metadata:
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     nginx.ingress.kubernetes.io/secure-backends: "true"
 
+    # set http security headers through the more_set_headers module
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      more_set_headers 'X-Frame-Options: SAMEORIGIN';
+      more_set_headers 'X-XSS-Protection: 1; mode=block';
+      more_set_headers 'X-Content-Type-Options: nosniff';
+      more_set_headers 'Content-Security-Policy: upgrade-insecure-requests';
+      more_set_headers 'Referrer-Policy: no-referrer-when-downgrade';
+
 spec:
   tls:
     - secretName: titanic-api-tls
