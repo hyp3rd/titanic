@@ -43,4 +43,4 @@ data:
   server-tokens: "false"
   enable-brotli: "true"
   proxy-set-headers: "ingress-nginx/custom-headers"
-  ssl-dh-param: "ingress-nginx/lb-dhparam"
+  ssl-dh-param: "hcs/titanic-api-tls-dhparam"
