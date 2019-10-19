@@ -142,21 +142,25 @@ deploy_cockroachdb () {
    # cockroachdb deployment init
   kubectl apply -f k8s/cockroachdb/
 
-  kubectl get csr
+  # kubectl wait --for=condition=complete --timeout=60s pods --all || :
 
-  kubectl certificate approve default.node.cockroachdb-0
+  # kubectl get csr
 
-  kubectl create -f k8s/cockroachdb/cockroachdb-cluster-init/cluster-init-secure.yaml
+  # kubectl certificate approve default.node.cockroachdb-0
 
-  kubectl get csr
+  # kubectl apply -f k8s/cockroachdb/cockroachdb-cluster-init/cluster-init-secure.yaml
 
-  kubectl certificate approve default.client.root
+  # kubectl --for=condition=complete --timeout=60s pods --all || :
 
-  kubectl get job cluster-init-secure
+  # kubectl get csr
 
-  kubectl get pods
+  # kubectl certificate approve default.client.root
+
+  # kubectl get job cluster-init-secure
+
+  # kubectl get pods
 }
 
 deploy_titanic_api
 
-# deploy_cockroachdb
+deploy_cockroachdb
