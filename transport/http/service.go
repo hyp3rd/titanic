@@ -273,7 +273,14 @@ func encodeResponse(ctx context.Context, w http.ResponseWriter, response interfa
 		encodeError(ctx, e.error(), w)
 		return nil
 	}
+
+	// Configure the http security headers
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	w.Header().Set("X-XSS-Protection", "1; mode=block")
+	w.Header().Set("X-Content-Type-Options", "nosniff")
+	w.Header().Set("X-Frame-Options", "SAMEORIGIN")
+	w.Header().Set("Content-Security-Policy", "upgrade-insecure-requests;")
+
 	return json.NewEncoder(w).Encode(response)
 }
 

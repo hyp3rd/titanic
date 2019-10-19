@@ -41,3 +41,8 @@ data:
   ssl-early-data: "true"
   ssl-protocols: "TLSv1.2 TLSv1.3"
   server-tokens: "false"
+  enable-brotli: "true"
+  proxy-set-headers: "ingress-nginx/custom-headers"
+  # use-forwarded-headers: "true"
+  # compute-full-forwarded-for: "true"
+  # use-proxy-protocol: "true"
