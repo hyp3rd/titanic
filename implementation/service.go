@@ -92,7 +92,7 @@ func (s *service) DeletePeople(ctx context.Context, uuid uuid.UUID) (string, err
 }
 
 func (s *service) GetPeople(ctx context.Context) ([]titanic.People, error) {
-	logger := log.With(s.logger, "methodXZZCCE", "GetPeople")
+	logger := log.With(s.logger, "method", "GetPeople")
 	people, err := s.repository.GetPeople(ctx)
 	if err != nil {
 		level.Error(logger).Log("err", err)
