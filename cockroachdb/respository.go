@@ -98,3 +98,16 @@ func createPeople(tx *sql.Tx, people titanic.People) (string, error) {
 // 	ParentsChildrenAboard *bool     `json:"parents_children_aboard,omitempty"`
 // 	Fare                  *float32  `json:"fare,omitempty"`
 // }
+
+// func (repo *repository) ChangeOrderStatus(ctx context.Context, orderId string, status string) error {
+// 	sql := `
+// UPDATE orders
+// SET status=$2
+// WHERE id=$1`
+
+// 	_, err := repo.db.ExecContext(ctx, sql, orderId, status)
+// 	if err != nil {
+// 		return err
+// 	}
+// 	return nil
+// }

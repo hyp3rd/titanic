@@ -32,6 +32,7 @@ func main() {
 		logger = log.With(logger, "caller", log.DefaultCaller)
 
 		logger = log.With(logger,
+			"svc", "titanic",
 			"ts", log.DefaultTimestampUTC,
 			"caller", log.DefaultCaller,
 		)
@@ -40,6 +41,18 @@ func main() {
 	level.Info(logger).Log("msg", "service started")
 	defer level.Info(logger).Log("msg", "service ended")
 
+	// var db *sql.DB
+	// {
+	// 	var err error
+	// 	// Connect to the "ordersdb" database
+	// 	db, err = sql.Open("postgres",
+	// 		"postgresql://d4gh0s7@localhost:26257/titanic?sslmode=disable")
+	// 	if err != nil {
+	// 		level.Error(logger).Log("exit", err)
+	// 		os.Exit(-1)
+	// 	}
+	// }
+
 	var svc titanic.Service
 	{
 		repository, err := inmemory.NewInmemService(logger)
@@ -47,6 +60,12 @@ func main() {
 			level.Error(logger).Log("exit", err)
 			os.Exit(-1)
 		}
+		// repository, err := cockroachdb.New(db, logger)
+		// if err != nil {
+		// 	level.Error(logger).Log("exit", err)
+		// 	os.Exit(-1)
+		// }
+
 		svc = titanicsvc.NewService(repository, logger)
 
 		// Service middleware
