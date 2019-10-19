@@ -29,10 +29,16 @@ metadata:
     nginx.ingress.kubernetes.io/lua-resty-waf-allow-unknown-content-types: "false"
     nginx.ingress.kubernetes.io/lua-resty-waf-process-multipart-body: "true"
 
+    # DDoS mitigations
     nginx.ingress.kubernetes.io/proxy-body-size: 2m
+    # NOTE: un-comment the whithelist to allow only certain IP/ ranges to consume this ingress
+    # nginx.ingress.kubernetes.io/whitelist-source-range: "<IP>/32"
+    nginx.ingress.kubernetes.io/limit-connections: "10"
+    nginx.ingress.kubernetes.io/limit-rps: "1"
 
-    # enable TLS for the backend
+    # enable TLS for the backends
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    nginx.ingress.kubernetes.io/secure-backends: "true"
 
 spec:
   tls:
