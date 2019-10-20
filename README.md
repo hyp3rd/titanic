@@ -13,7 +13,7 @@ The data layer is designed around [**CockroachDB**](https://www.cockroachlabs.co
 
 ### Build the API
 
-There are two ways here available to build the API code; a targetted method and a [cross-plattform builder script](./build); both allow to create portable executables, compatible with [Alpine Linux](https://www.alpinelinux.org/), compiled statically linking C bindings `-installsuffix 'static'`, and omitting the symbol and debug info `-ldflags "-s -w"`.
+There are two ways here available to build the API code; a targetted method and a [cross-plattform builder script](./build.bash); both allow to create portable executables, compatible with [Alpine Linux](https://www.alpinelinux.org/), compiled statically linking C bindings `-installsuffix 'static'`, and omitting the symbol and debug info `-ldflags "-s -w"`.
 
 #### Targetted build, based on your system/architecture
 
