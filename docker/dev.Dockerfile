@@ -37,7 +37,7 @@ CMD ["./titanic"]
 # Metadata
 LABEL org.opencontainers.image.vendor="Hyperd" \
     org.opencontainers.image.url="https://hyperd.sh" \
-    org.opencontainers.image.title="Titanic" \
+    org.opencontainers.image.title="Titanic Development Image" \
     org.opencontainers.image.description="Container Solution API-exercise" \
     org.opencontainers.image.version="v0.5" \
     org.opencontainers.image.documentation="https://gitlab.com/hyperd/titanic/blob/master/README.md"

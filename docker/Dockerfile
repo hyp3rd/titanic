@@ -1,5 +1,13 @@
 FROM alpine:3.10
 
+RUN apk update ; \
+	apk upgrade ; \
+	rm -rf /var/cache/apk/* \
+	export RANDOM_PASSWORD=`tr -dc A-Za-z0-9 < /dev/urandom | head -c71` ; \
+	echo "root:$RANDOM_PASSWORD" | chpasswd ; \
+	unset RANDOM_PASSWORD ; \
+	passwd -l root
+
 RUN set -ex; \
 	apkArch="$(apk --print-arch)"; \
 	case "$apkArch" in \

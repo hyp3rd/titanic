@@ -51,4 +51,4 @@ cleanup () {
     echo "All the Containers and Volumes are removed."
 }
 
-[ "$(ls -A ${cockroachdb_data_dir})" ] && cleanup || init
+[[ "$(ls -A ${cockroachdb_data_dir})" ]] ; cleanup || init
