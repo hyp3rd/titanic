@@ -16,7 +16,7 @@ A three nodes cluster is running:
 DB Listening on port:           26257
 Dashboard listening on port:    8080
 
-Beaware, this is an insecure setup:
+Beaware, this is an insecure setup, meant for development purposes only:
 
 DO NOT USE IT IN ANY PRODUCTION ENVIRONMENT.
 
