@@ -11,6 +11,7 @@ import (
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/log/level"
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 	titanic "gitlab.com/hyperd/titanic"
 	"gitlab.com/hyperd/titanic/cockroachdb"
 	titanicsvc "gitlab.com/hyperd/titanic/implementation"
@@ -54,7 +55,7 @@ func main() {
 		defer db.Close()
 
 		// Set to `true` and GORM will print out all DB queries.
-		db.LogMode(false)
+		db.LogMode(true)
 
 		db.AutoMigrate(&titanic.People{})
 	}
@@ -99,8 +100,8 @@ func main() {
 
 	go func() {
 		logger.Log("transport", "HTTPS", "addr", *httpsAddr)
-		errs <- http.ListenAndServeTLS(*httpsAddr, "/etc/tls/certs/tls.crt", "/etc/tls/certs/tls.key", h)
-		// errs <- http.ListenAndServeTLS(*httpsAddr, "./tls/tls.crt", "./tls/tls.key", h)
+		// errs <- http.ListenAndServeTLS(*httpsAddr, "/etc/tls/certs/tls.crt", "/etc/tls/certs/tls.key", h)
+		errs <- http.ListenAndServeTLS(*httpsAddr, "./tls/tls.crt", "./tls/tls.key", h)
 
 	}()
 

@@ -42,7 +42,7 @@ func (s *service) PostPeople(ctx context.Context, people titanic.People) (string
 
 	if err != nil {
 		level.Error(logger).Log("err", err)
-		return "", titanic.ErrCmdRepository
+		return id, titanic.ErrCmdRepository
 	}
 	return id, nil
 }
