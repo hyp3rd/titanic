@@ -9,6 +9,7 @@ require (
 	github.com/google/uuid v1.1.1
 	github.com/gorilla/mux v1.7.3 // indirect
 	github.com/jackc/pgconn v1.1.0 // indirect
+	github.com/jinzhu/gorm v1.9.11
 	gitlab.com/hyperd/titanic/implementation v0.0.0-20191019160947-65399fe7f8b6 // indirect
 	gitlab.com/hyperd/titanic/inmemory v0.0.0-20191019160947-65399fe7f8b6 // indirect
 	gitlab.com/hyperd/titanic/transport v0.0.0-20191019160947-65399fe7f8b6 // indirect

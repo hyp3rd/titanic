@@ -10,9 +10,10 @@ import (
 
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/log/level"
+	"github.com/jinzhu/gorm"
 	titanic "gitlab.com/hyperd/titanic"
+	"gitlab.com/hyperd/titanic/cockroachdb"
 	titanicsvc "gitlab.com/hyperd/titanic/implementation"
-	"gitlab.com/hyperd/titanic/inmemory"
 	"gitlab.com/hyperd/titanic/middleware"
 	httptransport "gitlab.com/hyperd/titanic/transport/http"
 )
@@ -41,30 +42,36 @@ func main() {
 	level.Info(logger).Log("msg", "service started")
 	defer level.Info(logger).Log("msg", "service ended")
 
-	// var db *sql.DB
-	// {
-	// 	var err error
-	// 	// Connect to the "ordersdb" database
-	// 	db, err = sql.Open("postgres",
-	// 		"postgresql://d4gh0s7@localhost:26257/titanic?sslmode=disable")
-	// 	if err != nil {
-	// 		level.Error(logger).Log("exit", err)
-	// 		os.Exit(-1)
-	// 	}
-	// }
-
-	var svc titanic.Service
+	var db *gorm.DB
 	{
-		repository, err := inmemory.NewInmemService(logger)
+		var err error
+		const addr = "postgresql://d4gh0s7@localhost:26257/titanic?sslmode=disable"
+		db, err := gorm.Open("postgres", addr)
 		if err != nil {
 			level.Error(logger).Log("exit", err)
 			os.Exit(-1)
 		}
-		// repository, err := cockroachdb.New(db, logger)
+		defer db.Close()
+
+		// Set to `true` and GORM will print out all DB queries.
+		db.LogMode(false)
+
+		db.AutoMigrate(&titanic.People{})
+	}
+
+	var svc titanic.Service
+	{
+		// repository, err := inmemory.NewInmemService(logger)
 		// if err != nil {
 		// 	level.Error(logger).Log("exit", err)
 		// 	os.Exit(-1)
 		// }
+
+		repository, err := cockroachdb.New(db, logger)
+		if err != nil {
+			level.Error(logger).Log("exit", err)
+			os.Exit(-1)
+		}
 
 		svc = titanicsvc.NewService(repository, logger)
 

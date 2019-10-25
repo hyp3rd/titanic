@@ -30,7 +30,7 @@ chmod +x build.bash && ./build.bash
 
 **The [build.bash](./build.bash) script will also re-build and push the docker images to our private [GCR](https://cloud.google.com/container-registry/).**
 
-Currently, the builds in the [releases](./releases) folder are available for the following platforms and architectures:
+Currently, the builds in the [releases](./releases/) folder are available for the following platforms and architectures:
 
 - darwin / amd64;
 - darwin / 386;
@@ -39,7 +39,7 @@ Currently, the builds in the [releases](./releases) folder are available for the
 
 ### Build the Docker images locally
 
-The Docker images are in the [docker](./docker) folder.
+The Docker images are in the [docker](./docker/) folder.
 To build the *production* API Docker image, run these commands in your terminal:
 
 ```bash
