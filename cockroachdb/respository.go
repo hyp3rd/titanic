@@ -51,16 +51,26 @@ func (repo *repository) PostPeople(ctx context.Context, people titanic.People) (
 	id := uuid.New()
 	people.UUID = id
 
-	if err := repo.db.Create(&titanic.People{UUID: people.UUID}).Error; err != nil {
-		return id.String(), err
-	}
+	repo.db.Create(&titanic.People{
+		UUID:                  people.UUID,
+		Survived:              people.Survived,
+		Pclass:                people.Pclass,
+		Name:                  people.Name,
+		Sex:                   people.Sex,
+		Age:                   people.Age,
+		SiblingsSpousesAbroad: people.SiblingsSpousesAbroad,
+		ParentsChildrenAboard: people.ParentsChildrenAboard,
+		Fare:                  people.Fare})
+
 	return id.String(), nil
 }
 
 func (repo *repository) GetPeopleByID(ctx context.Context, id uuid.UUID) (titanic.People, error) {
-	var peopleRow = titanic.People{}
+	var people = titanic.People{}
 
-	return peopleRow, nil
+	repo.db.Where("uuid = ?", id).First(&people)
+
+	return people, nil
 }
 
 func (repo *repository) PutPeople(ctx context.Context, id uuid.UUID, people titanic.People) error {
@@ -76,7 +86,11 @@ func (repo *repository) DeletePeople(ctx context.Context, id uuid.UUID) (string,
 }
 
 func (repo *repository) GetPeople(ctx context.Context) ([]titanic.People, error) {
-	return []titanic.People{}, nil
+	var people []titanic.People
+
+	repo.db.Find(&people)
+
+	return people, nil
 }
 
 // func transferFunds(db *gorm.DB, fromID int, toID int, amount int) error {

@@ -46,8 +46,10 @@ func main() {
 	var db *gorm.DB
 	{
 		var err error
+
 		const addr = "postgresql://d4gh0s7@localhost:26257/titanic?sslmode=disable"
-		db, err := gorm.Open("postgres", addr)
+
+		db, err = gorm.Open("postgres", addr)
 		if err != nil {
 			level.Error(logger).Log("exit", err)
 			os.Exit(-1)
@@ -57,6 +59,8 @@ func main() {
 		// Set to `true` and GORM will print out all DB queries.
 		db.LogMode(true)
 
+		// Disable table name's pluralization globally
+		db.SingularTable(true)
 		db.AutoMigrate(&titanic.People{})
 	}
 
@@ -100,8 +104,8 @@ func main() {
 
 	go func() {
 		logger.Log("transport", "HTTPS", "addr", *httpsAddr)
-		errs <- http.ListenAndServeTLS(*httpsAddr, "/etc/tls/certs/tls.crt", "/etc/tls/certs/tls.key", h)
-		// errs <- http.ListenAndServeTLS(*httpsAddr, "./tls/tls.crt", "./tls/tls.key", h)
+		// errs <- http.ListenAndServeTLS(*httpsAddr, "/etc/tls/certs/tls.crt", "/etc/tls/certs/tls.key", h)
+		errs <- http.ListenAndServeTLS(*httpsAddr, "./tls/tls.crt", "./tls/tls.key", h)
 
 	}()
 
