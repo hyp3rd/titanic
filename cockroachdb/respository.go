@@ -51,7 +51,7 @@ func (repo *repository) PostPeople(ctx context.Context, people titanic.People) (
 	id := uuid.New()
 	people.UUID = id
 
-	if err := repo.db.Create(&people).Error; err != nil {
+	if err := repo.db.Create(&titanic.People{UUID: people.UUID}).Error; err != nil {
 		return id.String(), err
 	}
 	return id.String(), nil
