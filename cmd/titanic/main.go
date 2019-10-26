@@ -15,14 +15,16 @@ import (
 	titanic "gitlab.com/hyperd/titanic"
 	"gitlab.com/hyperd/titanic/cockroachdb"
 	titanicsvc "gitlab.com/hyperd/titanic/implementation"
+	"gitlab.com/hyperd/titanic/inmemory"
 	"gitlab.com/hyperd/titanic/middleware"
 	httptransport "gitlab.com/hyperd/titanic/transport/http"
 )
 
 func main() {
 	var (
-		httpAddr  = flag.String("http.addr", ":3000", "HTTP listen address")
-		httpsAddr = flag.String("https.addr", ":8443", "HTTP listen address")
+		httpAddr     = flag.String("http.addr", ":3000", "HTTP listen address")
+		httpsAddr    = flag.String("https.addr", ":8443", "HTTPS listen address")
+		databaseType = flag.String("database.type", "cockroachdb", "Database type")
 	)
 	flag.Parse()
 
@@ -41,7 +43,13 @@ func main() {
 	}
 
 	level.Info(logger).Log("msg", "service started")
+
 	defer level.Info(logger).Log("msg", "service ended")
+
+	level.Info(logger).Log("backend", "database", "type", *databaseType)
+
+	selectedBackend := *databaseType // safe to dereference the *string
+	isCockroach := (selectedBackend == "cockroachdb")
 
 	var db *gorm.DB
 	{
@@ -66,23 +74,27 @@ func main() {
 
 	var svc titanic.Service
 	{
-		// repository, err := inmemory.NewInmemService(logger)
-		// if err != nil {
-		// 	level.Error(logger).Log("exit", err)
-		// 	os.Exit(-1)
-		// }
+		if isCockroach {
+			repository, err := inmemory.NewInmemService(logger)
+			if err != nil {
+				level.Error(logger).Log("exit", err)
+				os.Exit(-1)
+			}
+			svc = titanicsvc.NewService(repository, logger)
+			// Service middleware: Logging
+			svc = middleware.LoggingMiddleware(logger)(svc)
+		} else {
 
-		repository, err := cockroachdb.New(db, logger)
-		if err != nil {
-			level.Error(logger).Log("exit", err)
-			os.Exit(-1)
+			repository, err := cockroachdb.New(db, logger)
+			if err != nil {
+				level.Error(logger).Log("exit", err)
+				os.Exit(-1)
+			}
+			svc = titanicsvc.NewService(repository, logger)
+			// Service middleware: Logging
+			svc = middleware.LoggingMiddleware(logger)(svc)
 		}
 
-		svc = titanicsvc.NewService(repository, logger)
-
-		// Service middleware
-		// Logging middleware
-		svc = middleware.LoggingMiddleware(logger)(svc)
 	}
 
 	var h http.Handler

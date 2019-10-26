@@ -95,26 +95,3 @@ func (repo *repository) GetPeople(ctx context.Context) ([]titanic.People, error)
 
 	return people, nil
 }
-
-// func transferFunds(db *gorm.DB, fromID int, toID int, amount int) error {
-//     var fromAccount Account
-//     var toAccount Account
-
-//     db.First(&fromAccount, fromID)
-//     db.First(&toAccount, toID)
-
-//     if fromAccount.Balance < amount {
-//         return fmt.Errorf("account %d balance %d is lower than transfer amount %d", fromAccount.ID, fromAccount.Balance, amount)
-//     }
-
-//     fromAccount.Balance -= amount
-//     toAccount.Balance += amount
-
-//     if err := db.Save(&fromAccount).Error; err != nil {
-//         return err
-//     }
-//     if err := db.Save(&toAccount).Error; err != nil {
-//         return err
-//     }
-//     return nil
-// }
