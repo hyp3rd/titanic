@@ -6,6 +6,7 @@ Container Solution API-exercise, to assess technical proficiency with Software E
 
 [![GoDoc](https://godoc.org/gitlab.com/hyperd/titanic?status.svg)](https://godoc.org/gitlab.com/hyperd/titanic)
 [![Go Report Card](https://goreportcard.com/badge/gitlab.com/hyperd/titanic)](https://goreportcard.com/report/gitlab.com/hyperd/titanic)
+[![wercker status](https://app.wercker.com/status/4bf9af6e8c03d46082ba0d40c192e5b6/s/master "wercker status")](https://app.wercker.com/project/byKey/4bf9af6e8c03d46082ba0d40c192e5b6)
 
 The Titanic API is written in **golang**. It leverages **go-kit** to grant better modularity and micro-services support out-of-the-box.
 
