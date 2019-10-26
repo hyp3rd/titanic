@@ -24,7 +24,7 @@ func main() {
 	var (
 		httpAddr     = flag.String("http.addr", ":3000", "HTTP listen address")
 		httpsAddr    = flag.String("https.addr", ":8443", "HTTPS listen address")
-		databaseType = flag.String("database.type", "cockroachdb", "Database type")
+		databaseType = flag.String("database.type", "inmemory", "Database type")
 	)
 	flag.Parse()
 
