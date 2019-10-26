@@ -25,7 +25,7 @@ USER appuser
 
 EXPOSE 3000 8443
 
-ENTRYPOINT ["titanic -database.type=inmemory"]
+CMD ["titanic" "-database.type=inmemory"]
 
 # Metadata
 LABEL org.opencontainers.image.vendor="Hyperd" \
