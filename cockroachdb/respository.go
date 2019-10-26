@@ -82,7 +82,10 @@ func (repo *repository) PatchPeople(ctx context.Context, id uuid.UUID, people ti
 }
 
 func (repo *repository) DeletePeople(ctx context.Context, id uuid.UUID) (string, error) {
-	return "", nil
+
+	repo.db.Where("uuid = ?", id).Delete(&titanic.People{})
+
+	return id.String(), nil
 }
 
 func (repo *repository) GetPeople(ctx context.Context) ([]titanic.People, error) {
