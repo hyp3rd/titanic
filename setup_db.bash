@@ -11,12 +11,12 @@ trap traperr ERR
 
 initdb() {
     echo "Wait for servers to be up"
-    sleep 10
+    # sleep 10
 
     HOSTPARAMS="--host roach1 --insecure"
     SQL="/cockroach/cockroach.sh sql $HOSTPARAMS"
 
-    $SQL -e "CREATE DATABASE titanic;"
+    $SQL -e "CREATE DATABASE titanic; CREATE USER IF NOT EXISTS d4gh0s7; GRANT ALL ON DATABASE titanic TO d4gh0s7;"
     $SQL -d titanic -e "CREATE TABLE people (
     	id INT8 NOT NULL DEFAULT unique_rowid(),
     	created_at TIMESTAMPTZ NULL,
