@@ -171,7 +171,7 @@ func encodePostPeopleRequest(ctx context.Context, req *http.Request, request int
 func encodeGetPeopleByIDRequest(ctx context.Context, req *http.Request, request interface{}) error {
 	// r.Methods("GET").Path("/people/{uuid}")
 	r := request.(transport.GetPeopleByIDRequest)
-	peopleID := url.QueryEscape(r.UUID.String())
+	peopleID := url.QueryEscape(r.ID.String())
 	req.URL.Path = "/people/" + peopleID
 	return encodeRequest(ctx, req, request)
 }
@@ -179,7 +179,7 @@ func encodeGetPeopleByIDRequest(ctx context.Context, req *http.Request, request 
 func encodePutPeopleRequest(ctx context.Context, req *http.Request, request interface{}) error {
 	// r.Methods("PUT").Path("/people/{uuid}")
 	r := request.(transport.PutPeopleRequest)
-	peopleID := url.QueryEscape(r.UUID.String())
+	peopleID := url.QueryEscape(r.ID.String())
 	req.URL.Path = "/people/" + peopleID
 	return encodeRequest(ctx, req, request)
 }
@@ -187,7 +187,7 @@ func encodePutPeopleRequest(ctx context.Context, req *http.Request, request inte
 func encodePatchPeopleRequest(ctx context.Context, req *http.Request, request interface{}) error {
 	// r.Methods("PATCH").Path("/people/{uuid}")
 	r := request.(transport.PatchPeopleRequest)
-	peopleID := url.QueryEscape(r.UUID.String())
+	peopleID := url.QueryEscape(r.ID.String())
 	req.URL.Path = "/people/" + peopleID
 	return encodeRequest(ctx, req, request)
 }
@@ -195,7 +195,7 @@ func encodePatchPeopleRequest(ctx context.Context, req *http.Request, request in
 func encodeDeletePeopleRequest(ctx context.Context, req *http.Request, request interface{}) error {
 	// r.Methods("DELETE").Path("/people/{uuid}")
 	r := request.(transport.DeletePeopleRequest)
-	peopleID := url.QueryEscape(r.UUID.String())
+	peopleID := url.QueryEscape(r.ID.String())
 	req.URL.Path = "/people/" + peopleID
 	return encodeRequest(ctx, req, request)
 }

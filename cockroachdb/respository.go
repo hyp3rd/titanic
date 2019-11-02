@@ -49,7 +49,7 @@ var forceRetryLoop txnFunc = func(db *gorm.DB) error {
 func (repo *repository) PostPeople(ctx context.Context, people titanic.People) (string, error) {
 	// Run a transaction to sync the query model.
 	id := uuid.New()
-	people.UUID = id
+	people.ID = id
 
 	repo.db.Create(&titanic.People{
 		ID:                    people.ID,
