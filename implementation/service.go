@@ -27,9 +27,9 @@ func NewService(rep titanic.Repository, logger log.Logger) titanic.Service {
 
 // Response errors
 var (
-	ErrInconsistentUUIDs = errors.New("inconsistent UUIDs")
-	ErrAlreadyExists     = errors.New("already exists")
-	ErrNotFound          = errors.New("not found")
+	ErrInconsistentIDs = errors.New("inconsistent IDs")
+	ErrAlreadyExists   = errors.New("already exists")
+	ErrNotFound        = errors.New("not found")
 )
 
 func (s *service) PostPeople(ctx context.Context, people titanic.People) (string, error) {
