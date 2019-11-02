@@ -47,46 +47,44 @@ func main() {
 	defer level.Info(logger).Log("msg", "service ended")
 
 	selectedBackend := *databaseType // safe to dereference the *string
-	isCockroach := (selectedBackend == "cockroachdb")
+	isInMemory := (selectedBackend == "inmemory")
 
 	var db *gorm.DB
 	{
-		if isCockroach {
-			var err error
+		var err error
 
-			const addr = "postgresql://d4gh0s7@localhost:26257/titanic?sslmode=disable"
+		const addr = "postgresql://d4gh0s7@roach1:26257/titanic?sslmode=disable"
 
-			db, err = gorm.Open("postgres", addr)
-			if err != nil {
-				level.Error(logger).Log("exit", err)
-				os.Exit(-1)
-			}
-			defer db.Close()
-
-			// Set to `true` and GORM will print out all DB queries.
-			db.LogMode(true)
-
-			// Disable table name's pluralization globally
-			db.SingularTable(true)
-			db.AutoMigrate(&titanic.People{})
+		db, err = gorm.Open("postgres", addr)
+		if err != nil {
+			level.Error(logger).Log("exit", err)
+			os.Exit(-1)
 		}
+		defer db.Close()
+
+		// Set to `true` and GORM will print out all DB queries.
+		db.LogMode(true)
+
+		// Disable table name's pluralization globally
+		db.SingularTable(true)
+		db.AutoMigrate(&titanic.People{})
 	}
 
 	var svc titanic.Service
 	{
-		if isCockroach {
-			level.Info(logger).Log("backend", "database", "type", *databaseType)
+		if isInMemory {
+			level.Info(logger).Log("backend", "database", "type", "inmemory")
 
-			repository, err := cockroachdb.New(db, logger)
+			repository, err := inmemory.NewInmemService(logger)
 			if err != nil {
 				level.Error(logger).Log("exit", err)
 				os.Exit(-1)
 			}
 			svc = titanicsvc.NewService(repository, logger)
 		} else {
-			level.Info(logger).Log("backend", "database", "type", "inmemory")
+			level.Info(logger).Log("backend", "database", "type", *databaseType)
 
-			repository, err := inmemory.NewInmemService(logger)
+			repository, err := cockroachdb.New(db, logger)
 			if err != nil {
 				level.Error(logger).Log("exit", err)
 				os.Exit(-1)
@@ -117,8 +115,8 @@ func main() {
 
 	go func() {
 		logger.Log("transport", "HTTPS", "addr", *httpsAddr)
-		// errs <- http.ListenAndServeTLS(*httpsAddr, "/etc/tls/certs/tls.crt", "/etc/tls/certs/tls.key", h)
-		errs <- http.ListenAndServeTLS(*httpsAddr, "./tls/tls.crt", "./tls/tls.key", h)
+		errs <- http.ListenAndServeTLS(*httpsAddr, "/etc/tls/certs/tls.crt", "/etc/tls/certs/tls.key", h)
+		// errs <- http.ListenAndServeTLS(*httpsAddr, "./tls/tls.crt", "./tls/tls.key", h)
 
 	}()
 
