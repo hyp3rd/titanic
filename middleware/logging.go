@@ -30,7 +30,7 @@ type loggingMiddleware struct {
 
 func (mw loggingMiddleware) PostPeople(ctx context.Context, p titanic.People) (id string, err error) {
 	defer func(begin time.Time) {
-		mw.logger.Log("method", "PostPeople", "uuid", p.UUID, "took", time.Since(begin), "err", err)
+		mw.logger.Log("method", "PostPeople", "uuid", p.ID, "took", time.Since(begin), "err", err)
 	}(time.Now())
 	return mw.next.PostPeople(ctx, p)
 }
@@ -69,10 +69,3 @@ func (mw loggingMiddleware) GetPeople(ctx context.Context) (allPeople []titanic.
 	}(time.Now())
 	return mw.next.GetPeople(ctx)
 }
-
-// func (mw loggingMiddleware) GetAPIStatus(ctx context.Context) (status string, err error) {
-// 	defer func(begin time.Time) {
-// 		mw.logger.Log("method", "GetAPIStatus", "took", time.Since(begin), "err", err)
-// 	}(time.Now())
-// 	return mw.next.GetAPIStatus(ctx)
-// }

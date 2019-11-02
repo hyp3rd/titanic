@@ -48,7 +48,7 @@ services:
       - "3000:3000"
     volumes:
       - ./tls:/etc/tls/certs
-    links:
+    depends_on:
       - roach1
       - roach2
       - roach3

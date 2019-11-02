@@ -11,7 +11,7 @@ import (
 // UUID should be globally unique.
 type People struct {
 	gorm.Model
-	UUID                  uuid.UUID `json:"uuid,omitempty" gorm:"primary_key"`
+	ID                    uuid.UUID `json:"uuid,omitempty" gorm:"primary_key"`
 	Survived              *bool     `json:"survived,omitempty"`
 	Pclass                *int      `json:"pclass,omitempty"`
 	Name                  string    `json:"name,omitempty"`

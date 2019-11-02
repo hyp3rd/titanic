@@ -52,7 +52,7 @@ func (repo *repository) PostPeople(ctx context.Context, people titanic.People) (
 	people.UUID = id
 
 	repo.db.Create(&titanic.People{
-		UUID:                  people.UUID,
+		ID:                    people.ID,
 		Survived:              people.Survived,
 		Pclass:                people.Pclass,
 		Name:                  people.Name,

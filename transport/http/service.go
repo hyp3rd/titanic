@@ -104,7 +104,7 @@ func decodeGetPeopleByIDRequest(_ context.Context, r *http.Request) (request int
 		return nil, ErrBadRouting
 	}
 
-	return transport.GetPeopleByIDRequest{UUID: id}, nil
+	return transport.GetPeopleByIDRequest{ID: id}, nil
 }
 
 func decodePutPeopleRequest(_ context.Context, r *http.Request) (request interface{}, err error) {
@@ -120,7 +120,7 @@ func decodePutPeopleRequest(_ context.Context, r *http.Request) (request interfa
 		return nil, err
 	}
 	return transport.PutPeopleRequest{
-		UUID:   id,
+		ID:     id,
 		People: people,
 	}, nil
 }
@@ -138,7 +138,7 @@ func decodePatchPeopleRequest(_ context.Context, r *http.Request) (request inter
 		return nil, err
 	}
 	return transport.PatchPeopleRequest{
-		UUID:   id,
+		ID:     id,
 		People: people,
 	}, nil
 }
@@ -151,7 +151,7 @@ func decodeDeletePeopleRequest(_ context.Context, r *http.Request) (request inte
 		return nil, ErrBadRouting
 	}
 
-	return transport.DeletePeopleRequest{UUID: id}, nil
+	return transport.DeletePeopleRequest{ID: id}, nil
 }
 
 func decodeGetPeopleRequest(_ context.Context, r *http.Request) (request interface{}, err error) {
@@ -171,32 +171,32 @@ func encodePostPeopleRequest(ctx context.Context, req *http.Request, request int
 func encodeGetPeopleByIDRequest(ctx context.Context, req *http.Request, request interface{}) error {
 	// r.Methods("GET").Path("/people/{uuid}")
 	r := request.(transport.GetPeopleByIDRequest)
-	peopleUUID := url.QueryEscape(r.UUID.String())
-	req.URL.Path = "/people/" + peopleUUID
+	peopleID := url.QueryEscape(r.UUID.String())
+	req.URL.Path = "/people/" + peopleID
 	return encodeRequest(ctx, req, request)
 }
 
 func encodePutPeopleRequest(ctx context.Context, req *http.Request, request interface{}) error {
 	// r.Methods("PUT").Path("/people/{uuid}")
 	r := request.(transport.PutPeopleRequest)
-	peopleUUID := url.QueryEscape(r.UUID.String())
-	req.URL.Path = "/people/" + peopleUUID
+	peopleID := url.QueryEscape(r.UUID.String())
+	req.URL.Path = "/people/" + peopleID
 	return encodeRequest(ctx, req, request)
 }
 
 func encodePatchPeopleRequest(ctx context.Context, req *http.Request, request interface{}) error {
 	// r.Methods("PATCH").Path("/people/{uuid}")
 	r := request.(transport.PatchPeopleRequest)
-	peopleUUID := url.QueryEscape(r.UUID.String())
-	req.URL.Path = "/people/" + peopleUUID
+	peopleID := url.QueryEscape(r.UUID.String())
+	req.URL.Path = "/people/" + peopleID
 	return encodeRequest(ctx, req, request)
 }
 
 func encodeDeletePeopleRequest(ctx context.Context, req *http.Request, request interface{}) error {
 	// r.Methods("DELETE").Path("/people/{uuid}")
 	r := request.(transport.DeletePeopleRequest)
-	peopleUUID := url.QueryEscape(r.UUID.String())
-	req.URL.Path = "/people/" + peopleUUID
+	peopleID := url.QueryEscape(r.UUID.String())
+	req.URL.Path = "/people/" + peopleID
 	return encodeRequest(ctx, req, request)
 }
 
@@ -335,7 +335,7 @@ func codeFrom(err error) int {
 	switch err {
 	case titanic.ErrNotFound:
 		return http.StatusNotFound
-	case titanic.ErrAlreadyExists, titanic.ErrInconsistentUUIDs:
+	case titanic.ErrAlreadyExists, titanic.ErrInconsistentIDs:
 		return http.StatusBadRequest
 	default:
 		return http.StatusInternalServerError

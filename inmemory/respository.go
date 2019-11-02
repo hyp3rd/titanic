@@ -12,9 +12,9 @@ import (
 
 // Response errors
 var (
-	ErrInconsistentUUID = errors.New("inconsistent UUID")
-	ErrAlreadyExists    = errors.New("already exists")
-	ErrNotFound         = errors.New("not found")
+	ErrInconsistentID = errors.New("inconsistent ID")
+	ErrAlreadyExists  = errors.New("already exists")
+	ErrNotFound       = errors.New("not found")
 )
 
 type repository struct {
@@ -37,12 +37,12 @@ func (r *repository) PostPeople(ctx context.Context, p titanic.People) (string, 
 	// id, err := uuid.Parse(vars["uuid"])
 	id := uuid.New()
 
-	p.UUID = id
+	p.ID = id
 
-	if _, ok := r.m[p.UUID.String()]; ok {
+	if _, ok := r.m[p.ID.String()]; ok {
 		return "", ErrAlreadyExists // POST = create, don't overwrite
 	}
-	r.m[p.UUID.String()] = p
+	r.m[p.ID.String()] = p
 	return id.String(), nil
 }
 
@@ -57,21 +57,21 @@ func (r *repository) GetPeopleByID(ctx context.Context, uuid uuid.UUID) (titanic
 }
 
 func (r *repository) PutPeople(ctx context.Context, uuid uuid.UUID, p titanic.People) error {
-	if p.UUID.String() == "" {
-		return ErrInconsistentUUID
+	if p.ID.String() == "" {
+		return ErrInconsistentID
 	}
 
 	r.mtx.Lock()
 	defer r.mtx.Unlock()
 
-	p.UUID = uuid
+	p.ID = uuid
 	r.m[uuid.String()] = p // PUT = create or update
 	return nil
 }
 
 func (r *repository) PatchPeople(ctx context.Context, uuid uuid.UUID, p titanic.People) error {
-	if p.UUID.String() == "" {
-		return ErrInconsistentUUID
+	if p.ID.String() == "" {
+		return ErrInconsistentID
 	}
 
 	r.mtx.Lock()

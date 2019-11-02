@@ -11,18 +11,17 @@ trap traperr ERR
 
 initdb() {
     echo "Wait for servers to be up"
-    # sleep 10
+    sleep 10
 
     HOSTPARAMS="--host roach1 --insecure"
     SQL="/cockroach/cockroach.sh sql $HOSTPARAMS"
 
     $SQL -e "CREATE DATABASE titanic; CREATE USER IF NOT EXISTS d4gh0s7; GRANT ALL ON DATABASE titanic TO d4gh0s7;"
     $SQL -d titanic -e "CREATE TABLE people (
-    	id INT8 NOT NULL DEFAULT unique_rowid(),
     	created_at TIMESTAMPTZ NULL,
     	updated_at TIMESTAMPTZ NULL,
     	deleted_at TIMESTAMPTZ NULL,
-    	uuid UUID NOT NULL,
+    	ID UUID NOT NULL,
     	survived BOOL NULL,
     	pclass INT8 NULL,
     	name STRING NULL,
@@ -31,9 +30,9 @@ initdb() {
     	siblings_spouses_abroad BOOL NULL,
     	parents_children_aboard BOOL NULL,
     	fare DECIMAL NULL,
-    	CONSTRAINT \"primary\" PRIMARY KEY (id ASC, uuid ASC),
+    	CONSTRAINT \"primary\" PRIMARY KEY (uuid ASC),
     	INDEX idx_peoples_deleted_at (deleted_at ASC),
-    	FAMILY \"primary\" (id, created_at, updated_at, deleted_at, uuid, survived, pclass, name, sex, age, siblings_spouses_abroad, parents_children_aboard, fare)
+    	FAMILY \"primary\" (created_at, updated_at, deleted_at, uuid, survived, pclass, name, sex, age, siblings_spouses_abroad, parents_children_aboard, fare)
     );"
 }
 

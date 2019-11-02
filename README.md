@@ -14,7 +14,7 @@ The data layer is designed around [**CockroachDB**](https://www.cockroachlabs.co
 
 ### Build the API
 
-There are two ways here available to build the API code; a targetted method and a [cross-plattform builder script](./build.bash); both allow to create portable executables, compatible with [Alpine Linux](https://www.alpinelinux.org/), compiled statically linking C bindings `-installsuffix 'static'`, and omitting the symbol and debug info `-ldflags "-s -w"`.
+There are two ways here available to build the API code; a targetted method and a [cross-platform builder script](./build.bash). Both allow to create portable executables, compatible with [Alpine Linux](https://www.alpinelinux.org/), compiled statically linking C bindings `-installsuffix 'static'`, and omitting the symbol and debug info `-ldflags "-s -w"`.
 
 #### Targetted build, based on your system/architecture
 
@@ -29,7 +29,7 @@ CGO_ENABLED=0 GOARCH=[amd64|386] GOOS=[linux|darwin] go build -ldflags="-w -s" -
 chmod +x build.bash && ./build.bash
 ```
 
-**The [build.bash](./build.bash) script will also re-build and push the docker images to our private [GCR](https://cloud.google.com/container-registry/).**
+**The [build.bash](./build.bash) script will also re-build and push the docker images to our private registry [GCR](https://cloud.google.com/container-registry/).**
 
 Currently, the builds in the [releases](./releases/) folder are available for the following platforms and architectures:
 
@@ -48,17 +48,17 @@ cd docker
 docker build --no-cache --file Dockerfile -t gcr.io/$PROJECT_ID/titanic-api:latest .
 ```
 
-To build the *devlopment* Docker image you must extend the build context to the top-level folder of this repo, and include the files [go.mod](./go.mod) and [go.sum](./go.sum), along with the source code and run the API:
+To build the *development* Docker image, you must extend the build context to the top-level folder of this repo, and include the files [go.mod](./go.mod) and [go.sum](./go.sum), along with the source code and run the API:
 
 ```bash
-# the Dockerfile is outside the build context
-docker build --no-cache --file ./docker/dev.Dockerfile -t gcr.io/$PROJECT_ID/titanic-api:dev .
+# the Dockerfile the build context must be extended one level up to allow the proper files inclusions
+docker build --no-cache --file ./docker/devel.Dockerfile -t gcr.io/$PROJECT_ID/titanic-api:devel .
 ```
 
 ### Run the API locally in Docker
 
-Running the API locally is quite simple; it does not require any particular language or library installed on your system, other than **Docker**.
-The golang server is listening both on port `8443/TCP` over **TLS** and `3000/TCP` over **http**; to properly run the API locally, before spawning the docker image, you need to generate the certs as follow, from the top dir of this repo:
+Running the API locally is quite simple; it does not require any particular language or library installed on your system, other than **Docker** and **docker-compose**.
+The golang server is listening both on port `8443/TCP` over **TLS** and `3000/TCP` over **http**; to properly run the API locally, before spawning the docker stack, you need to generate the certs as follow, from the top dir of this repo:
 
 ```bash
 mkdir -p $(pwd)/tls; \
@@ -68,18 +68,17 @@ openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
 chmod 444 tls/*
 ```
 
-Once the cert and the key are in place, it's enough to lift the docker image with the command described here below, mounting the correct volume, to have the TLS configured correctly:
+Once the _cert_ and the _key_ are in place, it's enough to lift the docker-compose file with the command described here below:
 
 ```bash
-# production | develpment
-docker run -d --name titanic-api -v $(pwd)/tls:/etc/tls/certs -p 3000:3000 -p 8443:8443  gcr.io/$PROJECT_ID/titanic-api:[latest|dev]
+docker-compose up -d
 ```
 
 ### API Walkthrough
 
 The Titanic API exposes the following methods:
 
-`POST /people/` adds another passenger to the people collection:
+`POST /people/` adds another passenger to the people table:
 
 ```bash
 payload='

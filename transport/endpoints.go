@@ -49,7 +49,7 @@ func MakePostPeopleEndpoint(s titanic.Service) endpoint.Endpoint {
 func MakeGetPeopleByIDEndpoint(s titanic.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(GetPeopleByIDRequest)
-		p, e := s.GetPeopleByID(ctx, req.UUID)
+		p, e := s.GetPeopleByID(ctx, req.ID)
 		return GetPeopleByIDResponse{People: p, Err: e}, nil
 	}
 }
@@ -59,7 +59,7 @@ func MakeGetPeopleByIDEndpoint(s titanic.Service) endpoint.Endpoint {
 func MakePutPeopleEndpoint(s titanic.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(PutPeopleRequest)
-		e := s.PutPeople(ctx, req.UUID, req.People)
+		e := s.PutPeople(ctx, req.ID, req.People)
 		return PutPeopleResponse{Err: e}, nil
 	}
 }
@@ -69,7 +69,7 @@ func MakePutPeopleEndpoint(s titanic.Service) endpoint.Endpoint {
 func MakePatchPeopleEndpoint(s titanic.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(PatchPeopleRequest)
-		e := s.PatchPeople(ctx, req.UUID, req.People)
+		e := s.PatchPeople(ctx, req.ID, req.People)
 		return PatchPeopleResponse{Err: e}, nil
 	}
 }
@@ -79,7 +79,7 @@ func MakePatchPeopleEndpoint(s titanic.Service) endpoint.Endpoint {
 func MakeDeletePeopleEndpoint(s titanic.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(DeletePeopleRequest)
-		id, e := s.DeletePeople(ctx, req.UUID)
+		id, e := s.DeletePeople(ctx, req.ID)
 		return DeletePeopleResponse{ID: id, Err: e}, nil
 	}
 }
@@ -133,7 +133,7 @@ func (r PostPeopleResponse) error() error { return r.Err }
 
 // GetPeopleByIDRequest request object
 type GetPeopleByIDRequest struct {
-	UUID uuid.UUID
+	ID uuid.UUID
 }
 
 // GetPeopleByIDResponse response object
@@ -146,7 +146,7 @@ func (r GetPeopleByIDResponse) error() error { return r.Err }
 
 // PutPeopleRequest request object
 type PutPeopleRequest struct {
-	UUID   uuid.UUID      `json:"uuid,omitempty"`
+	ID     uuid.UUID      `json:"uuid,omitempty"`
 	People titanic.People `json:"people,omitempty"`
 }
 
@@ -159,7 +159,7 @@ func (r PutPeopleResponse) error() error { return nil }
 
 // PatchPeopleRequest request object
 type PatchPeopleRequest struct {
-	UUID   uuid.UUID      `json:"uuid,omitempty"`
+	ID     uuid.UUID      `json:"uuid,omitempty"`
 	People titanic.People `json:"people,omitempty"`
 }
 
@@ -172,7 +172,7 @@ func (r PatchPeopleResponse) error() error { return r.Err }
 
 // DeletePeopleRequest request object
 type DeletePeopleRequest struct {
-	UUID uuid.UUID
+	ID uuid.UUID
 }
 
 // DeletePeopleResponse response object

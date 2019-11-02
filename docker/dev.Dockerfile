@@ -32,7 +32,7 @@ COPY --from=builder /app/titanic .
 EXPOSE 3000 8443
 
 # Command to run the executable
-CMD ["./titanic"]
+CMD ["./titanic", "-database.type=inmemory"]
 
 # Metadata
 LABEL org.opencontainers.image.vendor="Hyperd" \
