@@ -36,7 +36,7 @@ func (s *service) PostPeople(ctx context.Context, people titanic.People) (string
 	logger := log.With(s.logger, "method", "PostPeople")
 	uuid := uuid.New()
 
-	people.UUID = uuid
+	people.ID = uuid
 
 	id, err := s.repository.PostPeople(ctx, people)
 
