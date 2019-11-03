@@ -25,3 +25,5 @@ type Service interface {
 	DeletePeople(ctx context.Context, ID uuid.UUID) (string, error)
 	GetPeople(ctx context.Context) ([]People, error)
 }
+
+// sha256:d1bfedb201dea05c5ddb2384f81a6403ccbc5bf4deddfd78bda97cf1eccde56f
