@@ -62,7 +62,11 @@ func main() {
 			defer cancel()
 			for {
 				db, err = gorm.Open("postgres", addr)
-				if err != nil || ctx.Err() != nil {
+				if ctx.Err() != nil {
+					level.Error(logger).Log("exit", ctx.Err())
+					os.Exit(-1)
+				}
+				if err != nil {
 					level.Error(logger).Log("exit", err)
 					os.Exit(-1)
 				}
