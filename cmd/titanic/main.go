@@ -26,7 +26,7 @@ func main() {
 	var (
 		httpAddr     = flag.String("http.addr", ":3000", "HTTP listen address")
 		httpsAddr    = flag.String("https.addr", ":8443", "HTTPS listen address")
-		databaseType = flag.String("database.type", "inmemory", "Database type")
+		databaseType = flag.String("database.type", "cockroachdb", "Database type")
 	)
 	flag.Parse()
 
@@ -95,7 +95,7 @@ func main() {
 			}
 			svc = titanicsvc.NewService(repository, logger)
 		} else {
-			level.Info(logger).Log("backend", "database", "type", *databaseType)
+			level.Info(logger).Log("backend", "database", "type", "cockroachdb")
 
 			repository, err := cockroachdb.New(db, logger)
 			if err != nil {
