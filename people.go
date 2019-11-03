@@ -2,8 +2,10 @@ package titanic
 
 import (
 	"context"
+	"errors"
 
 	"github.com/google/uuid"
+	"github.com/jinzhu/gorm"
 )
 
 // People represents a single passenger (People).
@@ -15,10 +17,20 @@ type People struct {
 	Pclass                *int      `json:"pclass,omitempty"`
 	Name                  string    `json:"name,omitempty"`
 	Sex                   string    `json:"sex,omitempty"`
-	Age                   int      `json:"age,omitempty"`
+	Age                   int       `json:"age,omitempty"`
 	SiblingsSpousesAbroad *bool     `json:"siblings_spouses_abroad,omitempty"`
 	ParentsChildrenAboard *bool     `json:"parents_children_aboard,omitempty"`
 	Fare                  *float32  `json:"fare,omitempty"`
+}
+
+// Validate People struct. All the error can be catched with `db.GetErrors()`
+func (people People) Validate(db *gorm.DB) {
+	if people.Age >= 18 {
+		db.AddError(errors.New("Age need to be 18+"))
+	}
+	if people.Name == "" {
+		db.AddError(errors.New("Name can't be blank"))
+	}
 }
 
 // Repository describes the persistence on people model
