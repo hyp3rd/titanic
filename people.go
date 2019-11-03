@@ -4,13 +4,12 @@ import (
 	"context"
 
 	"github.com/google/uuid"
-	"github.com/jinzhu/gorm"
 )
 
 // People represents a single passenger (People).
 // UUID should be globally unique.
 type People struct {
-	gorm.Model
+	// gorm.Model
 	ID                    uuid.UUID `json:"uuid,omitempty" gorm:"primary_key"`
 	Survived              *bool     `json:"survived,omitempty"`
 	Pclass                *int      `json:"pclass,omitempty"`
