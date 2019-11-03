@@ -21,7 +21,7 @@ initdb() {
     	created_at TIMESTAMPTZ NULL,
     	updated_at TIMESTAMPTZ NULL,
     	deleted_at TIMESTAMPTZ NULL,
-    	ID UUID NOT NULL,
+    	id UUID NOT NULL,
     	survived BOOL NULL,
     	pclass INT8 NULL,
     	name STRING NULL,
@@ -30,9 +30,9 @@ initdb() {
     	siblings_spouses_abroad BOOL NULL,
     	parents_children_aboard BOOL NULL,
     	fare DECIMAL NULL,
-    	CONSTRAINT \"primary\" PRIMARY KEY (uuid ASC),
+		CONSTRAINT \"primary\" PRIMARY KEY (id ASC),
     	INDEX idx_peoples_deleted_at (deleted_at ASC),
-    	FAMILY \"primary\" (created_at, updated_at, deleted_at, uuid, survived, pclass, name, sex, age, siblings_spouses_abroad, parents_children_aboard, fare)
+    	FAMILY \"primary\" (created_at, updated_at, deleted_at, id, survived, pclass, name, sex, age, siblings_spouses_abroad, parents_children_aboard, fare)
     );"
 }
 
