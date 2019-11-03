@@ -68,7 +68,7 @@ func (repo *repository) PostPeople(ctx context.Context, people titanic.People) (
 func (repo *repository) GetPeopleByID(ctx context.Context, id uuid.UUID) (titanic.People, error) {
 	var people = titanic.People{}
 
-	repo.db.Where("uuid = ?", id).First(&people)
+	repo.db.Where("id = ?", id).First(&people)
 
 	return people, nil
 }
@@ -83,7 +83,7 @@ func (repo *repository) PatchPeople(ctx context.Context, id uuid.UUID, people ti
 
 func (repo *repository) DeletePeople(ctx context.Context, id uuid.UUID) (string, error) {
 
-	repo.db.Where("uuid = ?", id).Delete(&titanic.People{})
+	repo.db.Where("id = ?", id).Delete(&titanic.People{})
 
 	return id.String(), nil
 }
