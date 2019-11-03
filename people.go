@@ -20,19 +20,19 @@ type People struct {
 	Age                   int       `json:"age,omitempty" valid:"numeric"`
 	SiblingsSpousesAbroad bool      `json:"siblings_spouses_abroad,omitempty"`
 	ParentsChildrenAboard bool      `json:"parents_children_aboard,omitempty"`
-	Fare                  float32   `json:"fare,omitempty" valid:"numeric"`
+	Fare                  float32   `json:"fare,omitempty" valid:"float"`
 }
 
 // Validate People struct. All the error can be catched with `db.GetErrors()`
 func (people People) Validate(db *gorm.DB) {
 	if people.Name == "" {
-		db.AddError(errors.New("Name can't be blank"))
+		db.AddError(errors.New("Name is required"))
 	}
 	if people.Sex == "" {
 		db.AddError(errors.New("Sex value can't be blank"))
 	}
-	if people.Age >= 18 {
-		db.AddError(errors.New("Age need to be 18+"))
+	if people.Age <= 0 || people.Age >= 110 {
+		db.AddError(errors.New("Age must be in a valid range"))
 	}
 }
 
@@ -45,3 +45,5 @@ type Repository interface {
 	DeletePeople(ctx context.Context, ID uuid.UUID) (string, error)
 	GetPeople(ctx context.Context) ([]People, error)
 }
+
+//sha256:a491b18f7b611590fc54be38f0af9a25dd5dc530dfcbca9a74823b4f8f3f091c
