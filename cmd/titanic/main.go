@@ -12,6 +12,7 @@ import (
 	"github.com/go-kit/kit/log/level"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
+	"github.com/qor/validations"
 	titanic "gitlab.com/hyperd/titanic"
 	"gitlab.com/hyperd/titanic/cockroachdb"
 	titanicsvc "gitlab.com/hyperd/titanic/implementation"
@@ -70,6 +71,9 @@ func main() {
 			// Disable table name's pluralization globally
 			db.SingularTable(true)
 			db.AutoMigrate(&titanic.People{})
+
+			// Validations uses GORM callbacks to handle validations
+			validations.RegisterCallbacks(db)
 		}
 	}
 

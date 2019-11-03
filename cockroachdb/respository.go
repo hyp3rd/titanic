@@ -2,6 +2,7 @@ package cockroachdb
 
 import (
 	"context"
+	"errors"
 
 	"github.com/go-kit/kit/log"
 	"github.com/google/uuid"
@@ -44,6 +45,15 @@ var forceRetryLoop txnFunc = func(db *gorm.DB) error {
 		return err
 	}
 	return nil
+}
+
+func (people titanic.People) Validate(db *gorm.DB) {
+	if people.Age >= 18 {
+		db.AddError(errors.New("Age need to be 18+"))
+	}
+	if people.Name == "" {
+		db.AddError(errors.New("Name can't be blank"))
+	}
 }
 
 func (repo *repository) PostPeople(ctx context.Context, people titanic.People) (string, error) {

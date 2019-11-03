@@ -15,7 +15,7 @@ type People struct {
 	Pclass                *int      `json:"pclass,omitempty"`
 	Name                  string    `json:"name,omitempty"`
 	Sex                   string    `json:"sex,omitempty"`
-	Age                   *int      `json:"age,omitempty"`
+	Age                   int      `json:"age,omitempty"`
 	SiblingsSpousesAbroad *bool     `json:"siblings_spouses_abroad,omitempty"`
 	ParentsChildrenAboard *bool     `json:"parents_children_aboard,omitempty"`
 	Fare                  *float32  `json:"fare,omitempty"`
