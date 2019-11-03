@@ -87,30 +87,23 @@ func (r *repository) PatchPeople(ctx context.Context, uuid uuid.UUID, p titanic.
 	// means not specified. The way around this is to use e.g. Name *string in
 	// the People definition.
 
-	if p.Survived != nil {
-		existing.Survived = p.Survived
-	}
-	if p.Pclass != nil {
-		existing.Pclass = p.Pclass
-	}
+	existing.Survived = p.Survived
+
+	existing.Pclass = p.Pclass
+
 	if p.Name != "" {
 		existing.Name = p.Name
 	}
 	if p.Sex != "" {
 		existing.Sex = p.Sex
 	}
-	if p.Age != nil {
-		existing.Age = p.Age
-	}
-	if p.SiblingsSpousesAbroad != nil {
-		existing.SiblingsSpousesAbroad = p.SiblingsSpousesAbroad
-	}
-	if p.ParentsChildrenAboard != nil {
-		existing.ParentsChildrenAboard = p.ParentsChildrenAboard
-	}
-	if p.Fare != nil {
-		existing.Fare = p.Fare
-	}
+	existing.Age = p.Age
+
+	existing.SiblingsSpousesAbroad = p.SiblingsSpousesAbroad
+
+	existing.ParentsChildrenAboard = p.ParentsChildrenAboard
+
+	existing.Fare = p.Fare
 
 	r.m[uuid.String()] = existing
 	return nil
