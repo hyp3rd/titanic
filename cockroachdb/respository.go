@@ -74,6 +74,7 @@ func (repo *repository) GetPeopleByID(ctx context.Context, id uuid.UUID) (titani
 }
 
 func (repo *repository) PutPeople(ctx context.Context, id uuid.UUID, people titanic.People) error {
+	// Update multiple attributes with `struct`, will only update those changed & non blank fields
 	repo.db.Model(&people).Updates(titanic.People{
 		ID:                    id,
 		Survived:              people.Survived,
@@ -90,7 +91,17 @@ func (repo *repository) PutPeople(ctx context.Context, id uuid.UUID, people tita
 }
 
 func (repo *repository) PatchPeople(ctx context.Context, id uuid.UUID, people titanic.People) error {
-	// repo.db.Model(&people).Updates(map[string]interface{}{"name": "hello", "age": 18, "actived": false})
+	// Update multiple attributes with `map`, will only update those changed fields
+	repo.db.Model(&people).Updates(map[string]interface{}{
+		"Survived":              people.Survived,
+		"Pclass":                people.Pclass,
+		"Name":                  people.Name,
+		"Sex":                   people.Sex,
+		"Age":                   people.Age,
+		"SiblingsSpousesAbroad": people.SiblingsSpousesAbroad,
+		"ParentsChildrenAboard": people.ParentsChildrenAboard,
+		"Fare":                  people.Fare,
+	})
 	return nil
 }
 
