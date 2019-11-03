@@ -92,7 +92,7 @@ func (repo *repository) PutPeople(ctx context.Context, id uuid.UUID, people tita
 
 func (repo *repository) PatchPeople(ctx context.Context, id uuid.UUID, people titanic.People) error {
 	// Update multiple attributes with `map`, will only update those changed fields
-	repo.db.Model(&people).Updates(map[string]interface{}{
+	repo.db.Model(&people).Where("id = ?", id).Updates(map[string]interface{}{
 		"Survived":              people.Survived,
 		"Pclass":                people.Pclass,
 		"Name":                  people.Name,
