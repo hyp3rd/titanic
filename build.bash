@@ -54,10 +54,12 @@ update_docker_images () {
 
     # build the titanic-api image with our modifications (see Dockerfile) and tag for private GCR
     docker build --no-cache --file ../docker/Dockerfile -t gcr.io/$PROJECT_ID/titanic-api:latest .
+    docker build --no-cache --file ../docker/mock.Dockerfile -t gcr.io/$PROJECT_ID/titanic-api:mock .
 
     # configure pushing to private GCR, and push our image
     gcloud auth configure-docker -q
-    docker push gcr.io/$PROJECT_ID/titanic-api
+    docker push gcr.io/$PROJECT_ID/titanic-api:latest
+    docker push gcr.io/$PROJECT_ID/titanic-api:mock
 
     report
 }
