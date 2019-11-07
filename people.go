@@ -28,7 +28,7 @@ func (people People) Validate(db *gorm.DB) {
 	if people.Name == "" {
 		db.AddError(errors.New("Name is required"))
 	}
-	if isValidSex(people.Sex) {
+	if !isValidSex(people.Sex) {
 		db.AddError(errors.New("Sex is not correct"))
 	}
 	if people.Age <= 0 || people.Age >= 110 {
