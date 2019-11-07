@@ -29,7 +29,7 @@ func (people People) Validate(db *gorm.DB) {
 		db.AddError(errors.New("Name is required"))
 	}
 	if isValidSex(people.Sex) {
-		db.AddError(errors.New("Sex value is not correct"))
+		db.AddError(errors.New("Sex is not correct"))
 	}
 	if people.Age <= 0 || people.Age >= 110 {
 		db.AddError(errors.New("Age must be in a valid range"))
