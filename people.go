@@ -28,7 +28,7 @@ func (people People) Validate(db *gorm.DB) {
 	if people.Name == "" {
 		db.AddError(errors.New("Name is required"))
 	}
-	if people.Sex != "M" || people.Sex != "F" {
+	if isValidSex(people.Sex) {
 		db.AddError(errors.New("Sex value is not correct"))
 	}
 	if people.Age <= 0 || people.Age >= 110 {
@@ -46,4 +46,13 @@ type Repository interface {
 	GetPeople(ctx context.Context) ([]People, error)
 }
 
-// sha256:4cd5c178af53df34a5a2ff2320255fa77a0787b9eaf1db70b7816bf0109c58ac
+func isValidSex(a string) bool {
+	list := [...]string{"M", "F", "N"}
+
+	for _, b := range list {
+		if b == a {
+			return true
+		}
+	}
+	return false
+}

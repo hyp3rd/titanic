@@ -88,8 +88,8 @@ payload='
   "name": "Francesco",
   "sex": "M",
   "age": 30,
-  "siblings_spouses_abroad": false,
-  "parents_children_aboard": false,
+  "siblings_spouses_abroad": 1,
+  "parents_children_aboard": 1,
   "fare": 7.34
 }
 '
@@ -111,8 +111,8 @@ curl http://localhost:3000/people/35d4ab59-fa9d-478d-a57e-61b526ee0a33 | jq
     "name": "Francesco",
     "sex": "M",
     "age": 30,
-    "siblings_spouses_abroad": false,
-    "parents_children_aboard": false,
+    "siblings_spouses_abroad": 1,
+    "parents_children_aboard": 1,
     "fare": 7.34
   }
 }
@@ -132,8 +132,8 @@ curl -X "DELETE" http://localhost:3000/people/35d4ab59-fa9d-478d-a57e-61b526ee0a
 ```bash
 payload='
 {
-  "siblings_spouses_abroad": true,
-  "parents_children_aboard": true
+  "siblings_spouses_abroad": 1,
+  "parents_children_aboard": 2
 }
 '
 curl -d "$payload" -H "Content-Type: application/json" -X PATCH -k http://localhost/people/35d4ab59-fa9d-478d-a57e-61b526ee0a33
@@ -150,8 +150,8 @@ payload='
   "name": "Francesco",
   "sex": "M",
   "age": 30,
-  "siblings_spouses_abroad": true,
-  "parents_children_aboard": true,
+  "siblings_spouses_abroad": 1,
+  "parents_children_aboard": 1,
   "fare": 9.81
 }
 '
@@ -172,8 +172,8 @@ curl http://localhost:3000/people/ | jq
       "name": "Francesco",
       "sex": "M",
       "age": 30,
-      "siblings_spouses_abroad": false,
-      "parents_children_aboard": false,
+      "siblings_spouses_abroad": 1,
+      "parents_children_aboard": 2,
       "fare": 7.34
     },
     {
@@ -183,8 +183,8 @@ curl http://localhost:3000/people/ | jq
       "name": "Anne McLeod",
       "sex": "F",
       "age": 49,
-      "siblings_spouses_abroad": true,
-      "parents_children_aboard": true,
+      "siblings_spouses_abroad": 1,
+      "parents_children_aboard": 3,
       "fare": 9.34
     },
     ...
