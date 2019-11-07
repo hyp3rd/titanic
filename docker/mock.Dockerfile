@@ -21,11 +21,11 @@ RUN set -ex; \
 
 RUN adduser -D -g '' appuser
 
-USER appuser
+# USER appuser
 
 EXPOSE 3000 8443
 
-CMD ["titanic", "--database.type=\"inmemory\""]
+ENTRYPOINT ["titanic", "--database.type=\"inmemory\""]
 
 # Metadata
 LABEL org.opencontainers.image.vendor="Hyperd" \
