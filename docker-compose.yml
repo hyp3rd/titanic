@@ -1,4 +1,4 @@
-version: "3.0"
+version: "3.7"
 
 services:
   roach1:
@@ -53,5 +53,12 @@ services:
       - roach2
       - roach3
       - db-init
+    restart: always
+    # deploy:
+    #   restart_policy:
+    #     condition: unless-stopped
+    #     delay: 5s
+    #     max_attempts: 5
+    #     window: 120s
 networks:
   titanicnet:
