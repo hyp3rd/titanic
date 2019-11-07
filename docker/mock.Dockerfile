@@ -21,11 +21,11 @@ RUN set -ex; \
 
 RUN adduser -D -g '' appuser
 
-# USER appuser
+USER appuser
 
 EXPOSE 3000 8443
 
-CMD ["sh", "-c", "titanic --database.type=\"inmemory\""]
+ENTRYPOINT ["sh", "-c", "titanic --database.type=\"inmemory\""]
 
 # Metadata
 LABEL org.opencontainers.image.vendor="Hyperd" \
@@ -34,5 +34,3 @@ LABEL org.opencontainers.image.vendor="Hyperd" \
 	org.opencontainers.image.description="Container Solution API-exercise" \
 	org.opencontainers.image.version="v0.5" \
 	org.opencontainers.image.documentation="https://gitlab.com/hyperd/titanic/blob/master/README.md"
-
-#sha256:29a159bc4f91abefd5cfcdae8236d3151c319925989034023973febec553af63
