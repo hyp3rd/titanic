@@ -7,7 +7,7 @@ metadata:
   labels:
     app: titanic-api
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: titanic-api
@@ -34,7 +34,7 @@ spec:
                       - europe-west4-c
       containers:
         - name: titanic-api-sha256
-          image: gcr.io/hyperd-titanic-api/titanic-api@sha256:dd8ac41f256ff8d262510264f1fe79c165edccb9cff67cf60aefc2ffe2d17947
+          image: gcr.io/hyperd-titanic-api/titanic-api@sha256:5aa7d20bbd701935f4f7da023fc65fd3e6da111470117def8ea3cf59239c75c4
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
@@ -62,8 +62,8 @@ spec:
             timeoutSeconds: 10
           resources:
             limits:
-              cpu: 2
-              memory: 2Gi
+              cpu: 1
+              memory: 1Gi
             requests:
               cpu: 250m
               memory: 1Gi
@@ -76,17 +76,3 @@ spec:
         - name: tls-vol
           secret:
             secretName: titanic-api-tls
-status:
-  availableReplicas: 1
-  conditions:
-    - message: Deployment has minimum availability.
-      reason: MinimumReplicasAvailable
-      status: "True"
-      type: Available
-    - reason: NewReplicaSetAvailable
-      status: "True"
-      type: Progressing
-  observedGeneration: 13
-  readyReplicas: 1
-  replicas: 1
-  updatedReplicas: 1

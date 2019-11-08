@@ -13,26 +13,32 @@ import (
 type People struct {
 	// gorm.Model
 	ID                    uuid.UUID `json:"uuid,omitempty" gorm:"primary_key"`
-	Survived              bool      `json:"survived,omitempty"`
-	Pclass                int       `json:"pclass,omitempty"`
+	Survived              bool      `json:"survived,omitempty" valid:"bool"`
+	Pclass                int       `json:"pclass,omitempty" valid:"numeric"`
 	Name                  string    `json:"name,omitempty" valid:"length(2|48)"`
 	Sex                   string    `json:"sex,omitempty" valid:"required"`
 	Age                   int       `json:"age,omitempty" valid:"numeric"`
-	SiblingsSpousesAbroad int       `json:"siblings_spouses_abroad,omitempty"`
-	ParentsChildrenAboard int       `json:"parents_children_aboard,omitempty"`
+	SiblingsSpousesAbroad int       `json:"siblings_spouses_abroad,omitempty" valid:"numeric"`
+	ParentsChildrenAboard int       `json:"parents_children_aboard,omitempty" valid:"numeric"`
 	Fare                  float32   `json:"fare,omitempty" valid:"float"`
 }
 
 // Validate People struct. All the error can be catched with `db.GetErrors()`
 func (people People) Validate(db *gorm.DB) {
 	if people.Name == "" {
-		db.AddError(errors.New("Name is required"))
+		db.AddError(errors.New("Name: is required"))
 	}
 	if !isValidSex(people.Sex) {
-		db.AddError(errors.New("Sex is not correct"))
+		db.AddError(errors.New("Sex: invalid value"))
 	}
-	if people.Age <= 0 || people.Age >= 110 {
-		db.AddError(errors.New("Age must be in a valid range"))
+	if people.Age < 0 || people.Age > 116 {
+		db.AddError(errors.New("Age: value in invalid range"))
+	}
+	if people.SiblingsSpousesAbroad < 0 || people.SiblingsSpousesAbroad > 20 {
+		db.AddError(errors.New("SiblingsSpousesAbroad: value in invalid range"))
+	}
+	if people.ParentsChildrenAboard < 0 || people.ParentsChildrenAboard > 20 {
+		db.AddError(errors.New("ParentsChildrenAboard: value in invalid range"))
 	}
 }
 
@@ -46,8 +52,9 @@ type Repository interface {
 	GetPeople(ctx context.Context) ([]People, error)
 }
 
+// Validation helpers
 func isValidSex(a string) bool {
-	list := [...]string{"M", "F", "N"}
+	list := [...]string{"male", "female", "not declared"}
 
 	for _, b := range list {
 		if b == a {
