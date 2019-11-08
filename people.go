@@ -17,7 +17,7 @@ type People struct {
 	Survived              bool      `json:"survived,omitempty" valid:"bool"`
 	Pclass                int       `json:"pclass,omitempty" valid:"numeric"`
 	Name                  string    `json:"name,omitempty" valid:"length(2|48)"`
-	Sex                   string    `json:"sex,omitempty" valid:"required"`
+	Sex                   string    `json:"sex,omitempty"`
 	Age                   int       `json:"age,omitempty" valid:"numeric"`
 	SiblingsSpousesAbroad int       `json:"siblings_spouses_abroad,omitempty" valid:"numeric"`
 	ParentsChildrenAboard int       `json:"parents_children_aboard,omitempty" valid:"numeric"`
