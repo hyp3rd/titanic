@@ -54,7 +54,7 @@ type Repository interface {
 
 // Validation helpers
 func isValidSex(a string) bool {
-	list := [...]string{"male", "female", "not declared"}
+	list := [...]string{"male", "female", "not declared", ""}
 
 	for _, b := range list {
 		if b == a {
