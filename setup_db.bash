@@ -10,6 +10,8 @@ set -o errtrace
 trap traperr ERR
 
 initdb() {
+	# TODO: implement a more elegant way to wait for the cluster
+	# to be up and running.
     echo "Wait for servers to be up"
     sleep 10
 
