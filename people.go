@@ -3,6 +3,7 @@ package titanic
 import (
 	"context"
 	"errors"
+	"regexp"
 
 	"github.com/google/uuid"
 	"github.com/jinzhu/gorm"
@@ -25,8 +26,9 @@ type People struct {
 
 // Validate People struct. All the error can be catched with `db.GetErrors()`
 func (people People) Validate(db *gorm.DB) {
-	if people.Name == "" {
-		db.AddError(errors.New("Name: is required"))
+	nameIsCorrect, _ := regexp.MatchString(`^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$`, people.Name)
+	if !nameIsCorrect {
+		db.AddError(errors.New("Name: invalid format"))
 	}
 	if !isValidSex(people.Sex) {
 		db.AddError(errors.New("Sex: invalid value"))
