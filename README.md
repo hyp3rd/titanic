@@ -40,12 +40,19 @@ Currently, the builds in the [releases](./releases/) folder are available for th
 
 ### Build the Docker images locally
 
-The Docker images are in the [docker](./docker/) folder.
+The Docker files are stored the [docker](./docker/) folder.
 To build the *production* API Docker image, run these commands in your terminal:
 
 ```bash
 cd docker
 docker build --no-cache --file Dockerfile -t gcr.io/$PROJECT_ID/titanic-api:latest .
+```
+
+To build the *mock* API Docker image backed by in memory storage, run these commands in your terminal:
+
+```bash
+cd docker
+docker build --no-cache --file mock.Dockerfile -t gcr.io/$PROJECT_ID/titanic-api:mock .
 ```
 
 To build the *development* Docker image, you must extend the build context to the top-level folder of this repo, and include the files [go.mod](./go.mod) and [go.sum](./go.sum), along with the source code and run the API:

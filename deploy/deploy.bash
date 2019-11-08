@@ -138,6 +138,9 @@ deploy_titanic_api () {
   kubectl apply -f k8s/titanic-api/
 }
 
+
+# TODO: Automate the commented steps, properly waiting for the resources
+# to be provisioned
 deploy_cockroachdb () {
    # cockroachdb deployment init
   kubectl apply -f k8s/cockroachdb/

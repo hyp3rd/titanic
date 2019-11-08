@@ -14,10 +14,10 @@ The following is stuff that's not feasible or desirable to automate:
 - `export REGION=<region e.g., europe-west1>`;
 - `export PROJECT_ID=<project name e.g. hyperd-titanic-api>`.
 
-Run the `setup.bash` script included in the [current folder](../deploy) (can take a while):
+Run the `deploy.bash` script included in the [current folder](../deploy) (can take a while):
 
 ```bash
-# file <setup.bash>
+# file <deploy.bash>
 #!/bin/bash
 set -Eeuo pipefail
 
@@ -158,28 +158,35 @@ deploy_titanic_api () {
   kubectl apply -f k8s/titanic-api/
 }
 
+
+# TODO: Automate the commented steps, properly waiting for the resources
+# to be provisioned
 deploy_cockroachdb () {
    # cockroachdb deployment init
   kubectl apply -f k8s/cockroachdb/
 
-  kubectl get csr
+  # kubectl wait --for=condition=complete --timeout=60s pods --all || :
 
-  kubectl certificate approve default.node.cockroachdb-0
+  # kubectl get csr
 
-  kubectl create -f k8s/cockroachdb/cockroachdb-cluster-init/cluster-init-secure.yaml
+  # kubectl certificate approve default.node.cockroachdb-0
 
-  kubectl get csr
+  # kubectl apply -f k8s/cockroachdb/cockroachdb-cluster-init/cluster-init-secure.yaml
 
-  kubectl certificate approve default.client.root
+  # kubectl --for=condition=complete --timeout=60s pods --all || :
 
-  kubectl get job cluster-init-secure
+  # kubectl get csr
 
-  kubectl get pods
+  # kubectl certificate approve default.client.root
+
+  # kubectl get job cluster-init-secure
+
+  # kubectl get pods
 }
 
 deploy_titanic_api
 
-# deploy_cockroachdb
+deploy_cockroachdb
 ```
 
 Once the setup is completed, we will have a [GKE](https://cloud.google.com/kubernetes-engine/docs/) cluster running, with these node pools settings (unless you modified the [terraform.tfvars](./terraform.tfvars) file):
@@ -208,4 +215,39 @@ curl -k https://<your_external_ip>/ | jq
 {
   "status": "Healthy"
 }
+```
+
+This deployment will configure the nginx-ingress controller, with LUA firewall enabled, and modsecurity in learning mode, in order to provide an acceptable level of filtering at the edge.
+
+```yaml
+    # load and enable modsecurity plugin
+    nginx.ingress.kubernetes.io/enable-modsecurity: "true"
+    nginx.ingress.kubernetes.io/enable-owasp-modsecurity-crs: "true"
+    nginx.ingress.kubernetes.io/enable-owasp-core-rules: "true"
+
+    nginx.ingress.kubernetes.io/lua-resty-waf: "active"
+    # disable rules for debugging
+    # nginx.ingress.kubernetes.io/lua-resty-waf-ignore-rulesets: "41000_sqli, 42000_xss, 40000_generic_attack, 35000_user_agent, 21000_http_anomaly"
+    nginx.ingress.kubernetes.io/lua-resty-waf-allow-unknown-content-types: "false"
+    nginx.ingress.kubernetes.io/lua-resty-waf-process-multipart-body: "true"
+```
+
+The ingress controller will also provide a basic rate limiting and inject a set of http security headers in the response:
+
+```yaml
+    # DDoS mitigations
+    nginx.ingress.kubernetes.io/proxy-body-size: 2m
+    # NOTE: un-comment the whithelist to allow only certain IP/ ranges to consume this ingress
+    # nginx.ingress.kubernetes.io/whitelist-source-range: "<IP>/32"
+    nginx.ingress.kubernetes.io/limit-connections: "10"
+    nginx.ingress.kubernetes.io/limit-rps: "1"
+```
+
+```yaml
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      more_set_headers 'X-Frame-Options: SAMEORIGIN';
+      more_set_headers 'X-XSS-Protection: 1; mode=block';
+      more_set_headers 'X-Content-Type-Options: nosniff';
+      more_set_headers 'Content-Security-Policy: upgrade-insecure-requests';
+      more_set_headers 'Referrer-Policy: no-referrer-when-downgrade';
 ```
