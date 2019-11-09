@@ -21,7 +21,7 @@ type People struct {
 	Fare                  float32   `json:"fare,omitempty" valid:"float"`
 }
 
-// sha256:e11ce3f65a6418aded4bfea5ff0f9030ada45f1bd6b7676619c48201d14cff7c
+// sha256:1c0eabbc4e926d45c9ce1e2e0a2937ddb65e05ea5b295d88cdb1b02872ffd80a
 // Validate People struct. All the error can be catched with `db.GetErrors()`
 // func (people People) Validate(db *gorm.DB) {
 // 	nameIsCorrect, _ := regexp.MatchString(`^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$`, people.Name)
