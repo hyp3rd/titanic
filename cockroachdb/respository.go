@@ -79,8 +79,9 @@ func (repo *repository) GetPeopleByID(ctx context.Context, id uuid.UUID) (titani
 }
 
 func (repo *repository) PutPeople(ctx context.Context, id uuid.UUID, people titanic.People) error {
+	tx := repo.db.Begin()
 	// Update multiple attributes with `struct`, will only update those changed & non blank fields
-	if err := repo.db.Model(&people).Updates(titanic.People{
+	if err := tx.Model(&people).Updates(titanic.People{
 		ID:                    id,
 		Survived:              people.Survived,
 		Pclass:                people.Pclass,
@@ -91,8 +92,11 @@ func (repo *repository) PutPeople(ctx context.Context, id uuid.UUID, people tita
 		ParentsChildrenAboard: people.ParentsChildrenAboard,
 		Fare:                  people.Fare,
 	}).Error; err != nil {
+		tx.Rollback()
 		return err
 	}
+
+	tx.Commit()
 
 	return nil
 }
