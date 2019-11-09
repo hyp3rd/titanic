@@ -10,7 +10,7 @@ import (
 // UUID should be globally unique.
 type People struct {
 	// gorm.Model
-	ID                    uuid.UUID `json:"uuid,omitempty" gorm:"primary_key" valid:"uuidv4"`
+	ID                    uuid.UUID `json:"uuid,omitempty" gorm:"primary_key" valid:"uuidv3"`
 	Survived              bool      `json:"survived,omitempty"`
 	Pclass                int       `json:"pclass,omitempty" valid:"numeric"`
 	Name                  string    `json:"name,omitempty" valid:"alphanum,stringlength(2|70)"` // https://webarchive.nationalarchives.gov.uk/20100407173424/http://www.cabinetoffice.gov.uk/govtalk/schemasstandards/e-gif/datastandards.aspx
@@ -21,7 +21,7 @@ type People struct {
 	Fare                  float32   `json:"fare,omitempty" valid:"float"`
 }
 
-// sha256:9f40d23ad125b9f6aa5a706b3f6d3e6b78f5937813812f2ca7e62769055104f3
+// sha256:e55c6a5b5556fb9b5491dbf4025b50d126396de98151e1a4e500faa1430c6d1c
 // Validate People struct. All the error can be catched with `db.GetErrors()`
 // func (people People) Validate(db *gorm.DB) {
 // 	nameIsCorrect, _ := regexp.MatchString(`^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$`, people.Name)
