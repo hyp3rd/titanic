@@ -30,7 +30,7 @@ type loggingMiddleware struct {
 
 func (mw loggingMiddleware) PostPeople(ctx context.Context, p titanic.People) (id string, err error) {
 	defer func(begin time.Time) {
-		mw.logger.Log("method", "PostPeople", "uuid", p.ID, "took", time.Since(begin), "err", err)
+		mw.logger.Log("method", "PostPeople", "people", p, "took", time.Since(begin), "err", err)
 	}(time.Now())
 	return mw.next.PostPeople(ctx, p)
 }

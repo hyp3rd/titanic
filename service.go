@@ -26,4 +26,4 @@ type Service interface {
 	GetPeople(ctx context.Context) ([]People, error)
 }
 
-// sha256:d1bfedb201dea05c5ddb2384f81a6403ccbc5bf4deddfd78bda97cf1eccde56f
+// sha256:41782cb3c0f9b6781b255e6e1aca70e7cc164092a9ca836b5e33ffd71a1ec496
