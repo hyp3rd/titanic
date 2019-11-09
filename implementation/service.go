@@ -3,7 +3,6 @@ package implementation
 import (
 	"context"
 	"database/sql"
-	"errors"
 
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/log/level"
@@ -26,11 +25,11 @@ func NewService(rep titanic.Repository, logger log.Logger) titanic.Service {
 }
 
 // Response errors
-var (
-	ErrInconsistentIDs = errors.New("inconsistent IDs")
-	ErrAlreadyExists   = errors.New("already exists")
-	ErrNotFound        = errors.New("not found")
-)
+// var (
+// 	ErrInconsistentIDs = errors.New("inconsistent IDs")
+// 	ErrAlreadyExists   = errors.New("already exists")
+// 	ErrNotFound        = errors.New("not found")
+// )
 
 func (s *service) PostPeople(ctx context.Context, people titanic.People) (string, error) {
 	logger := log.With(s.logger, "method", "PostPeople")
@@ -42,7 +41,7 @@ func (s *service) PostPeople(ctx context.Context, people titanic.People) (string
 
 	if err != nil {
 		level.Error(logger).Log("err", err)
-		return id, titanic.ErrCmdRepository
+		return id, err
 	}
 	return id, err
 }
@@ -64,7 +63,7 @@ func (s *service) PutPeople(ctx context.Context, uuid uuid.UUID, p titanic.Peopl
 	logger := log.With(s.logger, "method", "PutPeople")
 	if err := s.repository.PutPeople(ctx, uuid, p); err != nil {
 		level.Error(logger).Log("err", err)
-		return titanic.ErrCmdRepository
+		return err
 	}
 	return nil
 }
@@ -73,7 +72,7 @@ func (s *service) PatchPeople(ctx context.Context, uuid uuid.UUID, p titanic.Peo
 	logger := log.With(s.logger, "method", "PatchPeople")
 	if err := s.repository.PatchPeople(ctx, uuid, p); err != nil {
 		level.Error(logger).Log("err", err)
-		return titanic.ErrCmdRepository
+		return err
 	}
 	return nil
 }
@@ -97,9 +96,9 @@ func (s *service) GetPeople(ctx context.Context) ([]titanic.People, error) {
 	if err != nil {
 		level.Error(logger).Log("err", err)
 		if err == sql.ErrNoRows {
-			return people, titanic.ErrNotFound
+			return nil, titanic.ErrNotFound
 		}
-		return people, titanic.ErrQueryRepository
+		return nil, err
 	}
 	return people, err
 }

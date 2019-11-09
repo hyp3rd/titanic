@@ -21,26 +21,7 @@ type People struct {
 	Fare                  float32   `json:"fare,omitempty" valid:"float"`
 }
 
-// sha256:1c0eabbc4e926d45c9ce1e2e0a2937ddb65e05ea5b295d88cdb1b02872ffd80a
-// Validate People struct. All the error can be catched with `db.GetErrors()`
-// func (people People) Validate(db *gorm.DB) {
-// 	nameIsCorrect, _ := regexp.MatchString(`^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$`, people.Name)
-// 	if !nameIsCorrect {
-// 		db.AddError(errors.New("Name: invalid format"))
-// 	}
-// 	if !isValidSex(people.Sex) {
-// 		db.AddError(errors.New("Sex: invalid value"))
-// 	}
-// 	if people.Age < 0 || people.Age > 116 {
-// 		db.AddError(errors.New("Age: value in invalid range"))
-// 	}
-// 	if people.SiblingsSpousesAbroad < 0 || people.SiblingsSpousesAbroad > 20 {
-// 		db.AddError(errors.New("SiblingsSpousesAbroad: value in invalid range"))
-// 	}
-// 	if people.ParentsChildrenAboard < 0 || people.ParentsChildrenAboard > 20 {
-// 		db.AddError(errors.New("ParentsChildrenAboard: value in invalid range"))
-// 	}
-// }
+// sha256:aed0615a7c44df119aefa06c4e17a7d79a251e5ac1d3ee733553ec276a2b8888
 
 // Repository describes the persistence on people model
 type Repository interface {
@@ -51,15 +32,3 @@ type Repository interface {
 	DeletePeople(ctx context.Context, ID uuid.UUID) (string, error)
 	GetPeople(ctx context.Context) ([]People, error)
 }
-
-// Validation helpers
-// func isValidSex(a string) bool {
-// 	list := [...]string{"male", "female", "not declared", ""}
-
-// 	for _, b := range list {
-// 		if b == a {
-// 			return true
-// 		}
-// 	}
-// 	return false
-// }
