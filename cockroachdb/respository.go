@@ -51,7 +51,7 @@ func (repo *repository) PostPeople(ctx context.Context, people titanic.People) (
 	id := uuid.New()
 	people.ID = id
 
-	repo.db.Create(&titanic.People{
+	if err := repo.db.Create(&titanic.People{
 		ID:                    people.ID,
 		Survived:              people.Survived,
 		Pclass:                people.Pclass,
@@ -60,7 +60,9 @@ func (repo *repository) PostPeople(ctx context.Context, people titanic.People) (
 		Age:                   people.Age,
 		SiblingsSpousesAbroad: people.SiblingsSpousesAbroad,
 		ParentsChildrenAboard: people.ParentsChildrenAboard,
-		Fare:                  people.Fare})
+		Fare:                  people.Fare}).Error; err != nil {
+		return "", err
+	}
 
 	return id.String(), nil
 }
@@ -75,7 +77,7 @@ func (repo *repository) GetPeopleByID(ctx context.Context, id uuid.UUID) (titani
 
 func (repo *repository) PutPeople(ctx context.Context, id uuid.UUID, people titanic.People) error {
 	// Update multiple attributes with `struct`, will only update those changed & non blank fields
-	repo.db.Model(&people).Updates(titanic.People{
+	if err := repo.db.Model(&people).Updates(titanic.People{
 		ID:                    id,
 		Survived:              people.Survived,
 		Pclass:                people.Pclass,
@@ -85,7 +87,9 @@ func (repo *repository) PutPeople(ctx context.Context, id uuid.UUID, people tita
 		SiblingsSpousesAbroad: people.SiblingsSpousesAbroad,
 		ParentsChildrenAboard: people.ParentsChildrenAboard,
 		Fare:                  people.Fare,
-	})
+	}).Error; err != nil {
+		return err
+	}
 
 	return nil
 }
@@ -102,7 +106,17 @@ func (repo *repository) PatchPeople(ctx context.Context, id uuid.UUID, people ti
 	// 	"ParentsChildrenAboard": people.ParentsChildrenAboard,
 	// 	"Fare":                  people.Fare,
 	// })
-	repo.db.Model(&people).Where("id = ?", id).Updates(titanic.People{
+	// repo.db.Model(&people).Where("id = ?", id).Updates(titanic.People{
+	// 	Survived:              people.Survived,
+	// 	Pclass:                people.Pclass,
+	// 	Name:                  people.Name,
+	// 	Sex:                   people.Sex,
+	// 	Age:                   people.Age,
+	// 	SiblingsSpousesAbroad: people.SiblingsSpousesAbroad,
+	// 	ParentsChildrenAboard: people.ParentsChildrenAboard,
+	// 	Fare:                  people.Fare,
+	// })
+	if err := repo.db.Model(&people).Where("id = ?", id).Updates(titanic.People{
 		Survived:              people.Survived,
 		Pclass:                people.Pclass,
 		Name:                  people.Name,
@@ -111,7 +125,9 @@ func (repo *repository) PatchPeople(ctx context.Context, id uuid.UUID, people ti
 		SiblingsSpousesAbroad: people.SiblingsSpousesAbroad,
 		ParentsChildrenAboard: people.ParentsChildrenAboard,
 		Fare:                  people.Fare,
-	})
+	}).Error; err != nil {
+		return err
+	}
 
 	return nil
 }

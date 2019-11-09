@@ -44,7 +44,7 @@ func (s *service) PostPeople(ctx context.Context, people titanic.People) (string
 		level.Error(logger).Log("err", err)
 		return id, titanic.ErrCmdRepository
 	}
-	return id, nil
+	return id, err
 }
 
 func (s *service) GetPeopleByID(ctx context.Context, uuid uuid.UUID) (titanic.People, error) {
@@ -57,7 +57,7 @@ func (s *service) GetPeopleByID(ctx context.Context, uuid uuid.UUID) (titanic.Pe
 		}
 		return people, titanic.ErrQueryRepository
 	}
-	return people, nil
+	return people, err
 }
 
 func (s *service) PutPeople(ctx context.Context, uuid uuid.UUID, p titanic.People) error {
@@ -88,7 +88,7 @@ func (s *service) DeletePeople(ctx context.Context, uuid uuid.UUID) (string, err
 		}
 		return uuid.String(), titanic.ErrQueryRepository
 	}
-	return id, nil
+	return id, err
 }
 
 func (s *service) GetPeople(ctx context.Context) ([]titanic.People, error) {
@@ -101,5 +101,5 @@ func (s *service) GetPeople(ctx context.Context) ([]titanic.People, error) {
 		}
 		return people, titanic.ErrQueryRepository
 	}
-	return people, nil
+	return people, err
 }
