@@ -10,17 +10,18 @@ import (
 // UUID should be globally unique.
 type People struct {
 	// gorm.Model
-	ID                    uuid.UUID `json:"uuid,omitempty" gorm:"primary_key" valid:"uuid"`
+	ID                    uuid.UUID `json:"uuid,omitempty" gorm:"primary_key" valid:"uuidv4"`
 	Survived              bool      `json:"survived,omitempty"`
 	Pclass                int       `json:"pclass,omitempty" valid:"numeric"`
-	Name                  string    `json:"name,omitempty" valid:"alphanum,stringlength(2|48)"`
+	Name                  string    `json:"name,omitempty" valid:"alphanum,stringlength(2|70)"` // https://webarchive.nationalarchives.gov.uk/20100407173424/http://www.cabinetoffice.gov.uk/govtalk/schemasstandards/e-gif/datastandards.aspx
 	Sex                   string    `json:"sex,omitempty" valid:"in(male|female|not declared)"`
-	Age                   int       `json:"age,omitempty" valid:"numeric"`
-	SiblingsSpousesAbroad int       `json:"siblings_spouses_abroad,omitempty" valid:"numeric"`
-	ParentsChildrenAboard int       `json:"parents_children_aboard,omitempty" valid:"numeric"`
+	Age                   int       `json:"age,omitempty" valid:"numeric,range(0|116)"`
+	SiblingsSpousesAbroad int       `json:"siblings_spouses_abroad,omitempty" valid:"numeric,range(0|20)"`
+	ParentsChildrenAboard int       `json:"parents_children_aboard,omitempty" valid:"numeric,range(0|20)"`
 	Fare                  float32   `json:"fare,omitempty" valid:"float"`
 }
 
+// sha256:9f40d23ad125b9f6aa5a706b3f6d3e6b78f5937813812f2ca7e62769055104f3
 // Validate People struct. All the error can be catched with `db.GetErrors()`
 // func (people People) Validate(db *gorm.DB) {
 // 	nameIsCorrect, _ := regexp.MatchString(`^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$`, people.Name)
