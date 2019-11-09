@@ -21,7 +21,7 @@ type People struct {
 	Fare                  float32   `json:"fare,omitempty" valid:"float"`
 }
 
-// sha256:346650041cd298bc1aacb8e6243b2707338bf27871ade1fc535fd7d6407d04a4
+// sha256:3e0d14842df806ec7ce7c57ac435ffc80a06426b0a94d9e46db9b9a25164ccfa
 
 // Repository describes the persistence on people model
 type Repository interface {
