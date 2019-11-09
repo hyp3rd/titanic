@@ -53,7 +53,7 @@ services:
       - roach2
       - roach3
       - db-init
-    restart: always
+    restart: unless-stopped
     # deploy:
     #   restart_policy:
     #     condition: unless-stopped
