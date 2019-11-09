@@ -98,7 +98,8 @@ func (repo *repository) PutPeople(ctx context.Context, id uuid.UUID, people tita
 }
 
 func (repo *repository) PatchPeople(ctx context.Context, id uuid.UUID, people titanic.People) error {
-	if err := repo.db.Model(&people).Where("id = ?", id).Updates(titanic.People{
+	tx := repo.db.Begin()
+	if err := tx.Model(&people).Where("id = ?", id).Updates(titanic.People{
 		Survived:              people.Survived,
 		Pclass:                people.Pclass,
 		Name:                  people.Name,
@@ -108,8 +109,11 @@ func (repo *repository) PatchPeople(ctx context.Context, id uuid.UUID, people ti
 		ParentsChildrenAboard: people.ParentsChildrenAboard,
 		Fare:                  people.Fare,
 	}).Error; err != nil {
+		tx.Rollback()
 		return err
 	}
+
+	tx.Commit()
 
 	return nil
 }
