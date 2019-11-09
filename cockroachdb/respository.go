@@ -71,7 +71,7 @@ func (repo *repository) PostPeople(ctx context.Context, people titanic.People) (
 func (repo *repository) GetPeopleByID(ctx context.Context, id uuid.UUID) (titanic.People, error) {
 	var people = titanic.People{}
 
-	if repo.db.Where("id = ?", id).First(&people).RecordNotFound() {
+	if err := repo.db.Where("id = ?", id).First(&people).Error; err != nil {
 		return people, titanic.ErrNotFound
 	}
 

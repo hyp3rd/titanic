@@ -20,8 +20,6 @@ type People struct {
 	Fare                  float32   `json:"fare,omitempty" valid:"float"`
 }
 
-// sha256:bed498c8f6040db201bce7d18a2eae2e11e8996a9408e7c33bf2a556e842965e
-
 // Repository describes the persistence on people model
 type Repository interface {
 	PostPeople(ctx context.Context, p People) (string, error)
