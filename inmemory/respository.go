@@ -82,9 +82,40 @@ func (r *repository) PatchPeople(ctx context.Context, uuid uuid.UUID, p titanic.
 		return ErrNotFound // PATCH = update existing, don't create
 	}
 
-	// It should not possible to PATCH the UUID, and it should not be
-	// possible to PATCH any field to its zero value. That is, the zero value
-	// means not specified. The way around this is to use e.g. Name *string in
+	r.m[uuid.String()] = setPeople(p, existing)
+	return nil
+}
+
+func (r *repository) DeletePeople(ctx context.Context, uuid uuid.UUID) (string, error) {
+	r.mtx.Lock()
+	defer r.mtx.Unlock()
+	if _, ok := r.m[uuid.String()]; !ok {
+		return uuid.String(), ErrNotFound
+	}
+	delete(r.m, uuid.String())
+	return uuid.String(), nil
+}
+
+func (r *repository) GetPeople(ctx context.Context) ([]titanic.People, error) {
+	r.mtx.RLock()
+	defer r.mtx.RUnlock()
+
+	p := []titanic.People{}
+	for _, value := range r.m {
+		p = append(p, value)
+	}
+
+	if p == nil {
+		return []titanic.People{}, ErrNotFound
+	}
+	return p, nil
+}
+
+func setPeople(p titanic.People, existing titanic.People) titanic.People {
+
+	// It should not possible to PATCH the ID, and it should not be
+	// possible to PATCH or PUT any field to its zero value. That is, the zero value
+	// means not specified. The way around this is to use e.g. Survived *bool in
 	// the People definition.
 
 	if p.Survived != nil {
@@ -119,31 +150,5 @@ func (r *repository) PatchPeople(ctx context.Context, uuid uuid.UUID, p titanic.
 		existing.Fare = p.Fare
 	}
 
-	r.m[uuid.String()] = existing
-	return nil
-}
-
-func (r *repository) DeletePeople(ctx context.Context, uuid uuid.UUID) (string, error) {
-	r.mtx.Lock()
-	defer r.mtx.Unlock()
-	if _, ok := r.m[uuid.String()]; !ok {
-		return uuid.String(), ErrNotFound
-	}
-	delete(r.m, uuid.String())
-	return uuid.String(), nil
-}
-
-func (r *repository) GetPeople(ctx context.Context) ([]titanic.People, error) {
-	r.mtx.RLock()
-	defer r.mtx.RUnlock()
-
-	p := []titanic.People{}
-	for _, value := range r.m {
-		p = append(p, value)
-	}
-
-	if p == nil {
-		return []titanic.People{}, ErrNotFound
-	}
-	return p, nil
+	return existing
 }
