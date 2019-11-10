@@ -72,7 +72,7 @@ mkdir -p $(pwd)/tls; \
 openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
 -subj "/C=NL/ST=Amsterdam/L=Amsterdam/O=hyperd/CN=titanic-api.hyperd.sh" \
 -keyout $(pwd)/tls/tls.key -out $(pwd)/tls/tls.crt; \
-chmod 444 tls/*
+chmod 400 tls/tls.key ; chmod 444 tls/tls.crt
 ```
 
 Once the _cert_ and the _key_ are in place, it's enough to lift the docker-compose file with the command described here below:
