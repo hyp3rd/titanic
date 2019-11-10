@@ -64,8 +64,13 @@ func (r *repository) PutPeople(ctx context.Context, uuid uuid.UUID, p titanic.Pe
 	r.mtx.Lock()
 	defer r.mtx.Unlock()
 
-	p.ID = uuid
-	r.m[uuid.String()] = p // PUT = create or update
+	existing, ok := r.m[uuid.String()]
+	if !ok {
+		p.ID = uuid // PUT can create
+	}
+
+	r.m[uuid.String()] = setPeople(p, existing)
+
 	return nil
 }
 
