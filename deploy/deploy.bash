@@ -128,8 +128,6 @@ init() {
   deploy_secrets
 }
 
-init
-
 deploy_titanic_api () {
   # nginx ingress controller
   kubectl apply -f k8s/ingress-nginx/
@@ -164,6 +162,4 @@ deploy_cockroachdb () {
   # kubectl get pods
 }
 
-deploy_titanic_api
-
-deploy_cockroachdb
+init ; deploy_titanic_api ; deploy_cockroachdb
