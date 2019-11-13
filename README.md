@@ -100,7 +100,7 @@ payload='
   "fare": 7.34
 }
 '
-curl -d "$payload" -H "Content-Type: application/json" -X POST http://localhost:3000/people/ | jq
+curl -k -d "$payload" -H "Content-Type: application/json" -X POST https://localhost:8443/people/ | jq
 {
   "id": "bcf1d1e9-056d-46cf-9baa-aed0e6ffd219"
 }
@@ -109,7 +109,7 @@ curl -d "$payload" -H "Content-Type: application/json" -X POST http://localhost:
 `GET /people/:uuid` retrieves the given passenger by uuid from the people collection:
 
 ```bash
-curl http://localhost:3000/people/35d4ab59-fa9d-478d-a57e-61b526ee0a33 | jq
+curl -k https://localhost:8443/people/35d4ab59-fa9d-478d-a57e-61b526ee0a33 | jq
 {
   "people": {
     "uuid": "35d4ab59-fa9d-478d-a57e-61b526ee0a33",
@@ -128,7 +128,7 @@ curl http://localhost:3000/people/35d4ab59-fa9d-478d-a57e-61b526ee0a33 | jq
 `DELETE /people/:uuid` removes the given passenger:
 
 ```bash
-curl -X "DELETE" http://localhost:3000/people/35d4ab59-fa9d-478d-a57e-61b526ee0a33
+curl -X "DELETE" https://localhost:8443/people/35d4ab59-fa9d-478d-a57e-61b526ee0a33
 {
   "id": "35d4ab59-fa9d-478d-a57e-61b526ee0a33"
 }
@@ -143,7 +143,7 @@ payload='
   "parents_children_aboard": 2
 }
 '
-curl -d "$payload" -H "Content-Type: application/json" -X PATCH -k http://localhost/people/35d4ab59-fa9d-478d-a57e-61b526ee0a33
+curl -k -d "$payload" -H "Content-Type: application/json" -X PATCH -k https://localhost:8443/people/35d4ab59-fa9d-478d-a57e-61b526ee0a33
 {}
 ```
 
@@ -162,14 +162,14 @@ payload='
   "fare": 9.81
 }
 '
-curl -d "$payload" -H "Content-Type: application/json" -X PUT http://localhost:3000/people/35d4ab59-fa9d-478d-a57e-61b526ee0a33
+curl -k -d "$payload" -H "Content-Type: application/json" -X PUT https://localhost:8443/people/35d4ab59-fa9d-478d-a57e-61b526ee0a33
 {}
 ```
 
 `GET /people/` retrieves all the passengers of the Titanic:
 
 ```bash
-curl http://localhost:3000/people/ | jq
+curl -k https://localhost:8443/people/ | jq
 {
   "people": [
     {
