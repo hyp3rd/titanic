@@ -83,7 +83,23 @@ docker-compose up -d
 
 ### API Walkthrough
 
-The Titanic API exposes the following methods:
+The **people** struct is discribed in the following table:
+
+| Attribute             | Type    | Required | Validation                                              |
+|-----------------------|---------|----------|---------------------------------------------------------|
+| ID                    | UUID    | yes      | invalid uuid will generate exeptions                    |
+| Survived              | bool    | yes      | values different than booleans will generate exceptions |
+| Pclass                | int     | yes      | `valid:"numeric"`                                       |
+| Name                  | string  | yes      | `valid:"alphanum,stringlength(2|70)"`                   |
+| Sex                   | string  | yes      | `valid:"in(male|female|not declared)"`                  |
+| Age                   | int     | yes      | `valid:"numeric,range(0|116)"`                          |
+| SiblingsSpousesAbroad | int     | yes      | `valid:"numeric,range(0|20)"`                           |
+| ParentsChildrenAboard | int     | yes      | `valid:"numeric,range(0|20)"`                           |
+| Fare                  | float32 | yes      | `valid:"float"`                                         |
+
+Here below are listed the endpoints exposed:
+
+#### create
 
 `POST /people/` adds another passenger to the people table:
 
@@ -106,6 +122,8 @@ curl -k -d "$payload" -H "Content-Type: application/json" -X POST https://localh
 }
 ```
 
+#### get a single item
+
 `GET /people/:uuid` retrieves the given passenger by uuid from the people collection:
 
 ```bash
@@ -125,6 +143,8 @@ curl -k https://localhost:8443/people/35d4ab59-fa9d-478d-a57e-61b526ee0a33 | jq
 }
 ```
 
+#### delete a single item
+
 `DELETE /people/:uuid` removes the given passenger:
 
 ```bash
@@ -133,6 +153,8 @@ curl -X "DELETE" https://localhost:8443/people/35d4ab59-fa9d-478d-a57e-61b526ee0
   "id": "35d4ab59-fa9d-478d-a57e-61b526ee0a33"
 }
 ```
+
+#### update a single item
 
 `PATCH /people/:uuid` partial update of the passenger information:
 
@@ -146,6 +168,8 @@ payload='
 curl -k -d "$payload" -H "Content-Type: application/json" -X PATCH -k https://localhost:8443/people/35d4ab59-fa9d-478d-a57e-61b526ee0a33
 {}
 ```
+
+#### update or insert a single item
 
 `PUT /people/:uuid` posts updated information about a given passenger:
 
@@ -165,6 +189,8 @@ payload='
 curl -k -d "$payload" -H "Content-Type: application/json" -X PUT https://localhost:8443/people/35d4ab59-fa9d-478d-a57e-61b526ee0a33
 {}
 ```
+
+#### get all the items
 
 `GET /people/` retrieves all the passengers of the Titanic:
 
