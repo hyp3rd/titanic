@@ -127,4 +127,5 @@ module "cluster" {
   vpc_network_name = "${google_compute_network.vpc_network.name}"
 
   vpc_subnetwork_name = "${google_compute_subnetwork.vpc_subnetwork.name}"
+
 }

@@ -1,6 +1,6 @@
-# Container Solution API-exercise
+# API Solution PoC
 
-Container Solution API-exercise, to assess technical proficiency with Software Engineering, DevOps, and Infrastructure tasks.
+Software Engineering, DevOps, and Infrastructure tasks.
 
 ## The Titanic API
 
