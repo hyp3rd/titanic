@@ -1,6 +1,6 @@
-# Container Solution Assessment Deployment
+# GCP Deployment
 
-Container Solution API-exercise deployment to k8s
+API deployment to k8s
 
 ## Initial setup
 
