@@ -7,10 +7,10 @@ require (
 	github.com/go-kit/kit v0.9.0
 	github.com/google/uuid v1.1.1
 	github.com/jinzhu/gorm v1.9.11
-	github.com/qor/qor v0.0.0-20191022064424-b3deff729f68 // indirect
 	github.com/qor/validations v0.0.0-20171228122639-f364bca61b46 // indirect
-	gitlab.com/hyperd/titanic/implementation v0.0.0-20191113183645-2f4426876e7d // indirect
-	gitlab.com/hyperd/titanic/inmemory v0.0.0-20191113183645-2f4426876e7d // indirect
-	gitlab.com/hyperd/titanic/transport v0.0.0-20191113183645-2f4426876e7d // indirect
-	gitlab.com/hyperd/titanic/transport/http v0.0.0-20191113183645-2f4426876e7d // indirect
+	gitlab.com/hyperd/titanic/implementation v0.0.0-20191121205005-9dc5dfda259b // indirect
+	gitlab.com/hyperd/titanic/inmemory v0.0.0-20191121205005-9dc5dfda259b // indirect
+	gitlab.com/hyperd/titanic/transport v0.0.0-20191121205005-9dc5dfda259b // indirect
+	gitlab.com/hyperd/titanic/transport/http v0.0.0-20191121205005-9dc5dfda259b // indirect
+	golang.org/x/net v0.0.0-20191126235420-ef20fe5d7933 // indirect
 )

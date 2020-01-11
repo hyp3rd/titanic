@@ -19,6 +19,7 @@ import (
 	"gitlab.com/hyperd/titanic/inmemory"
 	"gitlab.com/hyperd/titanic/middleware"
 	httptransport "gitlab.com/hyperd/titanic/transport/http"
+	"golang.org/x/net/http2"
 )
 
 func main() {
@@ -121,8 +122,15 @@ func main() {
 	}()
 
 	go func() {
+		var httpServer = http.Server{
+			Addr:    *httpsAddr,
+			Handler: h,
+		}
+
+		var http2Server = http2.Server{}
+		_ = http2.ConfigureServer(&httpServer, &http2Server)
 		logger.Log("transport", "HTTPS", "addr", *httpsAddr)
-		errs <- http.ListenAndServeTLS(*httpsAddr, "/etc/tls/certs/tls.crt", "/etc/tls/certs/tls.key", h)
+		errs <- httpServer.ListenAndServeTLS("/etc/tls/certs/tls.crt", "/etc/tls/certs/tls.key")
 		// errs <- http.ListenAndServeTLS(*httpsAddr, "./tls/tls.crt", "./tls/tls.key", h)
 
 	}()

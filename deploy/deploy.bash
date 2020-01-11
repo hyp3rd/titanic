@@ -9,12 +9,13 @@ set -o errtrace
 trap traperr ERR
 
 validate_env () {
-    if [[ -z ${PROJECT_ID+x} ]] || [[ -z ${REGION+x} ]]; then
-      echo "To run this deployment you need to export PROJECT_ID and REGION as follows:
-      export REGION=<region e.g. europe-west1>
-      export PROJECT_ID=<project name e.g. hyperd-titanic-api>";
-      exit 1
-    fi
+  if [[ -z ${PROJECT_ID+x} ]] || [[ -z ${REGION+x} ]] || [[ -z ${GOOGLE_APPLICATION_CREDENTIALS+x} ]]; then
+    echo "To run this deployment you need to export PROJECT_ID and REGION as follows:
+    export REGION=<region e.g. europe-west1>
+    export PROJECT_ID=<project name e.g. hyperd-titanic-api>
+    export GOOGLE_APPLICATION_CREDENTIALS=<path to your service account key e.g. $PWD/key.json>";
+    exit 1
+  fi
 }
 
 gcloud_setup () {
